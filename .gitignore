@@ -1,0 +1,4 @@
+﻿# ignora os arquivos com extens�es 
+
+# ignora quaisquer diret�rios chamados "metadata"
+topicosA/node_modules/
