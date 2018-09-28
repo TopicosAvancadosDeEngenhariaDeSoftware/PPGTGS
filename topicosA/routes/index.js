@@ -26,7 +26,7 @@ router.get('/', function(req, res, next) {
 
   graficoDados.tituloY = "Numero de discentes";
 
-  return res.render('index', {email : req.email, grafico :graficoDados });
+  return res.render('base', {email : req.email, grafico :graficoDados });
 });
 
 module.exports = router;

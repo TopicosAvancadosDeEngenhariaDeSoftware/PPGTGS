@@ -12,7 +12,7 @@ router.get('/logout', function(req, res, next) {
   res.redirect('/login');
 });
 
-router.post('/autenticar', autenticacao_controller.autenticarUsuario);
+router.post('/auth', autenticacao_controller.autenticarUsuario);
 
 
 module.exports = router;

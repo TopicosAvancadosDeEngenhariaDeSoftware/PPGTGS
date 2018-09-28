@@ -6,11 +6,11 @@ var logger = require('morgan');
 
 var cookieSession = require('cookie-session');
 var configuracao = require('./config/config');
-var autenticacaoJWT = require('./auth/autenticacao');
+var autenticacaoJWT = require('./auth/auth-jwt');
 
 var indexRouter = require('./routes/index');
-var loginRoute = require('./routes/login');
-var utilsRoute = require('./routes/utils');
+var loginRoute = require('./routes/login-route');
+var utilsRoute = require('./routes/utils-route');
 
 var app = express();
 
@@ -37,7 +37,7 @@ app.use('/',loginRoute);
 app.use('/',utilsRoute);
 
 //A partir daqui as rotas precisao de autenticacao.
-app.use(autenticacaoJWT.verificacarAutenticacao);
+app.use(autenticacaoJWT.verificarSessao);
 
 app.use('/', indexRouter);
 

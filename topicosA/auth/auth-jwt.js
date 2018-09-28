@@ -3,7 +3,7 @@
 let jwt = require('jsonwebtoken');
 let configuracao = require('../config/config');
 
-exports.verificacarAutenticacao = (req, res, next) => {
+exports.verificarSessao = (req, res, next) => {
 
     let auth = req.session.token;
     if(auth == null || auth == undefined ){
