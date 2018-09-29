@@ -4,3 +4,5 @@
 Trabalho de Desenvolvimento de um Sistema para Programa Pós Graduação Tecnólogia Gestão e Sustentabilidade
 
 ## MER - Implementação do CRUD DISCENTE
+
+<img alt="CRUD DISCENTE" src="https://raw.githubusercontent.com/TopicosAvancadosDeEngenhariaDeSoftware/PPGTGS/master/docs/MER-PARCIAL-CRUD-DISCENTE.png" width="650">
