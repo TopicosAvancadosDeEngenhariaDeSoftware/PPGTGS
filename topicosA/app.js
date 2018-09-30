@@ -42,7 +42,7 @@ app.use(connectionMiddleware(pool));
 
 app.use('/',loginRoute);
 app.use('/',utilsRoute);
-app.use('/json',require('./routes/discente-route'));
+app.use('/',require('./routes/discente-route'));
 
 //A partir daqui as rotas precisao de autenticacao.
 app.use(autenticacaoJWT.verificarSessao);
