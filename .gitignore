@@ -2,3 +2,5 @@
 
 # ignora quaisquer diret�rios chamados "metadata"
 topicosA/node_modules/
+topicosA/.vs/
+topicosA/docs/

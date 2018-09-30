@@ -1,9 +1,14 @@
 var createError = require('http-errors');
 var express = require('express');
+
+const expressValidator = require('express-validator');
+
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const connectionMiddleware = require('./middleware/connection-middleware');
 
+const pool = require('./bd/pool-factory');
 var cookieSession = require('cookie-session');
 var configuracao = require('./config/config');
 var autenticacaoJWT = require('./auth/auth-jwt');
@@ -23,6 +28,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(expressValidator);
 
 app.set('trust proxy', 1) 
 
@@ -32,9 +38,11 @@ app.use(cookieSession({
   maxAge: 12 * 60 * 60 * 1000
 }))
 
+app.use(connectionMiddleware(pool));
 
 app.use('/',loginRoute);
 app.use('/',utilsRoute);
+app.use('/json',require('./routes/discente-route'));
 
 //A partir daqui as rotas precisao de autenticacao.
 app.use(autenticacaoJWT.verificarSessao);

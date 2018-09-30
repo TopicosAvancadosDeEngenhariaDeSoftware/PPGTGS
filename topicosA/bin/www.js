@@ -4,6 +4,10 @@
  * Module dependencies.
  */
 
+'use strict' //O javascript é mais criterioso na compilação
+
+console.log("--- Iniciando servidor ---");
+
 var app = require('../app');
 var debug = require('debug')('topicosa:server');
 var http = require('http');
