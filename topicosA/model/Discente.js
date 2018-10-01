@@ -169,7 +169,7 @@ module.exports = class Discente{
 		this._complemento = params.complemento != null ? params.complemento : null;
 		this._id_docente = parseInt(params.id_docente);
 		this._is_aceito = null;
-		//this._situacao = parseInt(params.situacao);
+		this._situacao = parseInt(params.situacao);
         this._id_titulo = parseInt(params.id_titulo);
         this._id_sexo = parseInt(params.id_sexo);
         this._telefone = parseInt(params.telefone);
