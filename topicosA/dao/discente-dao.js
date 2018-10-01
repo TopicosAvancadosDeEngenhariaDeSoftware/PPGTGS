@@ -73,7 +73,7 @@ module.exports = class DiscenteDao{
 }
 
 excluirDiscente(id_discente, callback){
-    var sql = "DELETE FROM Discente WHERE id = ? ;"
+    var sql = "DELETE FROM Discente WHERE id_discente = ? ;"
     var params = [];
     params.push(id_discente);
     sql = mysql.format(sql, params);
