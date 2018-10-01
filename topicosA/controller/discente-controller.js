@@ -6,6 +6,67 @@ const config = require('../config/config');
 const erros_mensagem = require('../config/config-erros');
 //const async = require("async");
 
+exports.recuperarDiscenteId = (req, res, next) => {
+    req.checkParams('id_discente', 'id é obrigatorio ser do tipo int').isInt();
+    let erros = req.validationErrors();
+    if(erros){
+      res.status(400).json(erros);
+      return;
+    }
+
+    let id_discente = parseInt(req.params.id_discente);
+    //console.log('id param', idparams);
+
+    (new Promise(
+        function (resolve, reject) {
+                //console.log('Administrador');
+                let av = new DiscenteDao(req.connection);
+                av.recuperarDiscentePorId(id_discente, (error, discente_result) => {
+                    if(error){
+                        reject(error);
+                    }else{
+                        resolve(discente_result);
+                    }
+                });
+    })).then(result => {
+        //console.log(result); console.log('aq');
+        res.status(200).json({resultado: result, erro: null});
+
+    }).catch(error => {
+        next(error);
+    });
+}
+
+exports.recuperarDiscenteNome = (req, res, next) => {
+    req.checkParams('nome', 'nome é obrigatório').notEmpty();
+    let erros = req.validationErrors();
+    if(erros){
+      res.status(400).json(erros);
+      return;
+    }
+
+    let nome = parseInt(req.params.nome);
+    //console.log('id param', idparams);
+
+    (new Promise(
+        function (resolve, reject) {
+                //console.log('Administrador');
+                let av = new DiscenteDao(req.connection);
+                av.recuperarDiscentePorNome(nome, (error, discente_result) => {
+                    if(error){
+                        reject(error);
+                    }else{
+                        resolve(discente_result);
+                    }
+                });
+    })).then(result => {
+        //console.log(result); console.log('aq');
+        res.status(200).json({resultado: result, erro: null});
+
+    }).catch(error => {
+        next(error);
+    });
+}
 
 exports.cadastrarDiscente = (req, res, next) => {
    // let id_tipo_usuario = req.id_tipo_usuario;

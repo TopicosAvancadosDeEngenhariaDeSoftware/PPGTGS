@@ -13,8 +13,8 @@ const router = require('express').Router();
 router.post('/discentes',discente_controller.cadastrarDiscente);
 router.put('/discentes/:id_discente', discente_controller.editarDiscente);
 router.delete('/discentes/:id_discente', discente_controller.excluirDiscente);
-//router.get('discentes/:id_discente', discente_controller.recuperarDiscenteId);
-//router.get('discentes', discente_controller.recuperarDiscentes);
+router.get('/discentes/:id_discente', discente_controller.recuperarDiscenteId);
+//router.get('/discentes', discente_controller.recuperarDiscentes);
 
 
 
