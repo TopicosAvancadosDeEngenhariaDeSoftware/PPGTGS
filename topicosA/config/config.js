@@ -9,3 +9,9 @@ exports.tipo_usuario = {
     "doscente" : 4,
     "secretaria" : 5
 }
+
+exports.situacao_discente = {
+    "ativo" : 1,
+    "inativo" : 2,
+    "egresso" : 3
+}

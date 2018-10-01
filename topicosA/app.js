@@ -1,6 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
-
+const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 
 var path = require('path');
@@ -19,18 +19,30 @@ var utilsRoute = require('./routes/utils-route');
 
 var app = express();
 
+
+app.use(bodyParser.json()); // middleware
+app.use(expressValidator());
+app.use(connectionMiddleware(pool));
+
+app.use('/',require('./routes/discente-route'));
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(expressValidator);
 
-app.set('trust proxy', 1) 
+
+
+app.set('trust proxy', 1);
+
+
+
 
 app.use(cookieSession({
   name: 'session',
@@ -38,16 +50,18 @@ app.use(cookieSession({
   maxAge: 12 * 60 * 60 * 1000
 }))
 
-app.use(connectionMiddleware(pool));
+
 
 app.use('/',loginRoute);
 app.use('/',utilsRoute);
-app.use('/',require('./routes/discente-route'));
+
+
 
 //A partir daqui as rotas precisao de autenticacao.
 app.use(autenticacaoJWT.verificarSessao);
 
 app.use('/', indexRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -64,5 +78,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
 
 module.exports = app;

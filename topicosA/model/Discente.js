@@ -17,18 +17,19 @@ module.exports = class Discente{
 		this._complemento = null;
 		this._id_docente = null;
 		this._is_aceito = null;
-		this._situacao = null
+		this._situacao = null;
         this._id_titulo = null;
         this._id_sexo = null;
-		this._cargo_instituicao =[];
-        this._tipo_discente = [];
+        this._telefone = null;
+		//this._cargo_instituicao =[];
+        //this._tipo_discente = [];
         
 		//acho q é assim q faz enum mas se nao for, ignora. 
 		//se for dai so colocar desse jeito entao, so q n lembro os valores q deveriam ser alem.
 		//const this._situacao ={
-		//	ATIVO:0,
-		//	INATIVO: 1,
-		//	EGRESSO:2
+		//	ATIVO:1,
+		//	INATIVO: 2,
+		//	EGRESSO:3
 		//}; 
 	}
 
@@ -133,6 +134,12 @@ module.exports = class Discente{
 	}
 	get id_titulo(){
 		return this._id_titulo;
+    }
+    set id_sexo(id_sexo) {
+		this._id_sexo = id_sexo;
+	}
+	get id_sexo(){
+		return this._id_sexo;
 	}
 	get cargo_instituicao(){
 		return this._cargo_instituicao;	
@@ -140,6 +147,12 @@ module.exports = class Discente{
 	get tipo_discente(){
 		return this._tipo_discente;
     }
+    set telefone(telefone) {
+		this._telefone = telefone;
+	}
+	get telefone(){
+		return this._telefone;
+	}
     
     construtorParametrosRequisicao(params){
         this._id_discente = parseInt(params.id_discente);
@@ -149,17 +162,20 @@ module.exports = class Discente{
 		this._cpf = params.cpf;
 		this._username = params.username;
 		this._senha = params.senha;
-		this._link_lattes = params.link_lattes;
+		this._link_lattes = params.link_lattes != null ? params.link_lattes : null;
 		this._email = params.email;
 		this._id_endereco = parseInt(params.id_endereco );
 		this._numero_residencia = parseInt(params.numero_residencia);
-		this._complemento = params.complemento;
+		this._complemento = params.complemento != null ? params.complemento : null;
 		this._id_docente = parseInt(params.id_docente);
 		this._is_aceito = null;
-		this._id_situacao = params.id_situacao;
-        this._id_titulo = params.id_titulo;
-        this._id_sexo = params.id_sexo;
+		//this._situacao = parseInt(params.situacao);
+        this._id_titulo = parseInt(params.id_titulo);
+        this._id_sexo = parseInt(params.id_sexo);
+        this._telefone = parseInt(params.telefone);
         
+       
+
         /*calendars.forEach(function(params) {   
             this._cargo_instituicao.push(params.cargo_instituicao);
         });
