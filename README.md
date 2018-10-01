@@ -10,12 +10,12 @@ O projeto irá auxiliar no cadastro dos alunos e tem como objetivo final, gerar 
 <img alt="CRUD DISCENTE" src="https://raw.githubusercontent.com/TopicosAvancadosDeEngenhariaDeSoftware/PPGTGS/master/docs/MER-PARCIAL-CRUD-DISCENTE.png" width="650">
 
 ## Lista de Casos de Uso à ser Implementado
-   * [ ] Manter Discente
+   * [ ] Manter Discente - Quase pronto Falta A interface
    * [ ] Manter Trabalhos Disciplinas
    * [ ] Manter Artigos Acadêmicos
    * [ ] Manter Projetos de Pesquisa
    * [ ] Manter Dissertações
-   * [ ] Manter Docentes
+   * [ ] Manter Docentes - Proximo Caso de Uso à ser implementado
    * [ ] Acessar Informações Lattes
    * [ ] Manter Eventos
    * [ ] Manter Indicadores
