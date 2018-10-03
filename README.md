@@ -22,7 +22,7 @@ Instale o banco de dados MariaDB na versão adequada, link: https://mariadb.com/
 * para acessar o sistema vá para ``` localhost:3000 ```
 
 ## Lista de Casos de Uso à ser Implementado
-   * [] Manter Discente - Quase pronto Falta A interface
+   * [ ] Manter Discente - Quase pronto Falta A interface
    * [ ] Manter Trabalhos Disciplinas
    * [ ] Manter Artigos Acadêmicos
    * [ ] Manter Projetos de Pesquisa
