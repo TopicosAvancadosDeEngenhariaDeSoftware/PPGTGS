@@ -15,3 +15,9 @@ exports.situacao_discente = {
     "inativo" : 2,
     "egresso" : 3
 }
+
+exports.sexo = {
+    "masculino" : 1,
+    "feminino" : 2,
+    "outro" : 3
+}

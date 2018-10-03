@@ -68,23 +68,24 @@ exports.recuperarDiscenteNome = (req, res, next) => {
     });
 }
 
+//cadastrar com endereço
+//cadastrar instituição e cargo docente
+//pegar o id do discente, fazer o select para verificar se existe instituição, se não cadastrar
+//pegar o id da instituição e salvar na tabela corresponde juntamente com o cargo.
+
 exports.cadastrarDiscente = (req, res, next) => {
    // let id_tipo_usuario = req.id_tipo_usuario;
-
-        console.log('aeee');
 
         req.assert('nome', 'nome é obrigatório').notEmpty(); 
         req.assert('data_nascimento', 'data de nascimento é obrigatório').notEmpty();
         req.assert('data_nascimento', 'data de nascimento incorreta').isISO8601();
-        req.assert('rg', 'rg é obrigatório').notEmpty();
-        req.assert('cpf', 'cpf é obrigatório').notEmpty();
         req.assert('username', 'username é obrigatório').notEmpty();
         req.assert('senha', 'senha é obrigatório').notEmpty();
         req.assert('email', 'email é obrigatório').notEmpty();
-        req.assert('numero_residencia', 'número da residência é obrigatório').notEmpty();
         req.assert('id_docente', 'docente é obrigatório').notEmpty();
         req.assert('id_titulo', 'titulo é obrigatório').notEmpty();
         req.assert('id_sexo', 'sexo é obrigatório').notEmpty();
+        req.assert('nacionalidade', 'nacionalidade é obrigatória').notEmpty();
 
         let erros = req.validationErrors();
           
