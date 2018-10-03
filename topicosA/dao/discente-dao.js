@@ -8,6 +8,75 @@ module.exports = class DiscenteDao{
     constructor(connection){
         this._connection = connection;
     }
+
+    recuperarDiscentePorId(id_discente, callback){
+        var sql = "SELECT * FROM Discente WHERE id_discente = ? ;"
+        var params = [];
+        params.push(id_discente);
+        sql = mysql.format(sql, params);
+        this._connection.query(sql, (error, results) =>{
+            console.log('RESULTs ',results);
+
+            if(error){
+                callback(error, null);
+            }else{
+                callback(error,results[0] ? results[0] : null);
+            }
+            
+        });
+    }
+
+    recuperarDiscentePorNome(nome, callback){
+        var sql = "SELECT * FROM Discente WHERE nome = ? ;"
+        var params = [];
+        params.push(nome);
+        sql = mysql.format(sql, params);
+        this._connection.query(sql, (error, results) =>{
+            console.log('RESULTs ',results);
+
+            if(error){
+                callback(error, null);
+            }else{
+                callback(error,results[0] ? results[0] : null);
+            }
+            
+        });
+    }
+
+    recuperarDiscentePorId(id_discente, callback){
+        var sql = "SELECT * FROM Discente WHERE id_discente = ? ;"
+        var params = [];
+        params.push(id_discente);
+        sql = mysql.format(sql, params);
+        this._connection.query(sql, (error, results) =>{
+            console.log('RESULTs ',results);
+
+            if(error){
+                callback(error, null);
+            }else{
+                callback(error,results[0] ? results[0] : null);
+            }
+            
+        });
+    }
+
+    recuperarDiscentePorNome(nome, callback){
+        var sql = "SELECT * FROM Discente WHERE nome = ? ;"
+        var params = [];
+        params.push(nome);
+        sql = mysql.format(sql, params);
+        this._connection.query(sql, (error, results) =>{
+            console.log('RESULTs ',results);
+
+            if(error){
+                callback(error, null);
+            }else{
+                callback(error,results[0] ? results[0] : null);
+            }
+            
+        });
+    }
+
     inserirDiscente(discente, callback){
 
         var sql = "INSERT INTO Discente (nome, data_nascimento, rg, cpf, username, senha, link_lattes, "+
