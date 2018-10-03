@@ -1,6 +1,10 @@
 'use strict'
+const DiscenteDao = require('../../dao/discente-dao');
+const Discente = require('../../model/Discente');
+const config = require('../../config/config');
+const erros_mensagem = require('../../config/config-erros');
+//const async = require("async");
 
-<<<<<<< HEAD
 exports.recuperarDiscenteId = (req, res, next) => {
     req.checkParams('id_discente', 'id é obrigatorio ser do tipo int').isInt();
     let erros = req.validationErrors();
@@ -63,24 +67,23 @@ exports.recuperarDiscenteNome = (req, res, next) => {
     });
 }
 
-//cadastrar com endereço
-//cadastrar instituição e cargo docente
-//pegar o id do discente, fazer o select para verificar se existe instituição, se não cadastrar
-//pegar o id da instituição e salvar na tabela corresponde juntamente com o cargo.
-
 exports.cadastrarDiscente = (req, res, next) => {
    // let id_tipo_usuario = req.id_tipo_usuario;
+
+        console.log('aeee');
 
         req.assert('nome', 'nome é obrigatório').notEmpty(); 
         req.assert('data_nascimento', 'data de nascimento é obrigatório').notEmpty();
         req.assert('data_nascimento', 'data de nascimento incorreta').isISO8601();
+        req.assert('rg', 'rg é obrigatório').notEmpty();
+        req.assert('cpf', 'cpf é obrigatório').notEmpty();
         req.assert('username', 'username é obrigatório').notEmpty();
         req.assert('senha', 'senha é obrigatório').notEmpty();
         req.assert('email', 'email é obrigatório').notEmpty();
+        req.assert('numero_residencia', 'número da residência é obrigatório').notEmpty();
         req.assert('id_docente', 'docente é obrigatório').notEmpty();
         req.assert('id_titulo', 'titulo é obrigatório').notEmpty();
         req.assert('id_sexo', 'sexo é obrigatório').notEmpty();
-        req.assert('nacionalidade', 'nacionalidade é obrigatória').notEmpty();
 
         let erros = req.validationErrors();
           
@@ -216,8 +219,3 @@ exports.editarDiscente = (req, res, next) => {
     else  res.status(401).json({resultado: null, erro: erros_mensagem.erro_usuario_permissao});
   
   }
-=======
-exports.cadastrarDiscente = async (req, res, next) => {
-        res.render('discentes-registro');
-}
->>>>>>> 7214f9498648a78d1144e4b98abe0c0e4d1a7b48

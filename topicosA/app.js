@@ -13,9 +13,12 @@ var cookieSession = require('cookie-session');
 var configuracao = require('./config/config');
 var autenticacaoJWT = require('./auth/auth-jwt');
 
-var indexRouter = require('./routes/index');
-var loginRoute = require('./routes/login-route');
-var utilsRoute = require('./routes/utils-route');
+var index_Router = require('./routes/index');
+var login_Route = require('./routes/login-route');
+var utils_Route = require('./routes/utils-route');
+var discente_Route = require('./routes/discente-route');
+
+var discente_json_Route = require('./routes/json/discente-route');
 
 var app = express();
 
@@ -24,7 +27,7 @@ app.use(bodyParser.json()); // middleware
 app.use(expressValidator());
 app.use(connectionMiddleware(pool));
 
-app.use('/',require('./routes/discente-route'));
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -52,15 +55,20 @@ app.use(cookieSession({
 
 
 
-app.use('/',loginRoute);
-app.use('/',utilsRoute);
+app.use('/',login_Route);
+app.use('/',utils_Route);
+
+app.use('/discentes/',discente_Route);
+
+//Lugar de teste dos post get etc /json/
+app.use('/json/',discente_json_Route);
 
 
 
 //A partir daqui as rotas precisao de autenticacao.
 app.use(autenticacaoJWT.verificarSessao);
 
-app.use('/', indexRouter);
+app.use('/', index_Router);
 
 
 // catch 404 and forward to error handler
