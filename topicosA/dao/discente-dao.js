@@ -80,7 +80,7 @@ module.exports = class DiscenteDao{
     inserirDiscente(discente, callback){
 
         var sql = "INSERT INTO Discente (nome,sobrenome, data_nascimento, rg, cpf, username, senha, link_lattes, "+
-        "email, id_endereco, numero_residencia, complemento, id_docente, isAceito, situacao, id_titulo, id_sexo, telefone, nacionalidade, passaporte) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
+        "email, id_endereco, numero_residencia, complemento, id_docente, isAceito, situacao, id_titulo, sexo, telefone, nacionalidade, passaporte) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
         var params = [];
         params.push(discente.nome);
         params.push(discente.sobrenome);
@@ -98,7 +98,7 @@ module.exports = class DiscenteDao{
         params.push(discente.isAceito);
         params.push(discente.situacao);
         params.push(discente.id_titulo);
-        params.push(discente.id_sexo);
+        params.push(discente.sexo);
         params.push(discente.telefone);
         params.push(discente.nacionalidade);
         params.push(discente.passaporte);

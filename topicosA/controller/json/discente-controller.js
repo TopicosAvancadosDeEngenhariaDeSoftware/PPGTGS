@@ -67,7 +67,7 @@ exports.recuperarDiscenteNome = (req, res, next) => {
     });
 }
 
-//cadastrar com endereço
+//cadastrar com endereço (fazer select para buscar se existe logradouro e bairro se nao existir cadastrar)
 //cadastrar instituição e cargo docente
 //pegar o id do discente, fazer o select para verificar se existe instituição, se não cadastrar
 //pegar o id da instituição e salvar na tabela corresponde juntamente com o cargo.
@@ -83,7 +83,7 @@ exports.cadastrarDiscente = (req, res, next) => {
          req.assert('email', 'email é obrigatório').notEmpty();
          req.assert('id_docente', 'docente é obrigatório').notEmpty();
          req.assert('id_titulo', 'titulo é obrigatório').notEmpty();
-         req.assert('id_sexo', 'sexo é obrigatório').notEmpty();
+         req.assert('sexo', 'sexo é obrigatório').notEmpty();
          req.assert('nacionalidade', 'nacionalidade é obrigatória').notEmpty();
  
          let erros = req.validationErrors();

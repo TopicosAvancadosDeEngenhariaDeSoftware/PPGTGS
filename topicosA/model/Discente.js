@@ -20,7 +20,7 @@ module.exports = class Discente{
 		this._is_aceito = null;
 		this._situacao = null;
         this._id_titulo = null;
-        this._id_sexo = null;
+        this._sexo = null;
 		this._telefone = null;
 		this._nacionalidade = null;
 		this._passaporte = null;
@@ -144,11 +144,11 @@ module.exports = class Discente{
 	get id_titulo(){
 		return this._id_titulo;
     }
-    set id_sexo(id_sexo) {
-		this._id_sexo = id_sexo;
+    set sexo(sexo) {
+		this._sexo = sexo;
 	}
-	get id_sexo(){
-		return this._id_sexo;
+	get sexo(){
+		return this._sexo;
 	}
 	get cargo_instituicao(){
 		return this._cargo_instituicao;	
@@ -193,7 +193,7 @@ module.exports = class Discente{
 		this._is_aceito = null;
 		this._situacao = parseInt(params.situacao);
         this._id_titulo = parseInt(params.id_titulo);
-        this._id_sexo = parseInt(params.id_sexo);
+        this._sexo = parseInt(params.sexo);
 		this._telefone = parseInt(params.telefone);
 		this._nacionalidade = params.nacionalidade;
 		this._passaporte = params.passaporte != null ?  params.passaporte : null;
