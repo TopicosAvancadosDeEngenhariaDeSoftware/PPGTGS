@@ -2,3 +2,7 @@
 .backSite{
   background-color: #ecf0f5;
 }
+
+.remover{
+  display: none;
+}

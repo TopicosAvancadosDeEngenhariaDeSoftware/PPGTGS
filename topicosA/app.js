@@ -19,6 +19,8 @@ var utils_Route = require('./routes/utils-route');
 var discente_Route = require('./routes/discente-route');
 
 var discente_json_Route = require('./routes/json/discente-route');
+var cidade_json_Route = require('./routes/json/cidade-route');
+var estado_json_Route = require('./routes/json/estado-route');
 
 var app = express();
 
@@ -62,6 +64,9 @@ app.use('/discentes/',discente_Route);
 
 //Lugar de teste dos post get etc /json/
 app.use('/json/',discente_json_Route);
+app.use('/json/',cidade_json_Route);
+app.use('/json/',estado_json_Route);
+
 
 
 
