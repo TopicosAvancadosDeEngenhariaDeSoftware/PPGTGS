@@ -5,4 +5,7 @@ var controllerDiscente = require('../controller/discente-controller');
 /* GET home page. */
 router.get('/registro', controllerDiscente.cadastrarDiscente);
 
+
+
 module.exports = router;
+

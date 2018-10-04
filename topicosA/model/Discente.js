@@ -5,6 +5,7 @@ module.exports = class Discente{
 	constructor(){
 		this._id_discente = null;
 		this._nome = null;
+		this._sobrenome = null;
 		this._data_nascimento = null;
 		this._rg = null;
 		this._cpf = null;
@@ -19,8 +20,10 @@ module.exports = class Discente{
 		this._is_aceito = null;
 		this._situacao = null;
         this._id_titulo = null;
-        this._id_sexo = null;
-        this._telefone = null;
+        this._sexo = null;
+		this._telefone = null;
+		this._nacionalidade = null;
+		this._passaporte = null;
 		//this._cargo_instituicao =[];
         //this._tipo_discente = [];
         
@@ -44,6 +47,12 @@ module.exports = class Discente{
 	}
 	get nome(){
 		return this._nome;
+	}
+	set sobrenome (sobrenome){
+		this._sobrenome = sobrenome;
+	}
+	get sobrenome(){
+		return this._sobrenome;
 	}
 	set data_nascimento(data_nascimento) {
 		this._data_nascimento = data_nascimento;
@@ -135,11 +144,11 @@ module.exports = class Discente{
 	get id_titulo(){
 		return this._id_titulo;
     }
-    set id_sexo(id_sexo) {
-		this._id_sexo = id_sexo;
+    set sexo(sexo) {
+		this._sexo = sexo;
 	}
-	get id_sexo(){
-		return this._id_sexo;
+	get sexo(){
+		return this._sexo;
 	}
 	get cargo_instituicao(){
 		return this._cargo_instituicao;	
@@ -153,26 +162,42 @@ module.exports = class Discente{
 	get telefone(){
 		return this._telefone;
 	}
+	set nacionalidade(nacionalidade) {
+		this._nacionalidade = nacionalidade;
+	}
+	get nacionalidade(){
+		return this._nacionalidade;
+	}
+	set passaporte(passaporte) {
+		this._passaporte = passaporte;
+	}
+	get passaporte(){
+		return this._passaporte;
+	}
     
     construtorParametrosRequisicao(params){
         this._id_discente = parseInt(params.id_discente);
 		this._nome = params.nome;
+		this._sobrenome = params.sobrenome;
 		this._data_nascimento = params.data_nascimento;
-		this._rg = params.rg;
-		this._cpf = params.cpf;
+		this._rg = params.rg != null ? params.rg : null;
+		this._cpf = params.cpf != null ? params.cpf : null;;
 		this._username = params.username;
 		this._senha = params.senha;
 		this._link_lattes = params.link_lattes != null ? params.link_lattes : null;
 		this._email = params.email;
 		this._id_endereco = parseInt(params.id_endereco );
-		this._numero_residencia = parseInt(params.numero_residencia);
+		this._numero_residencia = parseInt(params.numero_residencia) != null ? parseInt(params.numero_residencia) : null;
 		this._complemento = params.complemento != null ? params.complemento : null;
 		this._id_docente = parseInt(params.id_docente);
 		this._is_aceito = null;
 		this._situacao = parseInt(params.situacao);
         this._id_titulo = parseInt(params.id_titulo);
-        this._id_sexo = parseInt(params.id_sexo);
-        this._telefone = parseInt(params.telefone);
+        this._sexo = parseInt(params.sexo);
+		this._telefone = parseInt(params.telefone);
+		this._nacionalidade = params.nacionalidade;
+		this._passaporte = params.passaporte != null ?  params.passaporte : null;
+		
         
        
 
