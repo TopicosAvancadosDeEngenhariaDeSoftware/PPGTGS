@@ -80,7 +80,7 @@ module.exports = class DiscenteDao{
     inserirDiscente(discente, callback){
 
         var sql = "INSERT INTO Discente (nome,sobrenome, data_nascimento, rg, cpf, username, senha, link_lattes, "+
-        "email, id_endereco, numero_residencia, complemento, id_docente, isAceito, situacao, id_titulo, sexo, telefone, nacionalidade, passaporte) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
+        "email, id_endereco, numero_residencia, complemento, id_docente, isAceito, situacao, id_titulo, sexo, telefone, id_nacionalidade, passaporte) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
         var params = [];
         params.push(discente.nome);
         params.push(discente.sobrenome);
@@ -100,14 +100,14 @@ module.exports = class DiscenteDao{
         params.push(discente.id_titulo);
         params.push(discente.sexo);
         params.push(discente.telefone);
-        params.push(discente.nacionalidade);
+        params.push(discente.id_nacionalidade);
         params.push(discente.passaporte);
 
         sql = mysql.format(sql, params);
-
+        console.log(sql);
         this._connection.query(sql, (error, results) =>{
             console.log('Tentou inserir:',results);
-            if(error == null) discente.id = results.insertId;
+            if(error == null) discente.id_discente = results.insertId;
             callback(error, discente);
         });
     }

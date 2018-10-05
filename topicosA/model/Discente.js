@@ -22,7 +22,7 @@ module.exports = class Discente{
         this._id_titulo = null;
         this._sexo = null;
 		this._telefone = null;
-		this._nacionalidade = null;
+		this._id_nacionalidade = null;
 		this._passaporte = null;
 		//this._cargo_instituicao =[];
         //this._tipo_discente = [];
@@ -162,11 +162,11 @@ module.exports = class Discente{
 	get telefone(){
 		return this._telefone;
 	}
-	set nacionalidade(nacionalidade) {
-		this._nacionalidade = nacionalidade;
+	set id_nacionalidade(id_nacionalidade) {
+		this._id_nacionalidade = id_nacionalidade;
 	}
-	get nacionalidade(){
-		return this._nacionalidade;
+	get id_nacionalidade(){
+		return this._id_nacionalidade;
 	}
 	set passaporte(passaporte) {
 		this._passaporte = passaporte;
@@ -186,7 +186,7 @@ module.exports = class Discente{
 		this._senha = params.senha;
 		this._link_lattes = params.link_lattes != null ? params.link_lattes : null;
 		this._email = params.email;
-		this._id_endereco = parseInt(params.id_endereco );
+		this._id_endereco = parseInt(params.id_endereco);
 		this._numero_residencia = parseInt(params.numero_residencia) != null ? parseInt(params.numero_residencia) : null;
 		this._complemento = params.complemento != null ? params.complemento : null;
 		this._id_docente = parseInt(params.id_docente);
@@ -195,12 +195,9 @@ module.exports = class Discente{
         this._id_titulo = parseInt(params.id_titulo);
         this._sexo = parseInt(params.sexo);
 		this._telefone = parseInt(params.telefone);
-		this._nacionalidade = params.nacionalidade;
+		this._id_nacionalidade = parseInt(params.id_nacionalidade);
 		this._passaporte = params.passaporte != null ?  params.passaporte : null;
 		
-        
-       
-
         /*calendars.forEach(function(params) {   
             this._cargo_instituicao.push(params.cargo_instituicao);
         });

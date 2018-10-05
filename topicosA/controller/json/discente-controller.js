@@ -1,8 +1,12 @@
 'use strict'
 const DiscenteDao = require('../../dao/discente-dao');
 const Discente = require('../../model/Discente');
+const Endereco = require('../../model/Endereco');
 const config = require('../../config/config');
 const erros_mensagem = require('../../config/config-erros');
+const enderecoDao = require('../../dao/endereco-dao');
+const logradouroDao = require('../../dao/logradouro-dao');
+const bairroDao = require('../../dao/bairro-dao');
 //const async = require("async");
 
 exports.recuperarDiscenteId = (req, res, next) => {
@@ -84,29 +88,172 @@ exports.cadastrarDiscente = (req, res, next) => {
          req.assert('id_docente', 'docente é obrigatório').notEmpty();
          req.assert('id_titulo', 'titulo é obrigatório').notEmpty();
          req.assert('sexo', 'sexo é obrigatório').notEmpty();
-         req.assert('nacionalidade', 'nacionalidade é obrigatória').notEmpty();
- 
+         req.assert('id_nacionalidade', 'id_nacionalidade é obrigatória').notEmpty();
+         req.assert('logradouro', 'logradouro é obrigatório').notEmpty();
+         req.assert('bairro', 'bairro é obrigatório').notEmpty();
+         req.assert('cep', 'cep é obrigatório').notEmpty();
+
          let erros = req.validationErrors();
            
          if(erros){
              res.status(400).json({resultado: null, erro: erros});
-         return;
+            return;
          }
  
          //let params = req.body;
          
-             
+         let discente = new Discente();
+         console.log('REQ.BODY', req.body);
+         discente.construtorParametrosRequisicao(req.body);
+
+         discente.situacao = config.situacao_discente.ativo;
+         console.log('Discente::', discente);
+
+         let logradouro = req.body.logradouro;
+         let bairro = req.body.bairro;
+         let id_cidade = req.body.id_cidade;
+    
+
+         let id_logradouro = null;
+         let id_bairro = null;
+
+         console.log('Logradouro: ', logradouro);
+         console.log('bairro: ', bairro);
+         console.log('id_cidade: ',id_cidade);
+
+
+         let verifica_logradouro = new logradouroDao(req.connection);
+         let verifica_bairro = new bairroDao(req.connection);
+
+         
+         
+
+
+
+         //PEGAR ID LOGRADOURO
+        verifica_logradouro.recuperarLogradouroPorNome(logradouro, (error, result_logradouro) => {
+            if(error){
+                return res.status(500).json({resultado: null, erro: error});
+            }
+            else{
+                if(result_logradouro == null ){ // não existe logradouro
+                   //cadastrar o logradouro
+                    console.log('nao existe logradouro');
+                   (new Promise(
+                        function(resolve,reject){
+                            verifica_logradouro.inserirLogradouro(logradouro, (error, result_cadastro_logradouro)=> {
+                                if(error){
+                                    reject(error);
+                                }else{
+                                    resolve(result_cadastro_logradouro);
+                                }
+                            });
+                    })).then(result => {
+                        id_logradouro = result.insertId; //pega id_logradouro
+                        console.log('esse id_logradouro: ',id_logradouro);
+
+                    }).catch(error => {
+                        next(error);
+                    });
+ 
+
+                }else{ 
+                    //se já existir logradouro, pega o id logradouro
+                    id_logradouro = result_logradouro.id_logradouro;
+                    console.log('id_logradouro: ',id_logradouro);
+                    ////PEGAR ID Bairro
+                    verifica_bairro.recuperarBairroPorNome(bairro, (error, result_bairro) => {
+                        if(error){
+                            return res.status(500).json({resultado: null, erro: error});
+                        }
+                        else{
+                            if(result_bairro == null ){ // não existe bairro
+                            //cadastrar bairro
+                                console.log('nao existe bairro');
+                            (new Promise(
+                                    function(resolve,reject){
+                                        verifica_bairro.inserirBairro(bairro, (error, result_cadastro_bairro)=> {
+                                            if(error){
+                                                reject(error);
+                                            }else{
+                                                resolve(result_cadastro_bairro);
+                                            }
+                                        });
+                                })).then(result => {
+                                    id_bairro = result.insertId; //pega id_logradouro
+                                    console.log('esse id_bairro: ',id_bairro);
+
+                                }).catch(error => {
+                                    next(error);
+                                });
+            
+
+                            }else{ 
+                                //se já existir logradouro, pega o id logradouro
+                                id_bairro = result_bairro.id_bairro;
+                                console.log('id_bairro: ',id_bairro);
+                                //cadastrar endereço
+                                (new Promise(
+                                    function(resolve, reject){
+                                    let endereco = new Endereco();
+                                    endereco.construtorParametrosRequisicao(req.body);
+                                    endereco.id_logradouro = id_logradouro;
+                                    endereco.id_bairro = id_bairro;
+                                    console.log('endereco: ',endereco);
+                                    let e = new enderecoDao(req.connection);
+                                    e.inserirEndereco(endereco, (error, endereco_result) => {
+                                        if(error){
+                                            reject(error);
+                                        }else{
+                                            resolve(endereco_result);
+                                        }
+                                    })
+                                    }
+                                )).then(result => {
+                                    let id_endereco = result.insertId;
+                                    console.log('id endereco: ', id_endereco);
+                                    (new Promise(
+                                        function (resolve, reject) {
+                                                discente.id_endereco = id_endereco;
+                                                let disc = new DiscenteDao(req.connection);
+                                                console.log('Discente pronto: ', discente);
+                                                disc.inserirDiscente(discente, (error, discente_result) => {
+                                                    if(error){
+                                                        reject(error);
+                                                    }else{
+                                                        console.log('RESULTADO', discente_result);
+                                                        resolve(discente_result);
+                                                    }
+                                                });
+                                               
+                                        })).then(result => {
+                                        
+                                            //params.id = result.id;
+                                            res.status(201).json({resultado: result, erro: null});
+                                
+                                            //console.timeEnd();
+                                
+                                        }).catch(error => {
+                                            next(error);
+                                        });
+                                }).catch(error => {
+                                    next(error);
+                                });
+                            }
+                        }
+                    });
+                }
+            }
+         });
+
+        // console.log('discente: ', discente);
+  
+         /*
          (new Promise(
          function (resolve, reject) {
-     
-             let discente = new Discente();
-             
-             console.log('REQ.BODY', req.body);
-             discente.construtorParametrosRequisicao(req.body);
-             discente.situacao = config.situacao_discente.inativo;
-             console.log('Discente::', discente);
+                 discente.id_endereco = id_endereco;
                  let disc = new DiscenteDao(req.connection);
- 
+
                  disc.inserirDiscente(discente, (error, discente_result) => {
                      if(error){
                          reject(error);
@@ -115,8 +262,7 @@ exports.cadastrarDiscente = (req, res, next) => {
                          resolve(discente_result);
                      }
                  });
-                 
-             
+                
          })).then(result => {
          
              //params.id = result.id;
@@ -126,7 +272,7 @@ exports.cadastrarDiscente = (req, res, next) => {
  
          }).catch(error => {
              next(error);
-         });
+         }); */
  
    }
 
