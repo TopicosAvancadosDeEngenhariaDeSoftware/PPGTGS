@@ -83,7 +83,6 @@
                                     <label >Sexo: </label>
                                     
                                     <select id="list_sexo" class="form-control" style="width: 100%;" name="id_sexo">
-                                            
                                                 <option value="1">Masculino</option>
                                                 <option value="2">Feminino</option>
                                                 <option value="3">Outro</option>
@@ -92,25 +91,49 @@
                                 </div>
 
                               
+                                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                                        <label >Endereço: País * </label>
+                                        
+                                        <select id="list_pais" class="form-control select2" style="width: 100%;" name="endereco_id_pais">
+                                                <% for(var i = 0; i < paises.length ; i++){ %> 
+                                                    <option value="<%= paises[i].id_pais %>"><%= paises[i].nome %> </option>
+                                                <% } %>
+                                        </select>
+                                </div>
 
                               <div id="endereco_brasil" >
+
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                                            <label >Estado * </label>
+                                            
+                                            <select id="list_estado" class="form-control select2" style="width: 100%;" name="endereco_id_estado">
+                                                    
+                                            </select>
+                                    </div>
+
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                                            <label >Cidade * </label>
+                                            <select id="list_cidade" class="form-control select2" style="width: 100%;" name="endereco_id_cidade">
+                                                    
+                                            </select>
+                                    </div>
                                     
                                     <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3" >
-                                            <label >CEP</label>
-                                            <input type="text" class="form-control" id="discente_endereco_cep" >
+                                            <label >CEP *</label>
+                                            <input type="text" class="form-control" id="discente_endereco_cep" name="endereco_cep">
                                     </div>
                                     <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3" >
-                                            <label >Bairro</label>
-                                            <input type="text" class="form-control" id="discente_endereco_bairro" >
+                                            <label >Bairro *</label>
+                                            <input type="text" class="form-control" id="discente_endereco_bairro" name="endereco_bairro">
                                     </div>
                                     <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3" >
-                                            <label >Logradouro</label>
-                                            <input type="text" class="form-control" id="discente_endereco_logradouro" >
+                                            <label >Logradouro *</label>
+                                            <input type="text" class="form-control" id="discente_endereco_logradouro" name="endereco_logradouro">
                                     </div>
 
                                     <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3" >
-                                            <label >Nº Residência</label>
-                                            <input type="text" class="form-control" id="discente_endereco_numresidencia" >
+                                            <label >Nº Residência *</label>
+                                            <input type="text" class="form-control" id="discente_endereco_numresidencia" name="endereco_num_residencia">
                                     </div>
                                 
                               </div>
