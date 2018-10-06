@@ -21,3 +21,8 @@ exports.sexo = {
     "feminino" : 2,
     "outro" : 3
 }
+
+exports.tipo_instituicao = {
+    "publica" : 1,
+    "privada" : 2
+}

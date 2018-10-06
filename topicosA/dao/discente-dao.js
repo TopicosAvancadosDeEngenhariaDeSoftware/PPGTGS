@@ -1,3 +1,4 @@
+'use strict'
 const moment = require('moment');
 var mysql = require('mysql');  
 const Discente = require('../model/Discente');
