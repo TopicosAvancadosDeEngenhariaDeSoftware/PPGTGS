@@ -107,21 +107,22 @@
                                             <label >Estado * </label>
                                             
                                             <select id="list_estado" class="form-control select2" style="width: 100%;" name="endereco_id_estado">
-                                                    
                                             </select>
                                     </div>
 
-                                    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6" >
                                             <label >Cidade * </label>
                                             <select id="list_cidade" class="form-control select2" style="width: 100%;" name="endereco_id_cidade">
                                                     
                                             </select>
                                     </div>
                                     
-                                    <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3" >
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6" >
                                             <label >CEP *</label>
                                             <input type="text" class="form-control" id="discente_endereco_cep" name="endereco_cep">
                                     </div>
+
+                                    
                                     <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3" >
                                             <label >Bairro *</label>
                                             <input type="text" class="form-control" id="discente_endereco_bairro" name="endereco_bairro">
@@ -134,6 +135,10 @@
                                     <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3" >
                                             <label >Nº Residência *</label>
                                             <input type="text" class="form-control" id="discente_endereco_numresidencia" name="endereco_num_residencia">
+                                    </div>
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3" >
+                                            <label >Complemento</label>
+                                            <input type="text" class="form-control" id="discente_endereco_complemento" name="endereco_complemento">
                                     </div>
                                 
                               </div>
@@ -158,6 +163,17 @@
                                       </select>
                                             
                                   </div>
+
+                                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                                        <label >Orientador * </label>
+                                        
+                                        <select id="list_titulos" class="form-control select2" style="width: 100%;" name="id_titulo">
+                                                <% for(var i = 0; i < doscentes.length ; i++){ %> 
+                                                    <option value="<%= doscentes[i].id_doscente %>"><%= doscentes[i].nome %> </option>
+                                                <% } %>
+                                        </select>
+                                              
+                                </div>
                                 
 
                               <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -172,6 +188,8 @@
                                   <label for="exampleInputPassword1">Confirmar Senha *</label>
                                   <input type="password" class="form-control" id="discente_senha_conf" placeholder="Password">
                               </div>
+
+
                               
                             </div>
                             <!-- /.box-body -->
