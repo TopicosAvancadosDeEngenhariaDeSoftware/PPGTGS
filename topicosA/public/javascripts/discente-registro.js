@@ -336,12 +336,12 @@ $(function () {
                 lista_ocup[i].instituicao.tipo_instituicao = undefined;
             }
         }
-        obj.ocupacoes = lista_ocup;
+        obj.ocupacoes = JSON.stringify(lista_ocup);
 
 
         $.ajax({ 
             type: "POST",
-            data: {nome: obj.nome, sobrenome : obj.sobrenome, id_nacionalidade : obj.id_nacionalidade, telefone: obj.telefone, rg: obj.rg, cpf: obj.cpf, passaporte: obj.passaporte, id_sexo : obj.id_sexo, endereco_id_pais : obj.endereco_id_pais, endereco_id_cidade: obj.endereco_id_cidade, endereco_cep : obj.endereco_cep, endereco_bairro : obj.endereco_bairro, endereco_logradouro: obj.endereco_logradouro, endereco_num_residencia : obj.endereco_num_residencia, endereco_complemento: obj.endereco_complemento, username : obj.username, link_perfil_lattes: obj.link_perfil_lattes, id_titulo : obj.id_titulo, id_orientador : obj.id_orientador, email: obj.email, senha: obj.senha, senha_conf : obj.senha_conf, 'ocupacoes[]' : obj.ocupacoes},
+            data: obj,
             url: "./teste",
             success: function(result){
                 //alert(JSON.stringify(result));

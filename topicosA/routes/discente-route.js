@@ -6,7 +6,8 @@ var controllerDiscente = require('../controller/discente-controller');
 router.get('/registro', controllerDiscente.cadastrarDiscente);
 router.post('/teste', async (req, res, next) =>{
     
-    //console.log(req.body['ocupacoes[]']);
+    
+
     req.assert('nome', 'Nome é obrigatório').notEmpty();
     req.assert('nome', "Verifique seu nome").isLength({ min: 1, max: 40}); 
     req.assert('sobrenome', 'Sobrenome é obrigatório').notEmpty();
