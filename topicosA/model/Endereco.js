@@ -10,7 +10,7 @@ module.exports = class Endereco{
 		this._cep = null;
     }
     
-    set id_endereco(id_endereco) {
+  set id_endereco(id_endereco) {
 		this._id_endereco = id_endereco;
 	}
 	get id_endereco(){
