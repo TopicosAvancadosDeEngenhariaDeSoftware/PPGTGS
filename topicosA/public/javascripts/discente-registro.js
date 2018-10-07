@@ -248,12 +248,61 @@ $(function () {
     
     $('#button_cadastrar').click(function(){
 
+        $('#div_discente_nome').removeClass('has-error');
+        $('#err_discente_nome').html("");
+
+        $('#div_discente_sobrenome').removeClass('has-error');
+        $('#err_discente_sobrenome').html("");
+
+        $('#div_discente_nascionalidade').removeClass('has-error');
+        $('#err_discente_nascionalidade').html("");
+
+        $('#div_discente_sexo').removeClass('has-error');
+        $('#err_discente_sexo').html("");
+
+        $('#div_discente_id_pais').removeClass('has-error');
+        $('#err_discente_id_pais').html("");
+
+        $('#div_discente_id_cidade').removeClass('has-error');
+        $('#err_discente_id_cidade').html("");
+
+        $('#div_discente_cep').removeClass('has-error');
+        $('#err_discente_cep').html("");
+
+        $('#div_discente_bairro').removeClass('has-error');
+        $('#err_discente_bairro').html("");
+
+        $('#div_discente_logradouro').removeClass('has-error');
+        $('#err_discente_logradouro').html("");
+
+        $('#div_discente_num_residencia').removeClass('has-error');
+        $('#err_discente_num_residencia').html("");
+
+        $('#div_discente_username').removeClass('has-error');
+        $('#err_discente_username').html("");
+
+        $('#div_discente_id_titulo').removeClass('has-error');
+        $('#err_discente_id_titulo').html("");
+
+        $('#div_discente_id_orientador').removeClass('has-error');
+        $('#err_discente_id_orientador').html("");
+
+        $('#div_discente_email').removeClass('has-error');
+        $('#err_discente_email').html("");
+
+        $('#div_discente_senha').removeClass('has-error');
+        $('#err_discente_senha').html("");
+
+        $('#div_discente_senha_conf').removeClass('has-error');
+        $('#err_discente_senha_conf').html("");
+
         var obj = new Object();
         obj.nome =  $('#discente_nome').val();
         obj.sobrenome = $('#discente_sobrenome').val();
         obj.data_nascimento = $('#discente_datanascimento').val();
-        obj.id_nascionalidade = $('#list_nacionalidade').val();
-        if(obj.id_nascionalidade == 1){
+        obj.id_nacionalidade = $('#list_nacionalidade').val();
+        obj.telefone = $('#discente_telefone').val();
+        if(parseInt(obj.id_nacionalidade) == 1){
             obj.rg = $('#discente_rg').val();
             obj.cpf = $('#discente_cpf').val();
         }else{
@@ -292,11 +341,11 @@ $(function () {
 
         $.ajax({ 
             type: "POST",
-            data: obj,
+            data: {nome: obj.nome, sobrenome : obj.sobrenome, id_nacionalidade : obj.id_nacionalidade, telefone: obj.telefone, rg: obj.rg, cpf: obj.cpf, passaporte: obj.passaporte, id_sexo : obj.id_sexo, endereco_id_pais : obj.endereco_id_pais, endereco_id_cidade: obj.endereco_id_cidade, endereco_cep : obj.endereco_cep, endereco_bairro : obj.endereco_bairro, endereco_logradouro: obj.endereco_logradouro, endereco_num_residencia : obj.endereco_num_residencia, endereco_complemento: obj.endereco_complemento, username : obj.username, link_perfil_lattes: obj.link_perfil_lattes, id_titulo : obj.id_titulo, id_orientador : obj.id_orientador, email: obj.email, senha: obj.senha, senha_conf : obj.senha_conf, 'ocupacoes[]' : obj.ocupacoes},
             url: "./teste",
             success: function(result){
-                alert(JSON.stringify(result));
-                
+                //alert(JSON.stringify(result));
+                $('#resultado').html(JSON.stringify(result));
             },
             beforeSend: function(){
                 //$('#loading').css({display:"block"});
@@ -305,7 +354,85 @@ $(function () {
                 //$('#loading').css({display:"none"});
             },
             error: function(msg){
-                alert(JSON.stringify(msg));
+                $('#resultado').html(JSON.stringify(msg.responseJSON.erro));
+                if(msg.responseJSON.erro != null && msg.responseJSON.erro != undefined && msg.responseJSON.erro.length > 0 ){
+
+                    for(var i = 0; 0 < msg.responseJSON.erro.length ; i++){
+                        if(msg.responseJSON.erro[i].param != undefined && msg.responseJSON.erro[i].param !=  null)
+                        switch(msg.responseJSON.erro[i].param){
+                            case "nome":
+                                $('#div_discente_nome').addClass('has-error');
+                                $('#err_discente_nome').html(msg.responseJSON.erro[i].msg);
+                                break;
+                            case "sobrenome":
+                                $('#div_discente_sobrenome').addClass('has-error');
+                                $('#err_discente_sobrenome').html(msg.responseJSON.erro[i].msg);
+                                break;
+                            case "data_nascimento":
+                                $('#div_discente_datanascimento').addClass('has-error');
+                                $('#err_discente_datanascimento').html(msg.responseJSON.erro[i].msg);
+                                break;
+                            case "id_nacionalidade":
+                                $('#div_discente_nascionalidade').addClass('has-error');
+                                $('#err_discente_nascionalidade').html(msg.responseJSON.erro[i].msg);
+                                break;
+                            case "id_sexo":
+                                $('#div_discente_sexo').addClass('has-error');
+                                $('#err_discente_sexo').html(msg.responseJSON.erro[i].msg);
+                                break;
+                            case "endereco_id_pais":
+                                $('#div_discente_id_pais').addClass('has-error');
+                                $('#err_discente_id_pais').html(msg.responseJSON.erro[i].msg);
+                                break;
+                            case "endereco_id_cidade":
+                                $('#div_discente_id_cidade').addClass('has-error');
+                                $('#err_discente_id_cidade').html(msg.responseJSON.erro[i].msg);
+                                break;
+                            case "endereco_cep":
+                                $('#div_discente_cep').addClass('has-error');
+                                $('#err_discente_cep').html(msg.responseJSON.erro[i].msg);
+                                break;
+                            case "endereco_bairro":
+                                $('#div_discente_bairro').addClass('has-error');
+                                $('#err_discente_bairro').html(msg.responseJSON.erro[i].msg);
+                                break;
+                            case "endereco_logradouro":
+                                $('#div_discente_logradouro').addClass('has-error');
+                                $('#err_discente_logradouro').html(msg.responseJSON.erro[i].msg);
+                                break;
+                            case "endereco_num_residencia":
+                                $('#div_discente_num_residencia').addClass('has-error');
+                                $('#err_discente_num_residencia').html(msg.responseJSON.erro[i].msg);
+                                break;
+                            case "username":
+                                $('#div_discente_username').addClass('has-error');
+                                $('#err_discente_username').html(msg.responseJSON.erro[i].msg);
+                                break;
+                            case "id_titulo":
+                                $('#div_discente_id_titulo').addClass('has-error');
+                                $('#err_discente_id_titulo').html(msg.responseJSON.erro[i].msg);
+                                break;
+                            case "id_orientador":
+                                $('#div_discente_id_orientador').addClass('has-error');
+                                $('#err_discente_id_orientador').html(msg.responseJSON.erro[i].msg);
+                                break;
+                            case "email":
+                                $('#div_discente_email').addClass('has-error');
+                                $('#err_discente_email').html(msg.responseJSON.erro[i].msg);
+                                break;
+                            case "senha":
+                                $('#div_discente_senha').addClass('has-error');
+                                $('#err_discente_senha').html(msg.responseJSON.erro[i].msg);
+                                break;
+                            case "senha_conf":
+                                $('#div_discente_senha_conf').addClass('has-error');
+                                $('#err_discente_senha_conf').html(msg.responseJSON.erro[i].msg);
+                                break;
+                        } 
+                    }
+
+
+                }
             }
         });
         

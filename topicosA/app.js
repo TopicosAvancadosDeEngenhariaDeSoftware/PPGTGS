@@ -2,6 +2,7 @@ var createError = require('http-errors');
 var express = require('express');
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
+const validar = require('./utils/validar');
 
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -26,7 +27,11 @@ var app = express();
 
 
 app.use(bodyParser.json()); // middleware
-app.use(expressValidator());
+app.use(expressValidator({
+  customValidators: {
+    isValidListaOcupacoes : validar.isValidoListaOcupacoes
+  }
+}));
 app.use(connectionMiddleware(pool));
 
 
