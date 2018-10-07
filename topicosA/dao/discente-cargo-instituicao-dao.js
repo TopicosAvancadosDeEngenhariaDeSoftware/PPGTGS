@@ -1,14 +1,14 @@
 'use strict'
 var mysql = require('mysql');  
 
-module.exports = class InstituicaoDao{
+module.exports = class DiscenteCargoInstituicaoDao{
     constructor(connection){
         this._connection = connection;
     }
-    recuperarInstituicaoPorId(id_instituicao, callback){
-        var sql = "SELECT * FROM Instituicao WHERE id_instituicao = ?;"
+    recuperaroDiscenteCargoInstituicaoPorIdDiscente(id_discente, callback){
+        var sql = "SELECT * FROM DiscenteCargoInstituicao WHERE id_discente = ?;"
         var params = [];
-        params.push(id_instituicao);
+        params.push(id_discente);
         sql = mysql.format(sql, params);
         this._connection.query(sql, (error, results) =>{
             if(error){
@@ -19,8 +19,8 @@ module.exports = class InstituicaoDao{
         });
     }
 
-    recuperarInstituicoes(callback){
-        var sql = "SELECT * FROM Instituicao;"
+    recuperarDiscenteCargosInstituicao(callback){
+        var sql = "SELECT * FROM DiscenteCargoInstituicao;"
         var params = [];
         sql = mysql.format(sql, params);
         console.log(sql);
@@ -35,13 +35,13 @@ module.exports = class InstituicaoDao{
         });
     }
 
-    inserirInstituicao(nome, sigla, id_tipo_instituicao, callback){
+    inserirDiscenteCargoInstituicao(id_discente, id_instituicao, id_cargo_instituicao, callback){
 
-        var sql = "INSERT INTO Instituicao (nome, sigla, id_tipo_instituicao) VALUES (?,?,?);"
+        var sql = "INSERT INTO DiscenteCargoInstituicao (id_discente, id_instituicao, id_cargo_discente) VALUES (?,?,?);"
         var params = [];
-        params.push(nome);
-        params.push(sigla);
-        params.push(id_tipo_instituicao);
+        params.push(id_discente);
+        params.push(id_instituicao);
+        params.push(id_cargo_instituicao);
         sql = mysql.format(sql, params);
         this._connection.query(sql, (error, results) =>{
             console.log('Tentou inserir:',results);
@@ -54,13 +54,13 @@ module.exports = class InstituicaoDao{
         });
     }
 
-    editarInstituicao(id_instituicao, nome, sigla, id_tipo_instituicao, callback){
-        var sql = "UPDATE Instituicao SET nome = ?, sigla = ?, id_tipo_instituicao = ? WHERE id_instituicao = ?;"
+    editarDiscenteCargoInstituicaoPorIdDiscente(id_discente, id_instituicao, id_cargo_discente, callback){
+        var sql = "UPDATE DiscenteCargoInstituicao SET id_discente = ?, id_instituicao = ?, id_cargo_discente = ? WHERE id_discente = ?;"
         var params = [];
-        params.push(nome);
-        params.push(sigla);
-        params.push(id_tipo_instituicao);
+        params.push(id_discente);
         params.push(id_instituicao);
+        params.push(id_cargo_discente);
+        params.push(id_discente);
        
         sql = mysql.format(sql, params);
 
@@ -70,10 +70,10 @@ module.exports = class InstituicaoDao{
         });
     }
 
-    excluirInstituicao(id_instituicao, callback){
-        var sql = "DELETE FROM Instituicao WHERE id_instituicao = ? ;"
+    excluirDiscenteCargoInstituicao(id_discente, callback){
+        var sql = "DELETE FROM DiscenteCargoInstituicao WHERE id_discente = ? ;"
         var params = [];
-        params.push(id_instituicao);
+        params.push(id_discente);
         sql = mysql.format(sql, params);
         this._connection.query(sql, (error, results) =>{
             callback(error, results);

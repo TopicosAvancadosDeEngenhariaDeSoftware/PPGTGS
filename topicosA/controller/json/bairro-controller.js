@@ -26,7 +26,7 @@ exports.recuperarBairroPorNome = (req, res, next) => {
       return;
     }else{
         var bDao = new bairroDao(req.connection);
-        bDao.recuperarLogradouroPorNome(req.params.nome , (err, results) =>{
+        bDao.recuperarBairroPorNome(req.params.nome , (err, results) =>{
             if(err) res.status(400).json({resultado: null, erro: err});
             else{
                 res.json({resultado : results, erro : null});
