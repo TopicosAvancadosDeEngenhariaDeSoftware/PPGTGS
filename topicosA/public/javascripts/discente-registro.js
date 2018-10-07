@@ -57,7 +57,7 @@ $(function () {
                 //$('#loading').css({display:"none"});
             },
             error: function(msg){
-                alert(msg);
+                alert(JSON.stringify(msg));
             }
         });
     }
@@ -89,7 +89,7 @@ $(function () {
                 //$('#loading').css({display:"none"});
             },
             error: function(msg){
-                alert(msg);
+                alert(JSON.stringify(msg));
             }
         });
     }

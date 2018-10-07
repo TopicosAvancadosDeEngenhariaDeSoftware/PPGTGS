@@ -59,7 +59,7 @@
                                     
                                     <select id="list_nacionalidade" class="form-control select2" style="width: 100%;" name="id_nacionalidade">
                                             <% for(var i = 0; i < paises.length ; i++){ %> 
-                                                <option value="<%= paises[i].id_pais %>"><%= paises[i].nome %> </option>
+                                                <option value="<%= paises[i].id_pais %>"><%= paises[i].nascionalidade %> </option>
                                             <% } %>
 
                                     </select>
@@ -169,7 +169,7 @@
                                         
                                         <select id="list_titulos" class="form-control select2" style="width: 100%;" name="id_titulo">
                                                 <% for(var i = 0; i < doscentes.length ; i++){ %> 
-                                                    <option value="<%= doscentes[i].id_doscente %>"><%= doscentes[i].nome %> </option>
+                                                    <option value="<%= doscentes[i].id_doscente %>"><%= doscentes[i].nome + " " + doscentes[i].sobrenome %> </option>
                                                 <% } %>
                                         </select>
                                               
