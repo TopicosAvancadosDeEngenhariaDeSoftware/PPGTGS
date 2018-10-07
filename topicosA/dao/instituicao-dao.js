@@ -25,7 +25,6 @@ module.exports = class InstituicaoDao{
         sql = mysql.format(sql, params);
         console.log(sql);
         this._connection.query(sql, (error, results) =>{
-            //console.log('RESULTs ',results);
 
             if(error){
                 callback(error, null);

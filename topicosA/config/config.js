@@ -23,6 +23,12 @@ exports.sexo = {
 }
 
 exports.tipo_instituicao = {
-    "publica" : 1,
-    "privada" : 2
+    "publica" : {
+        id : 1,
+        nome : "Publica"
+    },
+    "privada" : {
+        id: 2,
+        nome: "Privada"
+    }
 }
