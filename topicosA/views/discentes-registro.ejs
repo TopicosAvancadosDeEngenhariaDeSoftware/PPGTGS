@@ -54,7 +54,7 @@
                               
                               <div id="div_discente_datanascimento" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
                                   <label >Data de nascimento *</label>
-                                  <input id="discente_datanascimento" type="text" class="form-control" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask>
+                                  <input id="discente_datanascimento" type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
                                   <span id="err_discente_datanascimento" class="help-block"></span>
                               </div>
                               <div id="div_discente_nascionalidade" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
@@ -62,7 +62,7 @@
                                     
                                     <select id="list_nacionalidade" class="form-control select2" style="width: 100%;" name="id_nacionalidade">
                                             <% for(var i = 0; i < paises.length ; i++){ %> 
-                                                <option value="<%= paises[i].id_pais %>"><%= paises[i].nascionalidade %> </option>
+                                                <option value="<%= paises[i].id_pais %>"><%= paises[i].nacionalidade %> </option>
                                             <% } %>
 
                                     </select>
@@ -73,9 +73,10 @@
                                   <label >RG</label>
                                   <input type="text" class="form-control" id="discente_rg">
                               </div>
-                              <div id="card_discente_cpf" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                              <div id="div_discente_cpf" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
                                   <label >CPF</label>
                                   <input type="text" class="form-control" id="discente_cpf">
+                                  <span id="err_discente_cpf" class="help-block"></span>  
                               </div>
                               <div id="card_discente_passaporte" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
                                   <label >Nº do Passaporte</label>
@@ -201,7 +202,7 @@
                                                 
                                                  
                                                 </table>
-                                              </div>
+                                        </div>
                                               <div class="col-xs-12 col-sm-12 col-md-4 col-lg-2 pull-right" >
                                                     <button id="button_add_ocupacao" type="button" class="btn btn-block btn-default " >Adicionar</button>
                                               </div>

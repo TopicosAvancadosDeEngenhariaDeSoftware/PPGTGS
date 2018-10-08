@@ -263,6 +263,9 @@ $(function () {
         $('#div_discente_sexo').removeClass('has-error');
         $('#err_discente_sexo').html("");
 
+        $('#div_discente_cpf').removeClass('has-error');
+        $('#err_discente_cpf').html("");
+
         $('#div_discente_id_pais').removeClass('has-error');
         $('#err_discente_id_pais').html("");
 
@@ -348,7 +351,10 @@ $(function () {
             url: "../json/discentes",
             success: function(result){
                 //alert(JSON.stringify(result));
-                $('#resultado').html(JSON.stringify(result));
+                //$('#resultado').html(JSON.stringify(result));
+                if(result.resultado == true){
+                    window.location.replace("../discentes/registro_ok");
+                }
             },
             beforeSend: function(){
                 //$('#loading').css({display:"block"});
@@ -358,13 +364,17 @@ $(function () {
             },
             error: function(msg){
                 //alert(JSON.stringify(msg));
-                $('#resultado').html(JSON.stringify(msg)); return;
-                $('#resultado').html(JSON.stringify(msg.responseJSON.erro));
+                //$('#resultado').html(JSON.stringify(msg)); 
+                //$('#resultado').html(JSON.stringify(msg.responseJSON.erro));
                 if(msg.responseJSON.erro != null && msg.responseJSON.erro != undefined && msg.responseJSON.erro.length > 0 ){
 
                     for(var i = 0; 0 < msg.responseJSON.erro.length ; i++){
                         if(msg.responseJSON.erro[i].param != undefined && msg.responseJSON.erro[i].param !=  null)
                         switch(msg.responseJSON.erro[i].param){
+                            case "cpf":
+                                $('#div_discente_cpf').addClass('has-error');
+                                $('#err_discente_cpf').html(msg.responseJSON.erro[i].msg);
+                                break;
                             case "nome":
                                 $('#div_discente_nome').addClass('has-error');
                                 $('#err_discente_nome').html(msg.responseJSON.erro[i].msg);

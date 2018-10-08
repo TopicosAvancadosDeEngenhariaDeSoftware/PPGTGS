@@ -3,7 +3,9 @@ var router = express.Router();
 var controllerDiscente = require('../controller/discente-controller');
 
 /* GET home page. */
+router.get('/', controllerDiscente.consultaTodosDiscente);
 router.get('/registro', controllerDiscente.cadastrarDiscente);
+router.get('/registro_ok', controllerDiscente.cadastrarOk);
 router.post('/teste', async (req, res, next) =>{
     
     

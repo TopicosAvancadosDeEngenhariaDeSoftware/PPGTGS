@@ -101,7 +101,15 @@ exports.cadastrarDiscente = (req, res, next) => {
         //req.assert('cpf', 'CPF é obrigatório').notEmpty();
 
         if(req.body.cpf != null && req.body.cpf != undefined && req.body.cpf.length > 0 && CPF.isValid(req.body.cpf) != true){
-            return res.status(400).json({resultado: null, erro: 'CPF em formato inválido'});
+            var responseJSON = new Object();
+            var erro_lista = [];
+            var erro = new Object();
+            erro.param = "cpf";
+            erro.msg = 'CPF em formato inválido';
+            erro_lista.push(erro);
+            responseJSON.erro = erro_lista;
+
+            return res.status(400).json({resultado: null, erro : erro_lista});
         }
         
         req.assert('endereco_id_cidade', 'Cidade é obrigatório').notEmpty();
@@ -136,7 +144,15 @@ exports.cadastrarDiscente = (req, res, next) => {
          let senha_conf = req.body.senha_conf;
 
          if(senha != senha_conf){
-            return res.status(400).json({resultado: null, erro: 'Senhas não conferem!!'});
+            var responseJSON = new Object();
+            var erro_lista = [];
+            var erro = new Object();
+            erro.param = "senha_conf";
+            erro.msg = 'Senhas não conferem.';
+            erro_lista.push(erro);
+            responseJSON.erro = erro_lista;
+
+            return res.status(400).json({resultado: null, erro : erro_lista});
          }
  
          //let params = req.body;
@@ -185,7 +201,7 @@ exports.cadastrarDiscente = (req, res, next) => {
                             return res.status(500).json({resultado: null, erro: error});
                         }
                         else{
-                            if(result_logradouro == null ){ // não existe logradouro
+                            if(result_logradouro == null || result_logradouro == undefined ){ // não existe logradouro
                             //cadastrar o logradouro
                                 console.log('nao existe logradouro');
                             (new Promise(
@@ -219,7 +235,7 @@ exports.cadastrarDiscente = (req, res, next) => {
                                         return res.status(500).json({resultado: null, erro: error});
                                     }
                                     else{
-                                        if(result_bairro == null ){ // não existe bairro
+                                        if(result_bairro == null || result_logradouro == undefined ){ // não existe bairro
                                         //cadastrar bairro
                                             console.log('nao existe bairro');
                                         (new Promise(
@@ -309,7 +325,7 @@ exports.cadastrarDiscente = (req, res, next) => {
                                                                 console.log('resultado: ', result);
                                                                 if(result.id_instituicao == 0){ //precisa cadastrar instituicao
                                                                     (new Promise(function(resolve,reject){
-                                                                        verifica_instituicao.inserirInstituicao(result.instituicao.nome, result.instituicao.sigla, result.instituicao.tipo_instituicao, (error, result_cadastro_instituicao)=> {
+                                                                        verifica_instituicao.inserirInstituicao(result.instituicao.nome, result.instituicao.sigla, result.instituicao.id_tipo_instituicao, (error, result_cadastro_instituicao)=> {
                                                                             if(error){
                                                                                 callback(error);
                                                                             }else{
@@ -508,7 +524,16 @@ exports.cadastrarDiscente = (req, res, next) => {
                         }
                     });
                 }else{
-                    return res.status(500).json({resultado: null, erro: "Este e-mail já possui cadastro!"});
+                    var responseJSON = new Object();
+                    var erro_lista = [];
+                    var erro = new Object();
+                    erro.param = "email";
+                    erro.msg = 'Este e-mail já está cadastrado.';
+                    erro_lista.push(erro);
+                    responseJSON.erro = erro_lista;
+
+                    return res.status(400).json({resultado: null, erro : erro_lista});
+                    //return res.status(500).json({resultado: null, erro: "Este e-mail já possui cadastro!"});
                 }
             }
         });
