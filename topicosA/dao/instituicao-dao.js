@@ -35,6 +35,9 @@ module.exports = class InstituicaoDao{
     }
 
     inserirInstituicao(nome, sigla, id_tipo_instituicao, callback){
+        console.log('nome: ', nome);
+        console.log('sigla: ', sigla),
+        console.log('tipo inst: ', id_tipo_instituicao);
 
         var sql = "INSERT INTO Instituicao (nome, sigla, id_tipo_instituicao) VALUES (?,?,?);"
         var params = [];
@@ -42,8 +45,9 @@ module.exports = class InstituicaoDao{
         params.push(sigla);
         params.push(id_tipo_instituicao);
         sql = mysql.format(sql, params);
+        console.log(sql);
         this._connection.query(sql, (error, results) =>{
-            console.log('Tentou inserir:',results);
+            //console.log('Tentou inserir:',results);
             if(error){
                 callback(error, null);
             }else{
