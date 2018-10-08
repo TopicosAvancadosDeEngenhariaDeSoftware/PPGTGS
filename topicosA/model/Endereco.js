@@ -47,9 +47,9 @@ module.exports = class Endereco{
 
     construtorParametrosRequisicao(params){
         this._id_endereco = parseInt(params.id_endereco);
-        this._id_cidade = parseInt(params.id_cidade) != null ? parseInt(params.id_cidade) : null;
-        this._id_bairro = parseInt(params.id_bairro) != null ? parseInt(params.id_bairro) : null;
-        this._id_logradouro = parseInt(params.id_logradouro) != null ? parseInt(params.id_logradouro) : null;
-		this._cep = params.cep;
+        this._id_cidade = parseInt(params.endereco_id_cidade) != null ? parseInt(params.endereco_id_cidade) : null;
+        this._id_bairro = parseInt(params.endereco_id_bairro) != null ? parseInt(params.endereco_id_bairro) : null;
+        this._id_logradouro = parseInt(params.endereco_id_logradouro) != null ? parseInt(params.endereco_id_logradouro) : null;
+				this._cep = params.endereco_cep;
     }
 }

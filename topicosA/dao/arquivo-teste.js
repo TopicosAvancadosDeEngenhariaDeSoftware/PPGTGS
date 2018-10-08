@@ -30,45 +30,7 @@ pool.getConnection((err, connection) => {
 
 
                                                                     
-(new Promise(function(resolve,reject){  
-    async.each(lista_inst_carg, function(result, callback){ 
 
-        (new Promise(function(resolve,reject){  
-
-            verifica_discente_cargo_instituicao.inserirDiscenteCargoInstituicao(id_discente_cadastrado, result.inst, result.carg, (error, result_disc_cargo)=> {
-                if(error){
-                    reject(error);
-                }else{
-                    console.log('cadastrou');
-                    callback();
-                }
-            });
-
-        })).then(result => {
-            resolve(result_disc_cargo);
-        }).catch(error => {
-            next(error);   
-        });  
-    
-    }, function(err){
-        if(!err){
-            console.log('Cad feitos');
-            resolve(true);
-        }else{
-            reject(err);
-        }
-    
-    });
-
-        
-    })).then(result => {
-        //resolve(result_disc_cargo);
-        console.log('cad ok');
-        res.status(201).json({resultado: result, erro: null});
-    }).catch(error => {
-        next(error);
-});   
-    
 
 
 
