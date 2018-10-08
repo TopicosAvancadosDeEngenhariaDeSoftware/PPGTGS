@@ -12,6 +12,7 @@ const cargoDiscenteDao = require('../../dao/cargo-discente-dao');
 const DiscenteCargoInstituicaoDao = require('../../dao/discente-cargo-instituicao-dao');
 const async = require("async");
 var CPF = require("cpf_cnpj").CPF;
+const moment = require('moment');
 
 exports.recuperarDiscenteId = (req, res, next) => {
     req.checkParams('id_discente', 'id é obrigatorio ser do tipo int').isInt();
@@ -82,6 +83,9 @@ exports.recuperarDiscenteNome = (req, res, next) => {
 
 exports.cadastrarDiscente = (req, res, next) => {
     // let id_tipo_usuario = req.id_tipo_usuario;
+    req.body.data_nascimento = moment(req.body.data_nascimento, "DD/MM/YYYY").format("YYYY-MM-DD");
+    //console.log(req.body.data_nascimento); return;
+
 
     req.assert('nome', 'Nome é obrigatório').notEmpty();
     req.assert('nome', "Verifique seu nome").isLength({ min: 1, max: 40}); 
@@ -93,10 +97,10 @@ exports.cadastrarDiscente = (req, res, next) => {
     req.assert('id_sexo', 'Sexo é obrigatório').notEmpty();
     req.assert('endereco_id_pais', 'País é obrigatório').notEmpty();
     if(req.body.endereco_id_pais != undefined && req.body.endereco_id_pais != null && parseInt(req.body.endereco_id_pais) == 1){
-        req.assert('rg', 'RG é obrigatório').notEmpty();
-        req.assert('cpf', 'CPF é obrigatório').notEmpty();
+        //req.assert('rg', 'RG é obrigatório').notEmpty();
+        //req.assert('cpf', 'CPF é obrigatório').notEmpty();
 
-        if(CPF.isValid(req.body.cpf) != true){
+        if(req.body.cpf != null && req.body.cpf != undefined && req.body.cpf.length > 0 && CPF.isValid(req.body.cpf) != true){
             return res.status(400).json({resultado: null, erro: 'CPF em formato inválido'});
         }
         
@@ -118,7 +122,9 @@ exports.cadastrarDiscente = (req, res, next) => {
     req.assert('senha_conf', 'Verifique a sua confirmação de senha').notEmpty().isLength({ min: 5, max: 60});
     //req.assert('ocupacoes', 'Verifique as ocupações').isValidListaOcupacoes();
 
-
+    req.body.ocupacoes = JSON.parse(req.body.ocupacoes);
+    console.log(req.body.ocupacoes);
+    
          let erros = req.validationErrors();
            
          if(erros){

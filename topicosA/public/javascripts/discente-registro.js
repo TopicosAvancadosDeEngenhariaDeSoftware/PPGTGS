@@ -254,6 +254,9 @@ $(function () {
         $('#div_discente_sobrenome').removeClass('has-error');
         $('#err_discente_sobrenome').html("");
 
+        $('#div_discente_datanascimento').removeClass('has-error');
+        $('#err_discente_datanascimento').html("");
+
         $('#div_discente_nascionalidade').removeClass('has-error');
         $('#err_discente_nascionalidade').html("");
 
@@ -354,6 +357,8 @@ $(function () {
                 //$('#loading').css({display:"none"});
             },
             error: function(msg){
+                //alert(JSON.stringify(msg));
+                $('#resultado').html(JSON.stringify(msg)); return;
                 $('#resultado').html(JSON.stringify(msg.responseJSON.erro));
                 if(msg.responseJSON.erro != null && msg.responseJSON.erro != undefined && msg.responseJSON.erro.length > 0 ){
 
