@@ -4,6 +4,7 @@ var controllerDiscente = require('../controller/discente-controller');
 
 /* GET home page. */
 router.get('/registro', controllerDiscente.cadastrarDiscente);
+router.get('/alterar', controllerDiscente.alterarDiscente);
 router.post('/teste', async (req, res, next) =>{
     
     
