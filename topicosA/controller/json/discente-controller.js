@@ -11,6 +11,7 @@ const instituicaoDao = require('../../dao/instituicao-dao');
 const cargoDiscenteDao = require('../../dao/cargo-discente-dao');
 const DiscenteCargoInstituicaoDao = require('../../dao/discente-cargo-instituicao-dao');
 const async = require("async");
+var CPF = require("cpf_cnpj").CPF;
 
 exports.recuperarDiscenteId = (req, res, next) => {
     req.checkParams('id_discente', 'id é obrigatorio ser do tipo int').isInt();
@@ -92,11 +93,22 @@ exports.cadastrarDiscente = (req, res, next) => {
     req.assert('id_sexo', 'Sexo é obrigatório').notEmpty();
     req.assert('endereco_id_pais', 'País é obrigatório').notEmpty();
     if(req.body.endereco_id_pais != undefined && req.body.endereco_id_pais != null && parseInt(req.body.endereco_id_pais) == 1){
+        req.assert('rg', 'RG é obrigatório').notEmpty();
+        req.assert('cpf', 'CPF é obrigatório').notEmpty();
+
+        if(CPF.isValid(req.body.cpf) != true){
+            return res.status(400).json({resultado: null, erro: 'CPF em formato inválido'});
+        }
+        
         req.assert('endereco_id_cidade', 'Cidade é obrigatório').notEmpty();
         req.assert('endereco_cep', 'Cep é obrigatório').notEmpty().isLength({ min: 1, max: 20}); 
         req.assert('endereco_bairro', 'Bairro é obrigatório').notEmpty().isLength({ min: 1, max: 40});
         req.assert('endereco_logradouro', 'Logradouro é obrigatório').notEmpty().isLength({ min: 1, max: 60});
         req.assert('endereco_num_residencia', 'Número da residência é obrigatório').notEmpty().isLength({ min: 1, max: 20});
+        
+    }
+    else if(req.body.endereco_id_pais != undefined && req.body.endereco_id_pais != null && parseInt(req.body.endereco_id_pais) != 1){
+        req.assert('passaporte', 'Passaporte é obrigatório').notEmpty();
     }
     req.assert('username', 'Username é obrigatório').notEmpty();
     req.assert('id_titulo', 'Titulo é obrigatório').notEmpty();
@@ -125,7 +137,7 @@ exports.cadastrarDiscente = (req, res, next) => {
 
          let logradouro = req.body.endereco_logradouro;
          let bairro = req.body.endereco_bairro;
-         let id_cidade = parseInt(req.body.id_cidade);
+         let id_cidade = parseInt(req.body.endereco_id_cidade);
       
          let id_logradouro = null;
          let id_bairro = null;
@@ -175,6 +187,7 @@ exports.cadastrarDiscente = (req, res, next) => {
                                 })).then(result => {
                                     id_logradouro = result.insertId; //pega id_logradouro
                                     console.log('esse id_logradouro: ',id_logradouro);
+                                    
 
                                 }).catch(error => {
                                     next(error);
@@ -185,6 +198,8 @@ exports.cadastrarDiscente = (req, res, next) => {
                                 //se já existir logradouro, pega o id logradouro
                                 id_logradouro = result_logradouro.id_logradouro;
                                 console.log('id_logradouro: ',id_logradouro);
+
+                            }
                                 ////PEGAR ID Bairro
                                 verifica_bairro.recuperarBairroPorNome(bairro, (error, result_bairro) => {
                                     if(error){
@@ -217,6 +232,8 @@ exports.cadastrarDiscente = (req, res, next) => {
                                             id_bairro = result_bairro.id_bairro;
                                             console.log('id_bairro: ',id_bairro);
                                             //cadastrar endereço
+                                            
+                                        }
                                             (new Promise(
                                                 function(resolve, reject){
                                                 let endereco = new Endereco();
@@ -471,10 +488,10 @@ exports.cadastrarDiscente = (req, res, next) => {
                                             }).catch(error => {
                                                 next(error);
                                             });
-                                        }
+                                       // }
                                     }
                                 });
-                            }
+                            //}
                         }
                     });
                 }else{

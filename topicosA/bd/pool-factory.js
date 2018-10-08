@@ -23,7 +23,6 @@ pool.on('release', () => console.log('pool => conexão retornada'));
 
 
 try {
-
     process.on('SIGINT', () => 
     pool.end(err => {
         if(err) return console.log(err);
