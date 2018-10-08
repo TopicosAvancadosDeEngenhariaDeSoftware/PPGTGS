@@ -118,12 +118,18 @@ exports.cadastrarDiscente = (req, res, next) => {
     req.assert('senha_conf', 'Verifique a sua confirmação de senha').notEmpty().isLength({ min: 5, max: 60});
     //req.assert('ocupacoes', 'Verifique as ocupações').isValidListaOcupacoes();
 
-
          let erros = req.validationErrors();
            
          if(erros){
-             res.status(400).json({resultado: null, erro: erros});
-            return;
+            return res.status(400).json({resultado: null, erro: erros});
+            
+         }
+
+         let senha = req.body.senha;
+         let senha_conf = req.body.senha_conf;
+
+         if(senha != senha_conf){
+            return res.status(400).json({resultado: null, erro: 'Senhas não conferem!!'});
          }
  
          //let params = req.body;
