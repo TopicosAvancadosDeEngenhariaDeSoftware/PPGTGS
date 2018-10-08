@@ -342,7 +342,7 @@ $(function () {
         $.ajax({ 
             type: "POST",
             data: obj,
-            url: "./teste",
+            url: "../json/discentes",
             success: function(result){
                 //alert(JSON.stringify(result));
                 $('#resultado').html(JSON.stringify(result));
