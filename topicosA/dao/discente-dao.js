@@ -10,6 +10,20 @@ module.exports = class DiscenteDao{
         this._connection = connection;
     }
 
+    recuperarDiscentes(callback){
+        var sql = "SELECT * FROM Discente ;"
+        var params = [];
+        sql = mysql.format(sql, params);
+        this._connection.query(sql, (error, results) =>{
+            if(error){
+                callback(error, null);
+            }else{
+                callback(error,results);
+            }
+            
+        });
+    }
+
     recuperarDiscentePorId(id_discente, callback){
         var sql = "SELECT * FROM Discente WHERE id_discente = ? ;"
         var params = [];

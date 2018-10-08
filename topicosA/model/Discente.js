@@ -194,7 +194,7 @@ module.exports = class Discente{
 		this._situacao = parseInt(params.situacao);
         this._id_titulo = parseInt(params.id_titulo);
         this._sexo = parseInt(params.id_sexo);
-		this._telefone = parseInt(params.telefone);
+		this._telefone = params.telefone;
 		this._id_nacionalidade = parseInt(params.id_nacionalidade);
 		this._passaporte = params.passaporte != null ?  params.passaporte : null;
 		

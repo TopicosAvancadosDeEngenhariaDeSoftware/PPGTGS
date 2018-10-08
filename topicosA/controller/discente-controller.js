@@ -4,10 +4,24 @@ const paisesDao = require('../dao/pais-dao');
 const titulosDao = require('../dao/titulo-dao');
 const docentesDao = require('../dao/docente-dao');
 const instituicaoDao = require('../dao/instituicao-dao');
+const discenteDao = require('../dao/discente-dao');
 
 const instituicaoModel = require('../model/Instituicao');
 
 const config = require('../config/config');
+
+exports.consultaTodosDiscente = async (req, res, next) => {
+        var dDao = new discenteDao(req.connection);
+        dDao.recuperarDiscentes((err, resultados) =>{
+                if(err) next(err);
+                res.render('discentes-consulta', {discentes : resultados});
+        });
+        
+};
+
+exports.cadastrarOk = async (req, res, next) => {
+        res.render('discentes-registro-ok', {});
+};
 
 exports.cadastrarDiscente = async (req, res, next) => {
         var pDao = new paisesDao(req.connection);
@@ -35,8 +49,7 @@ exports.cadastrarDiscente = async (req, res, next) => {
                                         lista_tipo_instituicao.push(config.tipo_instituicao.publica);
                                         lista_tipo_instituicao.push(config.tipo_instituicao.privada);
 
-                                        res.render('discentes-registro', {paises : resultado_paises, titulos : resultados_titulos, docentes: resultados_docentes, instituicoes : lista_instituicoes, tipos_instituicao : lista_tipo_instituicao});
-                                });
+                                        res.render('discentes-registro', {paises : resultado_paises, titulos : resultados_titulos, docentes: resultados_docentes, instituicoes : lista_instituicoes, tipos_instituicao : lista_tipo_instituicao});                                });
 
                         });
                 });      
@@ -71,10 +84,7 @@ exports.alterarDiscente = async (req, res, next) => {
 
                                         res.render('discentes-alterar', {paises : resultado_paises, titulos : resultados_titulos, docentes: resultados_docentes, instituicoes : lista_instituicoes, tipos_instituicao : lista_tipo_instituicao});
                                 });
-
-
-
-                               
+                       
                         });
                 });      
         });   

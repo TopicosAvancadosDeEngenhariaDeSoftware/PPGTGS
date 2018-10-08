@@ -31,7 +31,7 @@ module.exports = class LogradouroDao{
             if(error){
                 callback(error, null);
             }else{
-                console.log('results logradouro', results[0]);
+                //console.log('results logradouro', results[0]);
                 callback(error,results[0] != null ? results[0] : null);
             }
         });
