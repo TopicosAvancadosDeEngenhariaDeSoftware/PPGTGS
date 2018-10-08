@@ -125,7 +125,7 @@ exports.cadastrarDiscente = (req, res, next) => {
 
          let logradouro = req.body.endereco_logradouro;
          let bairro = req.body.endereco_bairro;
-         let id_cidade = parseInt(req.body.id_cidade);
+         let id_cidade = parseInt(req.body.endereco_id_cidade);
       
          let id_logradouro = null;
          let id_bairro = null;
@@ -175,6 +175,7 @@ exports.cadastrarDiscente = (req, res, next) => {
                                 })).then(result => {
                                     id_logradouro = result.insertId; //pega id_logradouro
                                     console.log('esse id_logradouro: ',id_logradouro);
+                                    
 
                                 }).catch(error => {
                                     next(error);
@@ -185,6 +186,8 @@ exports.cadastrarDiscente = (req, res, next) => {
                                 //se já existir logradouro, pega o id logradouro
                                 id_logradouro = result_logradouro.id_logradouro;
                                 console.log('id_logradouro: ',id_logradouro);
+
+                            }
                                 ////PEGAR ID Bairro
                                 verifica_bairro.recuperarBairroPorNome(bairro, (error, result_bairro) => {
                                     if(error){
@@ -217,6 +220,8 @@ exports.cadastrarDiscente = (req, res, next) => {
                                             id_bairro = result_bairro.id_bairro;
                                             console.log('id_bairro: ',id_bairro);
                                             //cadastrar endereço
+                                            
+                                        }
                                             (new Promise(
                                                 function(resolve, reject){
                                                 let endereco = new Endereco();
@@ -471,10 +476,10 @@ exports.cadastrarDiscente = (req, res, next) => {
                                             }).catch(error => {
                                                 next(error);
                                             });
-                                        }
+                                       // }
                                     }
                                 });
-                            }
+                            //}
                         }
                     });
                 }else{

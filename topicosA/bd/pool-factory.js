@@ -3,7 +3,7 @@ const mysql = require('mysql');
 const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
-    password: '',
+    password: 'mahuanjoga20',
     database: 'discente',
     port: 3306,
     connectionLimit: 200,
@@ -23,7 +23,6 @@ pool.on('release', () => console.log('pool => conexão retornada'));
 
 
 try {
-
     process.on('SIGINT', () => 
     pool.end(err => {
         if(err) return console.log(err);
