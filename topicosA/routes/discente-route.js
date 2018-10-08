@@ -31,6 +31,8 @@ router.post('/teste', async (req, res, next) =>{
     req.assert('senha', 'Verifique a sua senha').notEmpty().isLength({ min: 5, max: 60});
     req.assert('senha_conf', 'Verifique a sua confirmação de senha').notEmpty().isLength({ min: 5, max: 60});
     req.assert('ocupacoes', 'Verifique as ocupações').isValidListaOcupacoes();
+
+    
     /*
    
     
@@ -47,6 +49,8 @@ router.post('/teste', async (req, res, next) =>{
         res.status(400).json({resultado: null, erro: erros});
         return;
     }
+    req.body.ocupacoes = JSON.parse(req.body.ocupacoes);
+
     res.json(req.body);
 });
 
