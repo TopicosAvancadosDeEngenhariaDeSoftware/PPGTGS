@@ -19,6 +19,21 @@ module.exports = class CargoDiscenteDao{
         });
     }
 
+    recuperarCargoDiscentePorNome(nome, callback){
+        var sql = "SELECT * FROM CargoDiscente WHERE nome = ?;"
+        var params = [];
+        params.push(nome);
+        sql = mysql.format(sql, params);
+        console.log(sql);
+        this._connection.query(sql, (error, results) =>{
+            if(error){
+                callback(error, null);
+            }else{
+                callback(null, results[0] ? results[0] : null);
+            }
+        });
+    }
+
     recuperarCargosDiscente(callback){
         var sql = "SELECT * FROM CargoDiscente;"
         var params = [];

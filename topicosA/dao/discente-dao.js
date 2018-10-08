@@ -44,7 +44,24 @@ module.exports = class DiscenteDao{
         });
     }
 
-    recuperarDiscentePorId(id_discente, callback){
+    recuperarDiscentePorEmail(email, callback){
+        var sql = "SELECT * FROM Discente WHERE email = ? ;"
+        var params = [];
+        params.push(email);
+        sql = mysql.format(sql, params);
+        this._connection.query(sql, (error, results) =>{
+            console.log('RESULTs ',results);
+
+            if(error){
+                callback(error, null);
+            }else{
+                callback(error,results[0] ? results[0] : null);
+            }
+            
+        });
+    }
+
+  /*  recuperarDiscentePorId(id_discente, callback){
         var sql = "SELECT * FROM Discente WHERE id_discente = ? ;"
         var params = [];
         params.push(id_discente);
@@ -76,7 +93,7 @@ module.exports = class DiscenteDao{
             }
             
         });
-    }
+    } */
 
     inserirDiscente(discente, callback){
 

@@ -35,20 +35,24 @@ module.exports = class DiscenteCargoInstituicaoDao{
         });
     }
 
-    inserirDiscenteCargoInstituicao(id_discente, id_instituicao, id_cargo_instituicao, callback){
+    inserirDiscenteCargoInstituicao(id_discente, id_instituicao, id_cargo_discente, callback){
+        //console.log('id disc: ', id_discente);
+        //console.log('is instituicao: ', id_instituicao);
+        //console.log('id cargo_disc: ', id_cargo_discente);
 
         var sql = "INSERT INTO DiscenteCargoInstituicao (id_discente, id_instituicao, id_cargo_discente) VALUES (?,?,?);"
         var params = [];
         params.push(id_discente);
         params.push(id_instituicao);
-        params.push(id_cargo_instituicao);
+        params.push(id_cargo_discente);
         sql = mysql.format(sql, params);
+        //console.log(sql);
         this._connection.query(sql, (error, results) =>{
-            console.log('Tentou inserir:',results);
+            //console.log('Tentou inserir:',results);
             if(error){
                 callback(error, null);
             }else{
-                callback(null, results);
+                callback(null,results ? results : null);
             }
             
         });
