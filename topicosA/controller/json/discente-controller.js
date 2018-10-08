@@ -100,7 +100,7 @@ exports.cadastrarDiscente = (req, res, next) => {
     }
     req.assert('username', 'Username é obrigatório').notEmpty();
     req.assert('id_titulo', 'Titulo é obrigatório').notEmpty();
-    //req.assert('id_orientador', 'Orientador é obrigatório').notEmpty();
+   // req.assert('id_orientador', 'Orientador é obrigatório').notEmpty();
     req.assert('email', 'Verifique seu email').notEmpty().isEmail();
     req.assert('senha', 'Verifique a sua senha').notEmpty().isLength({ min: 5, max: 60});
     req.assert('senha_conf', 'Verifique a sua confirmação de senha').notEmpty().isLength({ min: 5, max: 60});
