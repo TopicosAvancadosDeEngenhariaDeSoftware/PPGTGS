@@ -36,9 +36,30 @@ exports.recuperarDiscenteId = (req, res, next) => {
                         resolve(discente_result);
                     }
                 });
-    })).then(result => {
+    })).then(result1 => {
         //console.log(result); console.log('aq');
-        res.status(200).json({resultado: result, erro: null});
+        //res.status(200).json({resultado: result, erro: null});
+
+
+        (new Promise(
+            function (resolve, reject) {
+                    //console.log('Administrador');
+                    let dci = new DiscenteCargoInstituicaoDao(req.connection);
+                    dci.recuperaroDiscenteCargoInstituicaoPorIdDiscente(id_discente, (error, discente_result_cargo_inst) => {
+                        if(error){
+                            reject(error);
+                        }else{
+                            resolve(discente_result_cargo_inst);
+                        }
+                    });
+        })).then(result2 => {
+            res.status(200).json({resultado: result1, erro: null});
+
+        }).catch(error => {
+            next(error);
+        });
+
+
 
     }).catch(error => {
         next(error);
@@ -623,6 +644,7 @@ exports.editarDiscente = (req, res, next) => {
     }
     else  res.status(401).json({resultado: null, erro: erros_mensagem.erro_usuario_permissao});
   }
+
 
   exports.excluirDiscente = (req, res, next) => {
     //let id_tipo_usuario = req.id_tipo_usuario;
