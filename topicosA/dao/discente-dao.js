@@ -187,5 +187,32 @@ excluirDiscente(id_discente, callback){
     });
 }
 
+buscarDiscenteInstituicao(id_instituicao, callback){
+    var sql = "SELECT COUNT(Discente.id_discente) FROM Discente inner join DiscenteCargoInstituicao on Discente.id_discente = "+
+    "DiscenteCargoInstituicao.id_discente inner join Instituicao on DiscenteCargoInstituicao.id_instituicao = Instituicao.id_instituicao WHERE "+
+    "Instituicao.id_instituicao = ?;"
+    var params = [];
+    params.push(id_instituicao);
+    sql = mysql.format(sql, params);
+    this._connection.query(sql, (error, results) =>{
+        callback(error, results);
+
+    });
+}
+
+
+buscarCargoDiscente(id_cargo_discente, callback){
+    var sql = "SELECT COUNT(Discente.id_discente) FROM Discente inner join DiscenteCargoInstituicao on Discente.id_discente = "+
+    "DiscenteCargoInstituicao.id_discente inner join CargoDiscente on DiscenteCargoInstituicao.id_cargo_discente = CargoDiscente.id_cargo_discente WHERE "+
+    "CargoDiscente.id_cargo_discente = ?;"
+    var params = [];
+    params.push(id_cargo_discente);
+    sql = mysql.format(sql, params);
+    this._connection.query(sql, (error, results) =>{
+        callback(error, results);
+
+    });
+}
+
 
 }

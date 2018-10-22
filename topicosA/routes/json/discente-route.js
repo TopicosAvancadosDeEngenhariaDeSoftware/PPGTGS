@@ -14,6 +14,8 @@ router.post('/discentes',discente_controller.cadastrarDiscente);
 router.put('/discentes/:id_discente', discente_controller.editarDiscente);
 router.delete('/discentes/:id_discente', discente_controller.excluirDiscente);
 router.get('/discentes/:id_discente', discente_controller.recuperarDiscenteId);
+router.get('/discentes/instituicoes/total', discente_controller.RecuperarDiscenteInstituicao);
+router.get('/discentes/cargos/total', discente_controller.RecuperarDiscenteCargoInstituicao);
 //router.get('/discentes', discente_controller.recuperarDiscentes);
 
 
