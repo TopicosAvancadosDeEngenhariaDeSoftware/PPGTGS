@@ -11,6 +11,7 @@ const instituicaoDao = require('../../dao/instituicao-dao');
 const cargoDiscenteDao = require('../../dao/cargo-discente-dao');
 const DiscenteCargoInstituicaoDao = require('../../dao/discente-cargo-instituicao-dao');
 const paisDao = require('../../dao/pais-dao');
+const tituloDao = require('../../dao/titulo-dao');
 const async = require("async");
 var CPF = require("cpf_cnpj").CPF;
 const moment = require('moment');
@@ -805,39 +806,40 @@ exports.editarDiscente = (req, res, next) => {
 
   exports.RecuperarNacionalidadeDiscente = (req, res, next) => {
     var object = [];      
-    var total_cargo_discente = {};
+    var total_pais_discente = {};
 
-    var cargo_discente = {};
+    var pais_discente = {};
     var total = {};
     
         (new Promise(
         function (resolve, reject) {
                 let pais = new paisDao(req.connection);
                 let disc = new DiscenteDao(req.connection);
-                cargo.recuperarCargosDiscente((error, cargo_result) => {
+                pais.recuperarPaises((error, pais_result) => {
                     if(error){
                         reject(error);
                     }else{
-                        console.log('Instituicoes Cargos: ', cargo_result);
-                        async.each(cargo_result, function(result, callback){ 
+                        console.log('Paises: ', pais_result);
+                        async.each(pais_result, function(result, callback){ 
 
-                            disc.buscarCargoDiscente(result.id_cargo_discente, (error, result_cargo_discente)=> {
+                            disc.buscarPaisesDiscente(result.id_pais, (error, result_pais_discente)=> {
                                 if(error){
                                     reject(error);
                                 }else{
-                                    console.log('Result: ', result.id_cargo_discente, result_cargo_discente);
-                                    cargo_discente = {
-                                        cargo_discente : {
-                                            idCargo: result.id_cargo_discente,
+                                    console.log('Result: ', result.id_pais, result_pais_discente);
+                                    pais_discente = {
+                                        pais_discente : {
+                                            idPais: result.id_pais,
                                             nome: result.nome,
+                                            nacionalidade: result.nacionalidade
                                             
                                         },
-                                        total : result_cargo_discente[0]['COUNT(Discente.id_discente)']
+                                        total : result_pais_discente[0]['COUNT(Discente.id_discente)']
                                     }
-                                    total_cargo_discente = {
-                                        total_cargo_discente : cargo_discente,
+                                    total_pais_discente = {
+                                        total_pais_discente : pais_discente,
                                     }
-                                    object.push(total_cargo_discente); 
+                                    object.push(total_pais_discente); 
                                     callback();
                                 }
                             });      
@@ -860,5 +862,122 @@ exports.editarDiscente = (req, res, next) => {
             next(error);
         });
   }
+
+
+  exports.RecuperarTipoInstituicaoDiscente = (req, res, next) => {
+    var object = [];      
+    var total_tipo_instituicao_discente = {};
+
+    var tipo_instituicao_discente = {};
+    var total = {};
+
+    var tipo_instituicao = [];
+    tipo_instituicao[0] = config.tipo_instituicao.privada;
+    tipo_instituicao[1] = config.tipo_instituicao.publica;
+
+    console.log('Tipo instituicao: ', tipo_instituicao);
+    let disc = new DiscenteDao(req.connection);
+
+    (new Promise(
+        function (resolve, reject) {
+        async.each(tipo_instituicao, function(result, callback){ 
+
+            disc.buscarTipoInstituicaoDiscente(result.id, (error, result_tipo_inst_discente)=> {
+                if(error){
+                    reject(error);
+                }else{
+                    console.log('Result: ', result.id, result_tipo_inst_discente);
+                    tipo_instituicao_discente = {
+                        tipo_instituicao_discente : {
+                            idTipoInstituicao: result.id,
+                            nome: result.nome,   
+                        },
+                        total : result_tipo_inst_discente[0]['COUNT(Discente.id_discente)']
+                    }
+                    total_tipo_instituicao_discente = {
+                        total_tipo_instituicao_discente : tipo_instituicao_discente,
+                    }
+                    object.push(total_tipo_instituicao_discente); 
+                    callback();
+                }
+            });      
+
+        }, function(err){
+            if(!err){
+                console.log('ok');
+                resolve(object);
+            }else{
+                reject(err);
+            }
+        
+        });            
+    //resolve(instituicao_result);
+    })).then(result => {
+        res.status(200).json({resultado: result, erro: null});
+    }).catch(error => {
+        next(error);
+    });
+  }
+
+
+  exports.RecuperarTituloDiscente = (req, res, next) => {
+    var object = [];      
+    var total_titulo_discente = {};
+
+    var titulo_discente = {};
+    var total = {};
+    
+        (new Promise(
+        function (resolve, reject) {
+                let titulo = new tituloDao(req.connection);
+                let disc = new DiscenteDao(req.connection);
+                titulo.recuperarTitulos((error, titulo_result) => {
+                    if(error){
+                        reject(error);
+                    }else{
+                        console.log('Titulos: ', titulo_result);
+                        async.each(titulo_result, function(result, callback){ 
+
+                            disc.buscarTituloDiscente(result.id_titulo, (error, result_titulo_discente)=> {
+                                if(error){
+                                    reject(error);
+                                }else{
+                                    console.log('Result: ', result.id_titulo, result_titulo_discente);
+                                    titulo_discente = {
+                                        titulo_discente : {
+                                            idTitulo: result.id_titulo,
+                                            nome: result.nome
+                                           
+                                        },
+                                        total : result_titulo_discente[0]['COUNT(Discente.id_discente)']
+                                    }
+                                    total_titulo_discente = {
+                                        total_titulo_discente : titulo_discente,
+                                    }
+                                    object.push(total_titulo_discente); 
+                                    callback();
+                                }
+                            });      
+
+                        }, function(err){
+                            if(!err){
+                                console.log('ok');
+                                resolve(object);
+                            }else{
+                                reject(err);
+                            }
+                        });            
+                        //resolve(instituicao_result);
+                    }
+                });
+        })).then(result => {
+            res.status(200).json({resultado: result, erro: null});
+        }).catch(error => {
+            next(error);
+        });
+  }
+
+
+
 
 
