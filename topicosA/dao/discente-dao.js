@@ -249,4 +249,20 @@ buscarTituloDiscente(id_titulo, callback){
 }
 
 
+buscarTipoDiscente(id_tipo_discente, callback){
+    var sql = "SELECT COUNT(Discente.id_discente) FROM Discente inner join DiscenteTipoDiscente on Discente.id_discente = "+
+    "DiscenteTipoDiscente.id_discente inner join TipoDiscente on DiscenteTipoDiscente.id_tipo_discente = TipoDiscente.id_tipo_discente WHERE "+
+    "TipoDiscente.id_tipo_discente = ?;"
+    var params = [];
+    params.push(id_tipo_discente);
+    sql = mysql.format(sql, params);
+    this._connection.query(sql, (error, results) =>{
+        callback(error, results);
+
+    });
+}
+
+
+
+
 }

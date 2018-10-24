@@ -12,6 +12,7 @@ const cargoDiscenteDao = require('../../dao/cargo-discente-dao');
 const DiscenteCargoInstituicaoDao = require('../../dao/discente-cargo-instituicao-dao');
 const paisDao = require('../../dao/pais-dao');
 const tituloDao = require('../../dao/titulo-dao');
+const tipoDiscenteDao = require('../../dao/tipo-discente-dao');
 const async = require("async");
 var CPF = require("cpf_cnpj").CPF;
 const moment = require('moment');
@@ -978,6 +979,63 @@ exports.editarDiscente = (req, res, next) => {
   }
 
 
+  exports.RecuperarTipoDiscente = (req, res, next) => {
+    var object = [];      
+    var total_tipo_discente = {};
+
+    var tipos_discente = {};
+    var total = {};
+    
+        (new Promise(
+        function (resolve, reject) {
+                let tipo_disc = new tipoDiscenteDao(req.connection);
+                let disc = new DiscenteDao(req.connection);
+                tipo_disc.recuperarTiposDiscente((error, tipo_disc_result) => {
+                    if(error){
+                        reject(error);
+                    }else{
+                        console.log('Tipos Discentes: ', tipo_disc_result);
+                        async.each(tipo_disc_result, function(result, callback){ 
+
+                            disc.buscarTipoDiscente(result.id_tipo_discente, (error, result_tipo_discente)=> {
+                                if(error){
+                                    reject(error);
+                                }else{
+                                    console.log('Result: ', result.id_tipo_discente, result_tipo_discente);
+                                    tipos_discente = {
+                                        tipo_discente : {
+                                            idTipoDiscente: result.id_tipo_discente,
+                                            nome: result.nome,
+                                            
+                                        },
+                                        total : result_tipo_discente[0]['COUNT(Discente.id_discente)']
+                                    }
+                                    total_tipo_discente = {
+                                        total_tipo_discente : tipos_discente,
+                                    }
+                                    object.push(total_tipo_discente); 
+                                    callback();
+                                }
+                            });      
+
+                        }, function(err){
+                            if(!err){
+                                console.log('ok');
+                                resolve(object);
+                            }else{
+                                reject(err);
+                            }
+                        
+                        });            
+                        //resolve(instituicao_result);
+                    }
+                });
+        })).then(result => {
+            res.status(200).json({resultado: result, erro: null});
+        }).catch(error => {
+            next(error);
+        });
+  }
 
 
 
