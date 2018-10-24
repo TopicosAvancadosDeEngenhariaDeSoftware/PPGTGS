@@ -20,6 +20,7 @@ router.get('/discentes/instituicoes/total', discente_controller.RecuperarDiscent
 router.get('/discentes/cargos/total', discente_controller.RecuperarDiscenteCargoInstituicao);
 router.get('/discentes/paises/total', discente_controller.RecuperarNacionalidadeDiscente);
 router.get('/discentes/tipos_instituicoes_discente/total', discente_controller.RecuperarTipoInstituicaoDiscente);
+router.get('/discentes/titulos/total', discente_controller.RecuperarTituloDiscente);
 //router.get('/discentes', discente_controller.recuperarDiscentes);
 
 
