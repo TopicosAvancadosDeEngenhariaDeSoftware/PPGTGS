@@ -36,9 +36,41 @@ function buscarIndicadorNumeroAlunosPorInstituicao(){
             alert(JSON.stringify(msg));
         }
     });
-
-
 }
+
+
+/*function buscarIndicador(){
+
+  $.ajax({ 
+      type: "GET",
+      data: {},
+      url: "../../json/discentes/instituicoes/total",
+      success: function(result){
+          //alert(JSON.stringify(result));
+
+          var dadosGrafico = new Object();
+          dadosGrafico.categorias = [];
+          dadosGrafico.dados = [];
+          for(var i = 0; i < result.resultado.length; i++){
+              dadosGrafico.categorias.push(result.resultado[i].total_instituicao.instituicao.sigla);
+              dadosGrafico.dados.push(result.resultado[i].total_instituicao.total);
+          }
+
+          grafico_indicador_instituicao_aluno(dadosGrafico);
+      },
+      beforeSend: function(){
+          //$('#loading').css({display:"block"});
+      },
+      complete: function(msg){
+          //$('#loading').css({display:"none"});
+      },
+      error: function(msg){
+          alert(JSON.stringify(msg));
+      }
+  });
+
+
+}*/
 
 function grafico_indicador_instituicao_aluno(dadosGrafico){
 
@@ -48,7 +80,7 @@ function grafico_indicador_instituicao_aluno(dadosGrafico){
     type: 'column'
   },
   title: {
-    text: "Número de discentes por Instituição"
+    text: ""
   },
   xAxis: {
     categories: dadosGrafico.categorias
