@@ -214,5 +214,55 @@ buscarCargoDiscente(id_cargo_discente, callback){
     });
 }
 
+buscarPaisesDiscente(id_pais, callback){
+    var sql = "SELECT COUNT(Discente.id_discente) FROM Discente inner join Pais on Discente.id_nacionalidade = Pais.id_pais "+
+    " WHERE Pais.id_pais = ?;"
+    var params = [];
+    params.push(id_pais);
+    sql = mysql.format(sql, params);
+    this._connection.query(sql, (error, results) =>{
+        callback(error, results);
+
+    });
+}
+
+buscarTipoInstituicaoDiscente(id_tipo_instituicao, callback){
+    var sql = "SELECT COUNT(Discente.id_discente) FROM Discente inner join DiscenteCargoInstituicao on Discente.id_discente = "+
+    "DiscenteCargoInstituicao.id_discente inner join Instituicao on DiscenteCargoInstituicao.id_instituicao = Instituicao.id_instituicao WHERE "+
+    "Instituicao.id_tipo_instituicao = ?;"
+    var params = [];
+    params.push(id_tipo_instituicao);
+    sql = mysql.format(sql, params);
+    this._connection.query(sql, (error, results) =>{
+        callback(error, results);
+    });
+}
+
+buscarTituloDiscente(id_titulo, callback){
+    var sql = "SELECT COUNT(Discente.id_discente) FROM Discente WHERE id_titulo = ?;"
+    var params = [];
+    params.push(id_titulo);
+    sql = mysql.format(sql, params);
+    this._connection.query(sql, (error, results) =>{
+        callback(error, results);
+    });
+}
+
+
+buscarTipoDiscente(id_tipo_discente, callback){
+    var sql = "SELECT COUNT(Discente.id_discente) FROM Discente inner join DiscenteTipoDiscente on Discente.id_discente = "+
+    "DiscenteTipoDiscente.id_discente inner join TipoDiscente on DiscenteTipoDiscente.id_tipo_discente = TipoDiscente.id_tipo_discente WHERE "+
+    "TipoDiscente.id_tipo_discente = ?;"
+    var params = [];
+    params.push(id_tipo_discente);
+    sql = mysql.format(sql, params);
+    this._connection.query(sql, (error, results) =>{
+        callback(error, results);
+
+    });
+}
+
+
+
 
 }
