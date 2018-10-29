@@ -9,7 +9,7 @@
 console.log("--- Iniciando servidor ---");
 
 var app = require('../app');
-var debug = require('debug')('topicosa:server');
+var debug = require('debug')('ppgtgs:server');
 var http = require('http');
 
 /**

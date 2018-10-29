@@ -4,7 +4,7 @@ const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'discente',
+    database: 'ppgtgs',
     port: 3306,
     connectionLimit: 200,
     connectTimeout: 2000,
