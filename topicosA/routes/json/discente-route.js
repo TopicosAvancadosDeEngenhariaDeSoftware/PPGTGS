@@ -22,6 +22,8 @@ router.get('/discentes/paises/total', discente_controller.RecuperarNacionalidade
 router.get('/discentes/tipos_instituicoes_discente/total', discente_controller.RecuperarTipoInstituicaoDiscente);
 router.get('/discentes/titulos/total', discente_controller.RecuperarTituloDiscente);
 router.get('/discentes/tipos_discente/total',discente_controller.RecuperarTipoDiscente);
+router.get('/discentes/tipos_discente/:id_tipo_discente',discente_controller.RecuperarDiscentePorTipoDiscente);
+
 //router.get('/discentes', discente_controller.recuperarDiscentes);
 
 

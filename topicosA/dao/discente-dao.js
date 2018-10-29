@@ -262,6 +262,47 @@ buscarTipoDiscente(id_tipo_discente, callback){
     });
 }
 
+buscarIdDiscentePorTipoDiscente(id_tipo_discente, callback){
+    var sql = "SELECT Discente.id_discente FROM Discente inner join DiscenteTipoDiscente on Discente.id_discente = "+
+    "DiscenteTipoDiscente.id_discente inner join TipoDiscente on DiscenteTipoDiscente.id_tipo_discente = TipoDiscente.id_tipo_discente WHERE "+
+    "TipoDiscente.id_tipo_discente = ?;"
+    var params = [];
+    params.push(id_tipo_discente);
+    sql = mysql.format(sql, params);
+    console.log(sql);
+    this._connection.query(sql, (error, results) =>{
+        if(error){
+            callback(error, null);
+        }else{
+            callback(error,results ? results : null);
+        }
+    });
+}
+
+
+recuperarDiscenteConformeTipoDiscente(id_discente, id_tipo_discente, callback){
+    var sql = "SELECT Discente.id_discente, Discente.nome, Discente.sobrenome, Discente.email, Discente.id_docente, "+
+    "Discente.id_titulo,  Discente.link_lattes, Discente.situacao, Discente.sexo, DiscenteTipoDiscente.data_inicial, DiscenteTipoDiscente.data_final, DiscenteTipoDiscente.isAtual, TipoDiscente.id_tipo_discente, TipoDiscente.nome as nome_tipo_discente FROM Discente inner join DiscenteTipoDiscente on Discente.id_discente = "+
+    "DiscenteTipoDiscente.id_discente inner join TipoDiscente on DiscenteTipoDiscente.id_tipo_discente = TipoDiscente.id_tipo_discente WHERE "+
+    "DiscenteTipoDiscente.id_discente = ? and DiscenteTipoDiscente.id_tipo_discente = ?;"
+    var params = [];
+    console.log('id discente: ', id_discente);
+    console.log('id tipo discente: ', id_tipo_discente);
+    params.push(id_discente);
+    params.push(id_tipo_discente);
+    sql = mysql.format(sql, params);
+    console.log(sql);
+    this._connection.query(sql, (error, results) =>{
+        if(error){
+            callback(error, null);
+        }else{
+            callback(error,results ? results : null);
+        }
+
+    });
+}
+
+
 
 
 

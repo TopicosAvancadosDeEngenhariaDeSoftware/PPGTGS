@@ -18,4 +18,18 @@ module.exports = class TipoDiscenteDao{
             }
         });
     }
+
+    
+    //retornar alguns dados do aluno e do discenteTipoDiscente
+    buscarTipoDiscenteId(id_tipo_discente,callback){
+        var sql = "SELECT * FROM TipoDiscente WHERE id_tipo_discente = ?"
+        var params = [];
+        params.push(id_tipo_discente);
+        sql = mysql.format(sql, params);
+        this._connection.query(sql, (error, results) =>{
+            callback(error, results);
+
+        });
+}
+
 }

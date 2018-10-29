@@ -1038,4 +1038,89 @@ exports.editarDiscente = (req, res, next) => {
   }
 
 
+  exports.RecuperarDiscentePorTipoDiscente = (req, res, next) => {
+
+    req.assert('id_tipo_discente', 'id é obrigatório').notEmpty();
+    req.assert('id_tipo_discente', 'id é obrigatório ser do tipo int').isInt();
+
+    let erros = req.validationErrors();
+    if(erros){
+        res.status(400).json({resultado: null, erro: erros});
+    return;
+    }
+
+    let id_tipo_discente = parseInt(req.params.id_tipo_discente); 
+    
+    var object = [];      
+    var discente_tipo_discente = {};
+
+    var total = {};
+
+    (new Promise(
+        function (resolve, reject) {
+               
+                let disc = new DiscenteDao(req.connection);
+                disc.buscarIdDiscentePorTipoDiscente(id_tipo_discente, (error, disc_result) => { //retorna lista de ids dos discentes
+                    if(error){
+                        reject(error);
+                    }else{
+                        console.log('Tipos Discentes: ', disc_result);
+                        async.each(disc_result, function(result, callback){ 
+
+                            disc.recuperarDiscenteConformeTipoDiscente(result.id_discente, id_tipo_discente,(error, result_tipo_discente)=> {
+                                if(error){
+                                    reject(error);
+                                }else{
+                                    console.log('Result: ', result.id_discente, result_tipo_discente);
+                                   discente_tipo_discente = {
+                                        discente : {
+                                            idDiscente: result.id_discente,
+                                            nome: result_tipo_discente[0].nome,
+                                            sobrenome: result_tipo_discente[0].sobrenome,
+                                            email: result_tipo_discente[0].email,
+                                            id_docente: result_tipo_discente[0].id_docente,
+                                            id_titulo: result_tipo_discente[0].id_titulo,
+                                            link_lattes: result_tipo_discente[0].link_lattes,
+                                            situacao: result_tipo_discente[0].situacao,
+                                            sexo: result_tipo_discente[0].sexo   
+                                        },
+                                        tipo_discente : {
+                                            idTipoDiscente: result_tipo_discente[0].id_tipo_discente,
+                                            nome: result_tipo_discente[0].nome_tipo_discente,
+                                            data_inicial: result_tipo_discente[0].data_inicial,
+                                            data_final: result_tipo_discente[0].data_final
+                                        }
+                                    }
+                                    
+                                    total = {
+                                       discente_tipo_discente
+                                    }
+
+                                    object.push(total); 
+                                    callback();
+                                }
+                            });      
+
+                        }, function(err){
+                            if(!err){
+                                console.log('ok');
+                                resolve(object);
+                            }else{
+                                reject(err);
+                            }
+                        
+                        });            
+                        //resolve(instituicao_result);
+                    }
+                });
+        })).then(result => {
+            res.status(200).json({resultado: result, erro: null});
+        }).catch(error => {
+            next(error);
+        });
+  }
+
+
+  
+
 
