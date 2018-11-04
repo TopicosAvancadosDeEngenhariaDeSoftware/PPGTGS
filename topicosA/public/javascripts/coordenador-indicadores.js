@@ -3,6 +3,9 @@ $(function () {
     buscarIndicadorNumeroAlunosPorInstituicao();
     buscarIndicadorNumeroAlunosPorCargo();
     buscarIndicadorNumeroAlunosPorTipoInstituicao();
+    buscarIndicadorNumeroAlunosNascionalidade();
+    buscarIndicadorNumeroAlunosPorTitulo();
+    
 
 
 
@@ -30,12 +33,14 @@ function buscarIndicadorNumeroAlunosPorTipoInstituicao(){
 
             var soma = obj_privada.count + obj_publica.count;
             $('#privada_indicador_por').text((""+ (obj_privada.count / soma * 100)));
-            $('#privada_indicador_text').text(""+ obj_privada.count+" discentes de instituições privadas");
+            $('#privada_indicador_text').text(""+ obj_privada.count+" de instituições privadas");
 
             $('#publica_indicador_por').text((""+ (obj_publica.count / soma * 100)));
-            $('#publica_indicador_text').text(""+ obj_publica.count+" discentes de instituições publicas");
+            $('#publica_indicador_text').text(""+ obj_publica.count+" de instituições publicas");
 
-            grafico_indicador_instituicao_aluno(dadosGrafico);
+           
+            $('#total_indicador_por').text((""+soma));
+            //grafico_indicador_instituicao_aluno(dadosGrafico);
         },
         beforeSend: function(){
             //$('#loading').css({display:"block"});
@@ -111,6 +116,67 @@ function buscarIndicadorNumeroAlunosPorCargo(){
             alert(JSON.stringify(msg));
         }
     });
+}
+
+
+function buscarIndicadorNumeroAlunosNascionalidade(){
+
+    $.ajax({ 
+        type: "GET",
+        data: {},
+        url: "../../json/discentes/paises/total",
+        success: function(result){
+            //alert(JSON.stringify(result));
+
+            var dadosGrafico = new Object();
+            dadosGrafico.categorias = [];
+            dadosGrafico.dados = [];
+            for(var i = 0; i < result.resultado.length; i++){
+                dadosGrafico.categorias.push(result.resultado[i].total_pais_discente.pais_discente.nacionalidade);
+                dadosGrafico.dados.push(result.resultado[i].total_pais_discente.total);
+            }
+
+            grafico_indicador_nascionalidade(dadosGrafico);
+        },
+        beforeSend: function(){
+            //$('#loading').css({display:"block"});
+        },
+        complete: function(msg){
+            //$('#loading').css({display:"none"});
+        },
+        error: function(msg){
+            alert(JSON.stringify(msg));
+        }
+    });
+}
+
+function buscarIndicadorNumeroAlunosPorTitulo(){
+
+  $.ajax({ 
+      type: "GET",
+      data: {},
+      url: "../../json/discentes/titulos/total",
+      success: function(result){
+          //alert(JSON.stringify(result));
+
+          var dadosGrafico = new Object();
+          dadosGrafico.dados = [];
+          for(var i = 0; i < result.resultado.length; i++){
+              dadosGrafico.dados.push({name: result.resultado[i].total_titulo_discente.titulo_discente.nome, y: result.resultado[i].total_titulo_discente.total});
+          }
+          //alert("oi");
+          grafico_indicador_titulos(dadosGrafico);
+      },
+      beforeSend: function(){
+          //$('#loading').css({display:"block"});
+      },
+      complete: function(msg){
+          //$('#loading').css({display:"none"});
+      },
+      error: function(msg){
+          alert(JSON.stringify(msg));
+      }
+  });
 }
 
 
@@ -220,3 +286,74 @@ function grafico_indicador_instituicao_aluno(dadosGrafico){
 
 
 }
+
+function grafico_indicador_nascionalidade(dadosGrafico){
+
+
+    Highcharts.chart('container_nascionalidade', {
+    chart: {
+      type: 'column'
+    },
+    title: {
+      text: ""
+    },
+    xAxis: {
+      categories: dadosGrafico.categorias
+    },
+    subtitle: {
+      text: ""
+    },
+    yAxis: {
+      title: {
+        text: "Alunos"
+      }
+    },
+    tooltip: {
+          enabled: false
+      },
+    legends: {
+      enabled: false
+    },
+    series: [{
+      data: dadosGrafico.dados,
+      showInLegend: false,
+      colorByPoint: true
+    }]
+  })
+  
+  
+  }
+
+  function grafico_indicador_titulos(dadosGrafico){
+    
+    Highcharts.chart('container_titulos', {
+        chart: {
+          plotBackgroundColor: null,
+          plotBorderWidth: null,
+          plotShadow: false,
+          type: 'pie'
+        },
+        title: {
+          text: ''
+        },
+        tooltip: {
+          pointFormat: '{series.name}: <b>{point.y}</b>'
+        },
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+              enabled: false
+            },
+            showInLegend: true
+          }
+        },
+        series: [{
+          name: 'Discentes',
+          colorByPoint: true,
+          data: dadosGrafico.dados
+        }]
+      });
+
+  }
