@@ -1282,6 +1282,5 @@ exports.editarDiscente = (req, res, next) => {
 
 
 
-  
 
 
