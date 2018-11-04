@@ -23,6 +23,7 @@ router.get('/discentes/tipos_instituicoes_discente/total', discente_controller.R
 router.get('/discentes/titulos/total', discente_controller.RecuperarTituloDiscente);
 router.get('/discentes/tipos_discente/total',discente_controller.RecuperarTipoDiscente);
 router.get('/discentes/tipos_discente/:id_tipo_discente',discente_controller.RecuperarDiscentePorTipoDiscente);
+router.get('/discentes/situacoes_discente/:id_situacao',discente_controller.RecuperarDiscentePorSituacao);
 
 //router.get('/discentes', discente_controller.recuperarDiscentes);
 

@@ -1121,6 +1121,43 @@ exports.editarDiscente = (req, res, next) => {
   }
 
 
+  //situacao 1 : ativo
+  //2 : inativo
+  //3 : egresso
+  exports.RecuperarDiscentePorSituacao = (req, res, next) => {
+
+    req.assert('id_situacao', 'id é obrigatório').notEmpty();
+    req.assert('id_situacao', 'id é obrigatório ser do tipo int').isInt();
+
+    let erros = req.validationErrors();
+    if(erros){
+        res.status(400).json({resultado: null, erro: erros});
+    return;
+    }
+
+    let id_situacao = parseInt(req.params.id_situacao); 
+    
+
+    (new Promise(
+        function (resolve, reject) {
+               
+            let disc = new DiscenteDao(req.connection);
+            disc.buscarDiscentePorSituacao(id_situacao, (error, disc_result) => {
+                if(error){
+                    reject(error);
+                }else{
+                    resolve(disc_result);  
+                }
+            });      
+                       
+        })).then(result => {
+            res.status(200).json({resultado: result, erro: null});
+        }).catch(error => {
+            next(error);
+        });
+  }
+
+
   
 
 
