@@ -1,14 +1,16 @@
 $(function () { 
 
     buscarIndicadorNumeroAlunosPorInstituicao();
-    buscarIndicadorNumeroAlunosPorCargo();
-    buscarIndicadorNumeroAlunosPorTipoInstituicao();
-    buscarIndicadorNumeroAlunosNascionalidade();
-    buscarIndicadorNumeroAlunosPorTitulo();
-    buscarIndicadorNumeroAlunosPorTipoDiscente();
+        buscarIndicadorNumeroAlunosPorCargo();
+        buscarIndicadorNumeroAlunosPorTipoInstituicao();
+        buscarIndicadorNumeroAlunosNascionalidade();
+        buscarIndicadorNumeroAlunosPorTitulo();
+        buscarIndicadorNumeroAlunosPorTipoDiscente();
 
     $('#filtro_situacao').change(function() {
         $('#carregando_filtro').removeClass('remover');
+
+        
 
         buscarIndicadorNumeroAlunosPorInstituicao();
         buscarIndicadorNumeroAlunosPorCargo();
@@ -24,10 +26,13 @@ $(function () {
 
 function buscarIndicadorNumeroAlunosPorTipoInstituicao(){
 
+    var filtro_idSituacao = $('#filtro_situacao').val();
+    
+
     $.ajax({ 
         type: "GET",
         data: {},
-        url: "../../json/discentes/tipos_instituicoes_discente/total",
+        url: "../../json/discentes/situacoes_discente/"+filtro_idSituacao+"/tipos_instituicoes_discente/total",
         success: function(result){
             //alert(JSON.stringify(result));
 
@@ -43,10 +48,15 @@ function buscarIndicadorNumeroAlunosPorTipoInstituicao(){
             }
 
             var soma = obj_privada.count + obj_publica.count;
-            $('#privada_indicador_por').text((""+ (obj_privada.count / soma * 100)));
+
+            var count_privada = (obj_privada.count / soma * 100);
+            if(soma == 0) count_privada = 0;
+            $('#privada_indicador_por').text((""+ count_privada));
             $('#privada_indicador_text').text(""+ obj_privada.count+" de instituições privadas");
 
-            $('#publica_indicador_por').text((""+ (obj_publica.count / soma * 100)));
+            var count_publica = (obj_publica.count / soma * 100);
+            if(soma == 0) count_publica = 0;
+            $('#publica_indicador_por').text((""+ count_publica));
             $('#publica_indicador_text').text(""+ obj_publica.count+" de instituições publicas");
 
            
@@ -68,10 +78,12 @@ function buscarIndicadorNumeroAlunosPorTipoInstituicao(){
 
 function buscarIndicadorNumeroAlunosPorInstituicao(){
 
+    var filtro_idSituacao = $('#filtro_situacao').val();
+
     $.ajax({ 
         type: "GET",
         data: {},
-        url: "../../json/discentes/instituicoes/total",
+        url: "../../json/discentes/situacoes_discente/"+filtro_idSituacao+"/instituicoes/total",
         success: function(result){
             //alert(JSON.stringify(result));
 
@@ -99,11 +111,12 @@ function buscarIndicadorNumeroAlunosPorInstituicao(){
 
 
 function buscarIndicadorNumeroAlunosPorCargo(){
+    var filtro_idSituacao = $('#filtro_situacao').val();
 
     $.ajax({ 
         type: "GET",
         data: {},
-        url: "../../json/discentes/cargos/total",
+        url: "../../json/discentes/situacoes_discente/"+filtro_idSituacao+"/cargos/total",
         success: function(result){
             //alert(JSON.stringify(result));
 
@@ -132,11 +145,12 @@ function buscarIndicadorNumeroAlunosPorCargo(){
 
 
 function buscarIndicadorNumeroAlunosNascionalidade(){
+    var filtro_idSituacao = $('#filtro_situacao').val();
 
     $.ajax({ 
         type: "GET",
         data: {},
-        url: "../../json/discentes/paises/total",
+        url: "../../json/discentes/situacoes_discente/"+filtro_idSituacao+"/paises/total",
         success: function(result){
             //alert(JSON.stringify(result));
 
@@ -163,11 +177,11 @@ function buscarIndicadorNumeroAlunosNascionalidade(){
 }
 
 function buscarIndicadorNumeroAlunosPorTitulo(){
-
+    var filtro_idSituacao = $('#filtro_situacao').val();
   $.ajax({ 
       type: "GET",
       data: {},
-      url: "../../json/discentes/titulos/total",
+      url: "../../json/discentes/situacoes_discente/"+filtro_idSituacao+"/titulos/total",
       success: function(result){
           //alert(JSON.stringify(result));
 
@@ -192,11 +206,11 @@ function buscarIndicadorNumeroAlunosPorTitulo(){
 }
 
 function buscarIndicadorNumeroAlunosPorTipoDiscente(){
-
+    var filtro_idSituacao = $('#filtro_situacao').val();
     $.ajax({ 
         type: "GET",
         data: {},
-        url: "../../json/discentes/tipos_discente/total",
+        url: "../../json/discentes/situacoes_discente/"+filtro_idSituacao+"/tipos_discente/total",
         success: function(result){
             //alert(JSON.stringify(result));
   
