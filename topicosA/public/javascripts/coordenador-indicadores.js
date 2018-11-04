@@ -5,8 +5,19 @@ $(function () {
     buscarIndicadorNumeroAlunosPorTipoInstituicao();
     buscarIndicadorNumeroAlunosNascionalidade();
     buscarIndicadorNumeroAlunosPorTitulo();
-    
+    buscarIndicadorNumeroAlunosPorTipoDiscente();
 
+    $('#filtro_situacao').change(function() {
+        $('#carregando_filtro').removeClass('remover');
+
+        buscarIndicadorNumeroAlunosPorInstituicao();
+        buscarIndicadorNumeroAlunosPorCargo();
+        buscarIndicadorNumeroAlunosPorTipoInstituicao();
+        buscarIndicadorNumeroAlunosNascionalidade();
+        buscarIndicadorNumeroAlunosPorTitulo();
+        buscarIndicadorNumeroAlunosPorTipoDiscente();
+
+    });
 
 
 });
@@ -105,6 +116,7 @@ function buscarIndicadorNumeroAlunosPorCargo(){
             }
 
             grafico_indicador_cargo_aluno(dadosGrafico);
+            $('#carregando_filtro').addClass('remover');
         },
         beforeSend: function(){
             //$('#loading').css({display:"block"});
@@ -179,6 +191,34 @@ function buscarIndicadorNumeroAlunosPorTitulo(){
   });
 }
 
+function buscarIndicadorNumeroAlunosPorTipoDiscente(){
+
+    $.ajax({ 
+        type: "GET",
+        data: {},
+        url: "../../json/discentes/tipos_discente/total",
+        success: function(result){
+            //alert(JSON.stringify(result));
+  
+            var dadosGrafico = new Object();
+            dadosGrafico.dados = [];
+            for(var i = 0; i < result.resultado.length; i++){
+                dadosGrafico.dados.push({name: result.resultado[i].total_tipo_discente.tipo_discente.nome, y: result.resultado[i].total_tipo_discente.total});
+            }
+            //alert("oi");
+            grafico_indicador_tipodiscente(dadosGrafico);
+        },
+        beforeSend: function(){
+            //$('#loading').css({display:"block"});
+        },
+        complete: function(msg){
+            //$('#loading').css({display:"none"});
+        },
+        error: function(msg){
+            alert(JSON.stringify(msg));
+        }
+    });
+  }
 
 /*function buscarIndicador(){
 
@@ -324,9 +364,43 @@ function grafico_indicador_nascionalidade(dadosGrafico){
   
   }
 
-  function grafico_indicador_titulos(dadosGrafico){
+function grafico_indicador_titulos(dadosGrafico){
     
     Highcharts.chart('container_titulos', {
+        chart: {
+          plotBackgroundColor: null,
+          plotBorderWidth: null,
+          plotShadow: false,
+          type: 'pie'
+        },
+        title: {
+          text: ''
+        },
+        tooltip: {
+          pointFormat: '{series.name}: <b>{point.y}</b>'
+        },
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+              enabled: false
+            },
+            showInLegend: true
+          }
+        },
+        series: [{
+          name: 'Discentes',
+          colorByPoint: true,
+          data: dadosGrafico.dados
+        }]
+      });
+
+  }
+
+  function grafico_indicador_tipodiscente(dadosGrafico){
+    //console.log(dadosGrafico);
+    Highcharts.chart('container_tipodiscente', {
         chart: {
           plotBackgroundColor: null,
           plotBorderWidth: null,
