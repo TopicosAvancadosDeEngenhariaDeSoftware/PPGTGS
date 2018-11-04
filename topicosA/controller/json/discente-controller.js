@@ -681,11 +681,20 @@ exports.editarDiscente = (req, res, next) => {
   
   }
 
-
-  //buscar as instituições - terei uma lista de instituiçoes
-  //buscar nos discentes através do count a quantidade de discentes em cada instituição
-  //retornar json com lista das instituições e quantidade de discentes
+//----INDICADORES DISCENTE----//
+  
   exports.RecuperarDiscenteInstituicao = (req, res, next) => {
+    
+    req.assert('id_situacao', 'id é obrigatório ser do tipo int').isInt();
+
+    let erros = req.validationErrors();
+    if(erros){
+        res.status(400).json({resultado: null, erro: erros});
+    return;
+    }
+
+    let id_situacao = parseInt(req.params.id_situacao);
+
     var object = [];      
     var total_instituicao = {};
 
@@ -703,7 +712,7 @@ exports.editarDiscente = (req, res, next) => {
                         console.log('Instituicoes: ', instituicao_result);
                         async.each(instituicao_result, function(result, callback){ 
 
-                            disc.buscarDiscenteInstituicao(result.id_instituicao, (error, result_inst_discente)=> {
+                            disc.buscarDiscenteInstituicao(result.id_instituicao, id_situacao, (error, result_inst_discente)=> {
                                 if(error){
                                     reject(error);
                                 }else{
@@ -747,6 +756,16 @@ exports.editarDiscente = (req, res, next) => {
 
 
   exports.RecuperarDiscenteCargoInstituicao = (req, res, next) => {
+    req.assert('id_situacao', 'id é obrigatório ser do tipo int').isInt();
+
+    let erros = req.validationErrors();
+    if(erros){
+        res.status(400).json({resultado: null, erro: erros});
+    return;
+    }
+
+    let id_situacao = parseInt(req.params.id_situacao);
+
     var object = [];      
     var total_cargo_discente = {};
 
@@ -764,7 +783,7 @@ exports.editarDiscente = (req, res, next) => {
                         console.log('Instituicoes Cargos: ', cargo_result);
                         async.each(cargo_result, function(result, callback){ 
 
-                            disc.buscarCargoDiscente(result.id_cargo_discente, (error, result_cargo_discente)=> {
+                            disc.buscarCargoDiscente(result.id_cargo_discente, id_situacao, (error, result_cargo_discente)=> {
                                 if(error){
                                     reject(error);
                                 }else{
@@ -806,6 +825,16 @@ exports.editarDiscente = (req, res, next) => {
 
 
   exports.RecuperarNacionalidadeDiscente = (req, res, next) => {
+    req.assert('id_situacao', 'id é obrigatório ser do tipo int').isInt();
+
+    let erros = req.validationErrors();
+    if(erros){
+        res.status(400).json({resultado: null, erro: erros});
+    return;
+    }
+
+    let id_situacao = parseInt(req.params.id_situacao);
+
     var object = [];      
     var total_pais_discente = {};
 
@@ -823,7 +852,7 @@ exports.editarDiscente = (req, res, next) => {
                         console.log('Paises: ', pais_result);
                         async.each(pais_result, function(result, callback){ 
 
-                            disc.buscarPaisesDiscente(result.id_pais, (error, result_pais_discente)=> {
+                            disc.buscarPaisesDiscente(result.id_pais, id_situacao, (error, result_pais_discente)=> {
                                 if(error){
                                     reject(error);
                                 }else{
@@ -866,6 +895,17 @@ exports.editarDiscente = (req, res, next) => {
 
 
   exports.RecuperarTipoInstituicaoDiscente = (req, res, next) => {
+
+    req.assert('id_situacao', 'id é obrigatório ser do tipo int').isInt();
+
+    let erros = req.validationErrors();
+    if(erros){
+        res.status(400).json({resultado: null, erro: erros});
+    return;
+    }
+
+    let id_situacao = parseInt(req.params.id_situacao);
+
     var object = [];      
     var total_tipo_instituicao_discente = {};
 
@@ -883,7 +923,7 @@ exports.editarDiscente = (req, res, next) => {
         function (resolve, reject) {
         async.each(tipo_instituicao, function(result, callback){ 
 
-            disc.buscarTipoInstituicaoDiscente(result.id, (error, result_tipo_inst_discente)=> {
+            disc.buscarTipoInstituicaoDiscente(result.id, id_situacao, (error, result_tipo_inst_discente)=> {
                 if(error){
                     reject(error);
                 }else{
@@ -922,6 +962,16 @@ exports.editarDiscente = (req, res, next) => {
 
 
   exports.RecuperarTituloDiscente = (req, res, next) => {
+    req.assert('id_situacao', 'id é obrigatório ser do tipo int').isInt();
+
+    let erros = req.validationErrors();
+    if(erros){
+        res.status(400).json({resultado: null, erro: erros});
+    return;
+    }
+
+    let id_situacao = parseInt(req.params.id_situacao);
+
     var object = [];      
     var total_titulo_discente = {};
 
@@ -939,7 +989,7 @@ exports.editarDiscente = (req, res, next) => {
                         console.log('Titulos: ', titulo_result);
                         async.each(titulo_result, function(result, callback){ 
 
-                            disc.buscarTituloDiscente(result.id_titulo, (error, result_titulo_discente)=> {
+                            disc.buscarTituloDiscente(result.id_titulo, id_situacao, (error, result_titulo_discente)=> {
                                 if(error){
                                     reject(error);
                                 }else{
@@ -980,6 +1030,16 @@ exports.editarDiscente = (req, res, next) => {
 
 
   exports.RecuperarTipoDiscente = (req, res, next) => {
+    req.assert('id_situacao', 'id é obrigatório ser do tipo int').isInt();
+
+    let erros = req.validationErrors();
+    if(erros){
+        res.status(400).json({resultado: null, erro: erros});
+    return;
+    }
+
+    let id_situacao = parseInt(req.params.id_situacao);
+
     var object = [];      
     var total_tipo_discente = {};
 
@@ -997,7 +1057,7 @@ exports.editarDiscente = (req, res, next) => {
                         console.log('Tipos Discentes: ', tipo_disc_result);
                         async.each(tipo_disc_result, function(result, callback){ 
 
-                            disc.buscarTipoDiscente(result.id_tipo_discente, (error, result_tipo_discente)=> {
+                            disc.buscarTipoDiscente(result.id_tipo_discente, id_situacao, (error, result_tipo_discente)=> {
                                 if(error){
                                     reject(error);
                                 }else{
@@ -1042,6 +1102,7 @@ exports.editarDiscente = (req, res, next) => {
 
     req.assert('id_tipo_discente', 'id é obrigatório').notEmpty();
     req.assert('id_tipo_discente', 'id é obrigatório ser do tipo int').isInt();
+    req.assert('id_situacao', 'id é obrigatório ser do tipo int').isInt();
 
     let erros = req.validationErrors();
     if(erros){
@@ -1050,6 +1111,7 @@ exports.editarDiscente = (req, res, next) => {
     }
 
     let id_tipo_discente = parseInt(req.params.id_tipo_discente); 
+    let id_situacao = parseInt(req.params.id_situacao);
     
     var object = [];      
     var discente_tipo_discente = {};
@@ -1060,7 +1122,7 @@ exports.editarDiscente = (req, res, next) => {
         function (resolve, reject) {
                
                 let disc = new DiscenteDao(req.connection);
-                disc.buscarIdDiscentePorTipoDiscente(id_tipo_discente, (error, disc_result) => { //retorna lista de ids dos discentes
+                disc.buscarIdDiscentePorTipoDiscente(id_tipo_discente, id_situacao, (error, disc_result) => { //retorna lista de ids dos discentes
                     if(error){
                         reject(error);
                     }else{
@@ -1137,7 +1199,6 @@ exports.editarDiscente = (req, res, next) => {
 
     let id_situacao = parseInt(req.params.id_situacao); 
     
-
     (new Promise(
         function (resolve, reject) {
                
@@ -1156,6 +1217,69 @@ exports.editarDiscente = (req, res, next) => {
             next(error);
         });
   }
+
+
+  exports.RecuperarQuantidadeDiscentePorSituacao = (req, res, next) => {
+
+    let situacao = [];
+    situacao = [
+        {
+            id: config.situacao_discente.ativo,
+            nome: "ativo"
+        },
+        {
+            id: config.situacao_discente.inativo,
+            nome: "inativo"
+        },
+        {
+            id:config.situacao_discente.egresso,
+            nome: "egresso"
+        }
+    ]
+    
+
+    console.log('situacao: ', situacao);
+
+    var object = [];      
+    var quantidade_situacao = {};
+    var total_quantidade_situacao = {};
+
+    async.each(situacao, function(result, callback){         
+        let disc = new DiscenteDao(req.connection);
+        disc.buscarQuantidadeDiscentePorSituacao(result.id, (error, total_result) => {
+            if(error){
+                console.log(error);
+                callback(error);
+            }else{
+                console.log('Total result: ', total_result); 
+                quantidade_situacao = {
+                    situacao : {
+                        id_situacao: result.id,
+                        nome: result.nome
+                    },
+                    total : total_result[0]['COUNT(id_discente)']
+                }
+
+                total_quantidade_situacao = {
+                    quantidade_situacao
+                }
+                console.log('total: ', total_quantidade_situacao);
+                object.push(total_quantidade_situacao); 
+                callback();
+            }
+        });      
+                        
+    }, function(err){
+        if(!err){
+            console.log('ok');
+            res.status(200).json({resultado: object, erro: null});
+        }else{
+            next(err);
+        }
+    
+    });            
+  }
+
 
 
   
