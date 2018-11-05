@@ -2,6 +2,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <title>Teste Dashboard</title>
 
     <% include partes/scripts-base %>
@@ -60,6 +61,7 @@
                              <tr>
                                  <td><%= discentes[i].nome + " " + discentes[i].sobrenome %></td>
                                  <td><%= discentes[i].email %></td>
+                                 <td><a href= "<%='../discentes/alterar?id='+discentes[i].id_discente%>" class="glyphicon glyphicon-pencil" TITLE="Alterar dados do discente"></a></td>
                              </tr>
                              <% } %>
                          </tbody>

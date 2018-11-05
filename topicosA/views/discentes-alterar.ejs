@@ -2,7 +2,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Discentes / Alterar</title>
+  <title>Discentes / Registro</title>
     <!-- Select2 -->
     <link rel="stylesheet" href="../bower_components/select2/dist/css/select2.min.css">
 
@@ -13,28 +13,42 @@
     
 
 </head>
-<body >
-    <div class="backSite wrapper ">
+<body class="hold-transition skin-blue sidebar-mini" >
+    <div class="wrapper ">
+         <% include partes/header %>
         
-        <div class="container " >
-                <div style="margin:30px;">
-                <section class="content-header" >
-                        <div class="col-xs-5 col-sm-4 col-md-3 col-lg-2" >
-                            <img src="https://www5.unioeste.br/eventos/identidadevisual/LOGOTIPOUNIOESTE.png" width="100%;" />
-                        </div>
-                        <h1 style="float:right;">
-                                <b>PPGTGS</b>
-                          
-                        </h1>
-                        
-                </section>
-                </div>
-                
-                <div class="col-md-12" style="margin-top:30px;">
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+          <section class="sidebar">
+            <!-- Sidebar Menu -->
+            <ul class="sidebar-menu" data-widget="tree">
+              <!-- Optionally, you can add icons to the links -->
+              <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
+              <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
+              <li class="treeview">
+                <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
+                  <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                  <li><a href="#">Link in level 2</a></li>
+                  <li><a href="#">Link in level 2</a></li>
+                </ul>
+              </li>
+            </ul>
+            <!-- /.sidebar-menu -->
+          </section>
+          <!-- /.sidebar -->
+        </aside>
+
+        <div class="content-wrapper" > 
+                    <section class="content container-fluid">
+
                         <!-- general form elements -->
                         <div class="box box-primary">
                           <div class="box-header with-border">
-                            <h1 class="box-title">Alterar Discente</h1>
+                            <h1 class="box-title">Alterar dados de Discente</h1>
                           </div>
                           <!-- /.box-header -->
                           <!-- form start -->
@@ -54,7 +68,7 @@
                               
                               <div id="div_discente_datanascimento" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
                                   <label >Data de nascimento *</label>
-                                  <input id="discente_datanascimento" type="text" class="form-control" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask>
+                                  <input id="discente_datanascimento" type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
                                   <span id="err_discente_datanascimento" class="help-block"></span>
                               </div>
                               <div id="div_discente_nascionalidade" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
@@ -62,7 +76,7 @@
                                     
                                     <select id="list_nacionalidade" class="form-control select2" style="width: 100%;" name="id_nacionalidade">
                                             <% for(var i = 0; i < paises.length ; i++){ %> 
-                                                <option value="<%= paises[i].id_pais %>"><%= paises[i].nascionalidade %> </option>
+                                                <option value="<%= paises[i].id_pais %>"><%= paises[i].nacionalidade %> </option>
                                             <% } %>
 
                                     </select>
@@ -73,9 +87,10 @@
                                   <label >RG</label>
                                   <input type="text" class="form-control" id="discente_rg">
                               </div>
-                              <div id="card_discente_cpf" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                              <div id="div_discente_cpf" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
                                   <label >CPF</label>
                                   <input type="text" class="form-control" id="discente_cpf">
+                                  <span id="err_discente_cpf" class="help-block"></span>  
                               </div>
                               <div id="card_discente_passaporte" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
                                   <label >Nº do Passaporte</label>
@@ -201,7 +216,7 @@
                                                 
                                                  
                                                 </table>
-                                              </div>
+                                        </div>
                                               <div class="col-xs-12 col-sm-12 col-md-4 col-lg-2 pull-right" >
                                                     <button id="button_add_ocupacao" type="button" class="btn btn-block btn-default " >Adicionar</button>
                                               </div>
@@ -274,23 +289,27 @@
                                 <label for="exampleInputEmail1">Email * </label>
                                 <input  type="email" class="form-control" id="discente_email" placeholder="exemplo@email.com">
                                 <span id="err_discente_email" class="help-block"></span> 
-                              </div>                              
+                              </div>
+                              <div id="div_discente_senha" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <label for="exampleInputPassword1">Senha * </label>
+                                <input type="password" class="form-control" id="discente_senha" placeholder="Password">
+                                <span id="err_discente_senha" class="help-block"></span>
+                              </div>
                             </div>
                             <!-- /.box-body -->
               
                             <div class="box-footer col-xs-12 col-sm-12 col-md-12 col-lg-12" >
-                              <button id="button_cadastrar" type="button" class="btn btn-primary" style="float: right;">Salva</button>
+                              <button id="button_cadastrar" type="button" class="btn btn-primary" style="float: right;">Salvar</button>
                             </div>
                           </form>
 
                           <div id="resultado"></div>
                 </div>
-        </div>
-        
+        </section>
     </div>
 </body>
 <script src="../bower_components/select2/dist/js/select2.full.min.js"></script>
-<script src="../javascripts/discente-registro.js"></script>
+<script src="../javascripts/discente-alterar.js"></script>
 
 <script>
         var lista_tipo_instituicao = '<%-JSON.stringify(tipos_instituicao) %>';

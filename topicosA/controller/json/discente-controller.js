@@ -39,36 +39,14 @@ exports.recuperarDiscenteId = (req, res, next) => {
                         resolve(discente_result);
                     }
                 });
-    })).then(result1 => {
+    })).then(result => {
         //console.log(result); console.log('aq');
-        //res.status(200).json({resultado: result, erro: null});
-
-
-        (new Promise(
-            function (resolve, reject) {
-                    //console.log('Administrador');
-                    let dci = new DiscenteCargoInstituicaoDao(req.connection);
-                    dci.recuperarDiscenteCargoInstituicaoPorIdDiscente(id_discente, (error, discente_result_cargo_inst) => {
-                        if(error){
-                            reject(error);
-                        }else{
-                            resolve(discente_result_cargo_inst);
-                        }
-                    });
-        })).then(result2 => {
-            res.status(200).json({resultado: result1, erro: null});
-
-        }).catch(error => {
-            next(error);
-        });
-
-
+        res.status(200).json({resultado: result, erro: null});
 
     }).catch(error => {
         next(error);
     });
 }
-
 exports.recuperarDiscenteNome = (req, res, next) => {
     req.checkParams('nome', 'nome é obrigatório').notEmpty();
     let erros = req.validationErrors();
@@ -600,8 +578,24 @@ exports.editarDiscente = (req, res, next) => {
         req.assert('nome', 'nome é obrigatório').notEmpty(); 
         req.assert('data_nascimento', 'data de nascimento é obrigatório').notEmpty();
         req.assert('data_nascimento', 'data de nascimento incorreta').isISO8601();
-        req.assert('rg', 'rg é obrigatório').notEmpty();
-        req.assert('cpf', 'cpf é obrigatório').notEmpty();
+        req.assert('id_nacionalidade', 'Nacionalidade é obrigatório').notEmpty();
+        req.assert('id_sexo', 'Sexo é obrigatório').notEmpty();
+        req.assert('endereco_id_pais', 'País é obrigatório').notEmpty();
+        if(req.body.endereco_id_pais != undefined && req.body.endereco_id_pais != null && parseInt(req.body.endereco_id_pais) == 1){
+        if(req.body.cpf != null && req.body.cpf != undefined && req.body.cpf.length > 0 && CPF.isValid(req.body.cpf) != true){
+            var responseJSON = new Object();
+            var erro_lista = [];
+            var erro = new Object();
+            erro.param = "cpf";
+            erro.msg = 'CPF em formato inválido';
+            erro_lista.push(erro);
+            responseJSON.erro = erro_lista;
+            return res.status(400).json({resultado: null, erro : erro_lista});
+        }
+    }
+    else if(req.body.endereco_id_pais != undefined && req.body.endereco_id_pais != null && parseInt(req.body.endereco_id_pais) != 1){
+        req.assert('passaporte', 'Passaporte é obrigatório').notEmpty();
+    }
         req.assert('username', 'username é obrigatório').notEmpty();
         req.assert('senha', 'senha é obrigatório').notEmpty();
         req.assert('email', 'email é obrigatório').notEmpty();
