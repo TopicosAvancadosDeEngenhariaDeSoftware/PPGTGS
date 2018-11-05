@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-
+/*
   var graficoDados = new Object();
   graficoDados.titulo = "Discentes";
   graficoDados.subtitulo = "";
@@ -26,7 +26,11 @@ router.get('/', function(req, res, next) {
 
   graficoDados.tituloY = "Numero de discentes";
 
-  return res.render('base', {email : req.email, grafico :graficoDados });
+  return res.render('base', {email : req.email, grafico :graficoDados }); */
+
+  res.redirect('/coordenador/indicadores');
+
+
 });
 
 module.exports = router;
