@@ -351,7 +351,12 @@ recuperarDiscenteConformeTipoDiscente(id_discente, id_tipo_discente, callback){
 }
 
 buscarDiscentePorSituacao(id_situacao, callback){
-    var sql = "SELECT * from Discente WHERE situacao = ?;"
+    if(id_situacao == 0){
+        var sql = "SELECT * from Discente;"
+    }else{
+        var sql = "SELECT * from Discente WHERE situacao = ?;"
+    }
+   
     var params = [];
     params.push(id_situacao);
     sql = mysql.format(sql, params);
@@ -379,7 +384,6 @@ buscarQuantidadeDiscentePorSituacao(id_situacao, callback){
         }
     });
 }
-
 
 
 }
