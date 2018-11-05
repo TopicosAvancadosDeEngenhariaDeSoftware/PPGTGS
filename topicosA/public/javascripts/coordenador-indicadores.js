@@ -22,6 +22,12 @@ $(function () {
     });
 
 
+        
+    $('#todos_discentes_card').on( "click", function() {
+        window.location.href = "../../discentes/filtro?idSituacao="+$('#filtro_situacao').val();
+        window.location.assign("../../discentes/filtro?idSituacao="+$('#filtro_situacao').val());
+    });
+
 });
 
 function buscarIndicadorNumeroAlunosPorTipoInstituicao(){
