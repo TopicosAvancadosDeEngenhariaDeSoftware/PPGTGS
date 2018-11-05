@@ -63,7 +63,7 @@ function buscarIndicadorNumeroAlunosPorTipoInstituicao(){
             var count_publica = (obj_publica.count / soma * 100).toFixed(1);
             if(soma == 0) count_publica = 0;
             $('#publica_indicador_por').text((""+ count_publica));
-            $('#publica_indicador_text').text(""+ obj_publica.count+" de instituições publicas");
+            $('#publica_indicador_text').text(""+ obj_publica.count+" de instituições públicas");
 
            
             $('#total_indicador_por').text((""+soma));
