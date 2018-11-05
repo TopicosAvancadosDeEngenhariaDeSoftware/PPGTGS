@@ -2,7 +2,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Teste Dashboard</title>
+  <title>Indicadores</title>
 
     <% include partes/scripts-base %>
 
@@ -19,8 +19,8 @@
             <!-- Sidebar Menu -->
             <ul class="sidebar-menu" data-widget="tree">
               <!-- Optionally, you can add icons to the links -->
-              <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-              <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
+              <li class="active"><a href="/coordenador/indicadores"><i class="fa fa-link"></i> <span>Indicadores</span></a></li>
+              <!--<li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
               <li class="treeview">
                 <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
                   <span class="pull-right-container">
@@ -31,7 +31,7 @@
                   <li><a href="#">Link in level 2</a></li>
                   <li><a href="#">Link in level 2</a></li>
                 </ul>
-              </li>
+              </li>-->
             </ul>
             <!-- /.sidebar-menu -->
           </section>
@@ -130,6 +130,34 @@
                     <!--<a href="#" class="small-box-footer"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Mais informações </font></font><i class="fa fa-arrow-circle-right"></i></a>-->
                   </div>
                 </div>
+
+                <div class="col-lg-4 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-green">
+                      <div class="inner">
+                        <h3><font style="vertical-align: inherit;"><font id="brasileiro_indicador" style="vertical-align: inherit;">53 </font></font><sup style="font-size: 20px"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">%</font></font></sup></h3>
+                        <p><font style="vertical-align: inherit;"><font id="brasileiro_indicador_text" style="vertical-align: inherit;font-size: 12px;">Taxa de rejeição</font></font></p>
+                      </div>
+                      <div class="icon">
+                        <i class="ion ion-ios-book"></i>
+                      </div>
+                      <!--<a href="#" class="small-box-footer"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Mais informações </font></font><i class="fa fa-arrow-circle-right"></i></a>-->
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4 col-xs-6">
+                      <!-- small box -->
+                      <div class="small-box bg-blue">
+                        <div class="inner">
+                          <h3><font style="vertical-align: inherit;"><font id="outros_indicador" style="vertical-align: inherit;">53 </font></font><sup style="font-size: 20px"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">%</font></font></sup></h3>
+                          <p><font style="vertical-align: inherit;"><font id="outros_indicador_text" style="vertical-align: inherit;font-size: 12px;">Taxa de rejeição</font></font></p>
+                        </div>
+                        <div class="icon">
+                          <i class="ion ion-ios-book"></i>
+                        </div>
+                        <!--<a href="#" class="small-box-footer"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Mais informações </font></font><i class="fa fa-arrow-circle-right"></i></a>-->
+                      </div>
+                    </div>
                 
               </div>
             </div>
@@ -166,7 +194,7 @@
                 <div class="box box-info ">
                   <div class="box-header ui-sortable-handle" >
                     <i class="fa fa-tag"></i>
-                    <h3 class="box-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Número de discentes por Nascionalidade</font></font></h3>
+                    <h3 class="box-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Número de discentes por Nacionalidade</font></font></h3>
                   </div>
                     <div class="box-body">
                       <div id="container_nascionalidade" style="min-width: 310px; height: 250px; margin: 0 auto"></div>
