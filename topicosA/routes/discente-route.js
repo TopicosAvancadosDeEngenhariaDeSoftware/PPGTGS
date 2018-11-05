@@ -4,6 +4,9 @@ var controllerDiscente = require('../controller/discente-controller');
 
 /* GET home page. */
 router.get('/', controllerDiscente.consultaTodosDiscente);
+
+router.get('/filtro', controllerDiscente.consultaDiscenteFiltro);
+
 router.get('/registro', controllerDiscente.cadastrarDiscente);
 router.get('/registro_ok', controllerDiscente.cadastrarOk);
 router.get('/alterar', controllerDiscente.alterarDiscente);

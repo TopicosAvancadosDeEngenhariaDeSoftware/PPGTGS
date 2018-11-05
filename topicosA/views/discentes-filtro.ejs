@@ -1,0 +1,113 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Teste Dashboard</title>
+
+    <% include partes/scripts-base %>
+
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        <% include partes/header %>
+        
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+          <section class="sidebar">
+            <!-- Sidebar Menu -->
+            <ul class="sidebar-menu" data-widget="tree">
+              <!-- Optionally, you can add icons to the links -->
+              <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Discentes</span></a></li>
+              <!--<li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
+              <li class="treeview">
+                <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
+                  <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                  <li><a href="#">Link in level 2</a></li>
+                  <li><a href="#">Link in level 2</a></li>
+                </ul>
+              </li>-->
+            </ul>
+            <!-- /.sidebar-menu -->
+          </section>
+          <!-- /.sidebar -->
+        </aside>
+      
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+          <!-- Content Header (Page header) -->
+          <section class="content-header">
+            <h1>
+              Discentes
+              
+            </h1>
+            
+          </section>
+
+          <section class="col-lg-12">
+                <div class="box box-info box-body">
+                    <div class="box-header ui-sortable-handle" >
+                        <i class="fa fa-pencil"></i>
+                        <h3 class="box-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Filtros: </font></font></h3>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Situacao do discentes</label>
+                            <select class="form-control" id="filtro_situacao">
+                              <option value="0">Todos</option>
+                              <option value="1">Ativo</option>
+                              <option value="2">Inativo</option>
+                              <option value="3">Egresso</option>
+                            </select>
+                          </div>
+                    </div>
+                    <div id="carregando_filtro" class="col-lg-6 remover">
+                        <label>&nbsp;</label>
+                        <div class="form-control" style="color:green;">
+                          Carregando...
+                        </select>
+                    </div>
+                </div>
+            </section>
+      
+          <!-- Main content -->
+          <section class="content container-fluid col-lg-12 ">
+                <div class="box-body table-responsive no-padding box box-info">
+                    <table  class="table table-hover">
+                        <tbody id="tabela_discentes">
+                            <tr>
+                                <th>Nome</th>
+                                <th>Lattes</th>
+                            </tr>
+                            <!-- for(var i = 0 ; i< discentes.length ;i++){ 
+                             <tr>
+                                 <td>= discentes[i].nome + " " + discentes[i].sobrenome </td>
+                                 <td>= discentes[i].email </td>
+                             </tr>
+                              } -->
+                         </tbody>
+                 
+                    </table>
+                </div>
+      
+          </section>
+          <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+      
+        
+      
+       
+        
+      </div>
+      </body>
+
+      <script>
+            var filtro_idSituacao = '<%- idSituacao  %>';
+            $('#filtro_situacao').val(filtro_idSituacao);
+      </script>
+      <script src="../javascripts/discente-filtro.js"></script>
+      </html>
