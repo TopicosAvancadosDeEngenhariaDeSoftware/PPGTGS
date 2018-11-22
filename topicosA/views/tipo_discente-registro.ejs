@@ -1,0 +1,68 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Tipo Discentes / Registro</title>
+    <!-- Select2 -->
+    <link rel="stylesheet" href="../bower_components/select2/dist/css/select2.min.css">
+
+    <% include partes/scripts-base %>
+    <script src="../plugins/input-mask/jquery.inputmask.js"></script>
+    <script src="../plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+    <script src="../plugins/input-mask/jquery.inputmask.extensions.js"></script>
+    
+
+</head>
+<body >
+    <div class="backSite wrapper ">
+        
+        <div class="container " >
+                <div style="margin:30px;">
+                <section class="content-header" >
+                        <div class="col-xs-5 col-sm-4 col-md-3 col-lg-2" >
+                            <img src="https://www5.unioeste.br/eventos/identidadevisual/LOGOTIPOUNIOESTE.png" width="100%;" />
+                        </div>
+                        <h1 style="float:right;">
+                                <b>PPGTGS</b>
+                          
+                        </h1>
+                        
+                </section>
+                </div>
+                
+                <div class="col-md-12" style="margin-top:30px;">
+                        <!-- general form elements -->
+                        <div class="box box-primary">
+                          <div class="box-header with-border">
+                            <h1 class="box-title">Registro do Tipo Discente</h1>
+                          </div>
+                          <!-- /.box-header -->
+                          <!-- form start -->
+                          <form role="form" >
+                            <div class="box-body">
+                                
+                              <div id="div_discente_tipo" class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6" >
+                                    <label >Nome *</label>
+                                    <input type="text" class="form-control" id="discente_tipo" placeholder="">
+                                    <span id="err_discente_tipo" class="help-block"></span>
+                              </div>
+                              
+                            </div>
+                            <!-- /.box-body -->
+              
+                            <div class="box-footer col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                                <button id="button_cadastrar" type="button" class="btn btn-primary" style="float: right;">Cadastrar</button>
+                            </div>
+
+                          </form>
+
+                          <div id="resultado"></div>
+                </div>
+        </div>
+        
+    </div>
+</body>
+<script src="../bower_components/select2/dist/js/select2.full.min.js"></script>
+<script src="../javascripts/tipo_discente-registro.js"></script>
+
+</html>
