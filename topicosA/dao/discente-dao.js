@@ -30,7 +30,7 @@ module.exports = class DiscenteDao{
         params.push(id_discente);
         sql = mysql.format(sql, params);
         this._connection.query(sql, (error, results) =>{
-            console.log('RESULTs ',results);
+            //console.log('RESULTs ',results);
 
             if(error){
                 callback(error, null);

@@ -14,7 +14,7 @@ module.exports = class DiscenteCargoInstituicaoDao{
             if(error){
                 callback(error, null);
             }else{
-                callback(null, results[0] ? results[0] : null);
+                callback(null, results ? results : null);
             }
         });
     }
