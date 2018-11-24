@@ -13,6 +13,15 @@ exports.recuperarDiscentesPendentes = async (req, res, next) => {
         });
 };
 
+//dependo da organização das views Discentes, desnecessário
+exports.recuperarDiscentesAceitos = async (req, res, next) => {
+        var dDao = new discenteDao(req.connection);
+        dDao.recuperarDiscentesAceitos((err, resultados) =>{
+                if(err) next(err);
+                res.render('secretaria-aceitos', {discentes : resultados});
+        });
+};
+
 exports.aprovarDiscente = async (req, res, next) => {
         var dDao = new discenteDao(req.connection);
         dDao.aprovarDiscente((err, resultados) =>{
