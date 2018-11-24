@@ -5,6 +5,7 @@ const titulosDao = require('../dao/titulo-dao');
 const docentesDao = require('../dao/docente-dao');
 const instituicaoDao = require('../dao/instituicao-dao');
 const discenteDao = require('../dao/discente-dao');
+const tipoDiscenteDao = require('../dao/tipo-discente-dao');
 
 const instituicaoModel = require('../model/Instituicao');
 
@@ -58,7 +59,14 @@ exports.cadastrarDiscente = async (req, res, next) => {
                                         lista_tipo_instituicao.push(config.tipo_instituicao.publica);
                                         lista_tipo_instituicao.push(config.tipo_instituicao.privada);
 
-                                        res.render('discentes-registro', {paises : resultado_paises, titulos : resultados_titulos, docentes: resultados_docentes, instituicoes : lista_instituicoes, tipos_instituicao : lista_tipo_instituicao});                                });
+                                        var tipoDiscenteD = new tipoDiscenteDao(req.connection);
+                                        tipoDiscenteD.recuperarTiposDiscente((err, results_tipos_discentes) =>{
+                                                if(err) return next(err);
+                                                res.render('discentes-registro', {tipos_discente: results_tipos_discentes,  paises : resultado_paises, titulos : resultados_titulos, docentes: resultados_docentes, instituicoes : lista_instituicoes, tipos_instituicao : lista_tipo_instituicao});                                });
+                                                
+                                        });
+
+                                        
 
                         });
                 });      
