@@ -27,9 +27,13 @@ module.exports = class TipoDiscenteDao{
         params.push(id_tipo_discente);
         sql = mysql.format(sql, params);
         this._connection.query(sql, (error, results) =>{
-            callback(error, results);
+            if(error){
+                callback(error, null);
+            }else{
+                callback(error,results[0] ? results[0] : null);
+            }
 
         });
-}
+    }
 
 }

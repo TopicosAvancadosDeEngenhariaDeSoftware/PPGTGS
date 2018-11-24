@@ -31,7 +31,6 @@ module.exports = class DiscenteDao{
         sql = mysql.format(sql, params);
         this._connection.query(sql, (error, results) =>{
             //console.log('RESULTs ',results);
-
             if(error){
                 callback(error, null);
             }else{
@@ -176,13 +175,17 @@ module.exports = class DiscenteDao{
         });
 }
 
-excluirDiscente(id_discente, callback){
-    var sql = "DELETE FROM Discente WHERE id_discente = ? ;"
+excluirDiscente(id_discente, callback){ //exclusão lógica
+    var sql = "UPDATE Discente SET situacao = 2 WHERE id_discente = ? ;"
     var params = [];
     params.push(id_discente);
     sql = mysql.format(sql, params);
     this._connection.query(sql, (error, results) =>{
-        callback(error, results);
+        if(error){
+            callback(error, null);
+        }else{
+            callback(null, true ? true : null);
+        }
 
     });
 }

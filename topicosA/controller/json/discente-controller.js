@@ -13,6 +13,8 @@ const DiscenteCargoInstituicaoDao = require('../../dao/discente-cargo-instituica
 const paisDao = require('../../dao/pais-dao');
 const tituloDao = require('../../dao/titulo-dao');
 const tipoDiscenteDao = require('../../dao/tipo-discente-dao');
+const DiscenteTipoDiscenteDao = require('../../dao/discente-tipo-discente-dao');
+const docenteDao = require('../../dao/docente-dao');
 const async = require("async");
 var CPF = require("cpf_cnpj").CPF;
 const moment = require('moment');
@@ -29,7 +31,12 @@ exports.recuperarDiscenteId = (req, res, next) => {
     //console.log('id param', idparams);
 
     let pacote = {};
-    let resposta = [];
+     let resposta = [];
+     let dados_pessoais = {};
+     let lista_ocupacoes = {};
+     let resp = [];
+
+     let dados_pessoais_discente;
 
     (new Promise(
         function (resolve, reject) {
@@ -46,28 +53,33 @@ exports.recuperarDiscenteId = (req, res, next) => {
         //console.log(result); console.log('aq');
         //res.status(200).json({resultado: result, erro: null});
 
-        pacote.id_discente = result.id_discente;
-        pacote.nome = result.nome;
-        pacote.sobrenome = result.sobrenome;
-        pacote.data_nascimento = result.data_nascimento;
-        pacote.rg = result.rg;
-        pacote.cpf = result.cpf;
-        pacote.username = result.username;
-        pacote.senha = result.senha;
-        pacote.link_lattes = result.link_lattes;
-        pacote.email = result.email;
-        pacote.id_endereco = result.id_endereco;
-        pacote.numero_residencia = result.numero_residencia;
-        pacote.complemento = result.complemento;
-        pacote.id_docente = result.id_docente;
-        pacote.isAceito = result.isAceito;
-        pacote.situacao = result.situacao;
-        pacote.id_titulo = result.titulo;
-        pacote.sexo = result.sexo;
-        pacote.telefone = result.telefone;
-        pacote.passaporte = result.passaporte;
-        pacote.id_nacionalidade = result.id_nacionalidade;
-        resposta.push(pacote);
+        dados_pessoais_discente = result;
+
+        dados_pessoais = {
+            id_discente : dados_pessoais_discente.id_discente,
+            nome : dados_pessoais_discente.nome,
+            sobrenome : dados_pessoais_discente.sobrenome,
+            data_nascimento : dados_pessoais_discente.data_nascimento,
+            rg : dados_pessoais_discente.rg,
+            cpf : dados_pessoais_discente.cpf,
+            username : dados_pessoais_discente.username,
+            senha : dados_pessoais_discente.senha,
+            link_lattes : dados_pessoais_discente.link_lattes,
+            email : dados_pessoais_discente.email,
+            id_endereco : dados_pessoais_discente.id_endereco,
+            numero_residencia : dados_pessoais_discente.numero_residencia,
+            complemento : dados_pessoais_discente.complemento,
+            id_docente : dados_pessoais_discente.id_docente,
+            isAceito : dados_pessoais_discente.isAceito,
+            situacao : dados_pessoais_discente.situacao,
+            id_titulo : dados_pessoais_discente.titulo,
+            sexo : dados_pessoais_discente.sexo,
+            telefone : dados_pessoais_discente.telefone,
+            passaporte : dados_pessoais_discente.passaporte,
+            id_nacionalidade : dados_pessoais_discente.id_nacionalidade
+        }
+
+        console.log('dados pessoais: ', dados_pessoais);
 
         (new Promise(
             function (resolve, reject) {
@@ -86,54 +98,50 @@ exports.recuperarDiscenteId = (req, res, next) => {
             //pegar a lista de instituições e retornar as instituicoes
             //pegar lista de cargos e retornar os cargos 
            
-            let instituicao = {};
-            let cargo = {};
-
-            
 
             (new Promise(function (resolve, reject) {
                 async.each(result_lista_instituicao_cargo, function(result, callback){
 
                     (new Promise(
                         function (resolve, reject) {
-                                //console.log('Administrador');
-                                let i = new instituicaoDao(req.connection);
-                                i.recuperarInstituicaoPorId(result.id_instituicao, (error, discente_instituicao_result) => { //buscar os dados da instituicao
+                                //console.log('Administrador');     
+                                let c = new cargoDiscenteDao(req.connection);
+                                c.recuperarCargoDiscentePorId(result.id_cargo_discente, (error, discente_cargo_result) => {
                                     if(error){
                                         reject(error);
                                     }else{
-                                    
-                                            instituicao = {
-                                                id_instituicao: result.id_instituicao,
-                                                nome_instituicao: discente_instituicao_result.nome,
-                                                sigla_intituicao: discente_instituicao_result.sigla,
-                                                tipo_instituicao: discente_instituicao_result.id_tipo_instituicao
-                                            }
-                                        
-                                        console.log('Discente instituicao: ', discente_instituicao_result);
-                                        let c = new cargoDiscenteDao(req.connection);
-                                        c.recuperarCargoDiscentePorId(result.id_cargo_discente, (error, discente_cargo_result) => {
+
+                                        let i = new instituicaoDao(req.connection);
+                                        i.recuperarInstituicaoPorId(result.id_instituicao, (error, discente_instituicao_result) => { //buscar os dados da instituicao
                                             if(error){
                                                 reject(error);
                                             }else{
-                                                cargo = {
-                                                    id_cargo: result.id_cargo_discente,
-                                                    nome_cargo: discente_cargo_result
+                                            
+                                                lista_ocupacoes ={
+                                                    cargo : {
+                                                        id_cargo: result.id_cargo_discente,
+                                                        nome_cargo: discente_cargo_result.nome,
+                                                        instituicao : {
+                                                            id_instituicao: result.id_instituicao,
+                                                            nome_instituicao: discente_instituicao_result.nome,
+                                                            sigla_intituicao: discente_instituicao_result.sigla,
+                                                            tipo_instituicao: discente_instituicao_result.id_tipo_instituicao
+                                                        }
+                                                    }
                                                 }
 
-                                                pacote = {
-                                                    intituicao: instituicao,
-                                                    cargo: cargo
-                                                }
-                                                resposta.push(pacote);
+                                                
+                                                resposta.push(lista_ocupacoes);
                                                 resolve(resposta);
                                             }
                                         });
-
-                                    
                                     }
                                 });
+
+                                    
+                                 
                     })).then(result => {
+
                         callback();
 
 
@@ -144,6 +152,7 @@ exports.recuperarDiscenteId = (req, res, next) => {
                 }, function(err){
                     if(!err){
                         console.log('FINAL: ', resposta);
+                       
                         resolve(resposta);
                     }else{
                         reject(err);
@@ -151,9 +160,160 @@ exports.recuperarDiscenteId = (req, res, next) => {
                 
                 });
             })).then(result => {
+                dados_pessoais.lista_ocupacoes = result;
+                //res.status(200).json({resultado: dados_pessoais, erro: null});
 
-                console.log('aaa:> ',result);
-                res.status(200).json({resultado: result, erro: null});
+                (new Promise(
+                    function (resolve, reject) {
+                            //console.log('Administrador');
+                            let dtc = new DiscenteTipoDiscenteDao(req.connection);
+                            dtc.recuperarDiscenteTipoDiscentePorIdDiscente(id_discente, (error, discente_tipo_discente_result) => { //retorna lista de cargos e instituição do discente
+                                if(error){
+                                    reject(error);
+                                }else{
+                                    console.log('Discente cargo instituicao: ', discente_tipo_discente_result);
+                                    resolve(discente_tipo_discente_result);
+                                }
+                            });
+                })).then(result_discente_tipo_discente => {
+                    //console.log('result: ', result_lista_instituicao_cargo[0].id_discente,result_lista_instituicao_cargo[0].id_instituicao, result_lista_instituicao_cargo[0].id_cargo_discente, result_lista_instituicao_cargo[1].id_instituicao);
+                    //pegar a lista de instituições e retornar as instituicoes
+                    //pegar lista de cargos e retornar os cargos 
+                   
+        
+                    (new Promise(function (resolve, reject) {
+                        async.each(result_discente_tipo_discente, function(result, callback){
+        
+                            (new Promise(
+                                function (resolve, reject) {
+                                        //console.log('Administrador');     
+                                        let td = new tipoDiscenteDao(req.connection);
+                                        td.buscarTipoDiscenteId(result.id_tipo_discente, (error, tipo_discente_result) => {
+                                            if(error){
+                                                reject(error);
+                                            }else{
+                                                let tipo_discente = {};
+                                               
+
+                                                console.log('tipo discente: ', tipo_discente_result);
+
+                                                tipo_discente = {
+                                                    data_inicial : result.data_inicial,
+                                                    data_final : result.data_final,
+                                                    isAtual : result.isAtual,
+                                                    id_tipo_discente : tipo_discente_result.id_tipo_discente,
+                                                    nome_tipo_discente : tipo_discente_result.nome
+                                                }
+
+                                                
+                                                resp.push(tipo_discente);
+                                                resolve(resp);
+                                            }
+                                        });
+        
+                                            
+                                         
+                            })).then(result => {
+                                console.log('oi');
+                                callback();
+        
+        
+                            }).catch(error => {
+                                console.log('error: ', error);
+                                callback(error);
+                            }); 
+        
+                        }, function(err){
+                            if(!err){
+                                console.log('FINAL: ', resp);
+                               
+                                resolve(resp);
+                            }else{
+                                console.log('error: ', err);
+                                reject(err);
+                            }
+                        
+                        });
+                    })).then(result => {
+                        dados_pessoais.tipo_discente = result;
+                        //res.status(200).json({resultado: dados_pessoais, erro: null});
+                        
+                        (new Promise(
+                            function (resolve, reject) {
+                                    //console.log('Administrador');     
+                                    let tit = new tituloDao(req.connection);
+                                    tit.recuperarTituloId(dados_pessoais_discente.id_titulo, (error, titulo_discente) => {
+                                        if(error){
+                                            reject(error);
+                                        }else{
+                                            
+                                           console.log('titulo: ', titulo_discente);
+                                           dados_pessoais.titulo = titulo_discente.nome;
+                                            resolve(dados_pessoais);
+                                        }
+                                    });      
+                        })).then(result => {
+                            //res.status(200).json({resultado: dados_pessoais, erro: null});
+
+                            (new Promise(
+                                function (resolve, reject) {
+                                        //console.log('Administrador');     
+                                        let doc = new docenteDao(req.connection);
+                                        doc.recuperarDocenteId(dados_pessoais_discente.id_docente, (error, docente_discente) => {
+                                            if(error){
+                                                reject(error);
+                                            }else{
+                                                
+                                            console.log('docente: ', docente_discente);
+                                            dados_pessoais.orientador = docente_discente.nome;
+                                                resolve(dados_pessoais);
+                                            }
+                                        });      
+                            })).then(result => {
+                                //res.status(200).json({resultado: dados_pessoais, erro: null});
+
+
+
+                                (new Promise(
+                                    function (resolve, reject) {
+                                            //console.log('Administrador');     
+                                            let nac = new paisDao(req.connection);
+                                            nac.recuperarPaisId(dados_pessoais_discente.id_nacionalidade, (error, nacionalidade_discente) => {
+                                                if(error){
+                                                    reject(error);
+                                                }else{
+                                                    
+                                                console.log('nacio: ', nacionalidade_discente);
+                                                dados_pessoais.nacionalidade = nacionalidade_discente.nacionalidade;
+                                                    resolve(dados_pessoais);
+                                                }
+                                            });      
+                                })).then(result => {
+                                    res.status(200).json({resultado: dados_pessoais, erro: null});
+                                }).catch(error => {
+                                    console.log('error: ', error);
+                                    callback(error);
+                                }); 
+
+
+
+                            }).catch(error => {
+                                console.log('error: ', error);
+                                callback(error);
+                            }); 
+
+                        }).catch(error => {
+                            console.log('error: ', error);
+                            callback(error);
+                        }); 
+
+                    }).catch(error => {
+                        next(error);
+                    });  
+                
+                }).catch(error => {
+                    next(error);
+                });  
 
             }).catch(error => {
                 next(error);
@@ -167,6 +327,7 @@ exports.recuperarDiscenteId = (req, res, next) => {
         next(error);
     });
 }
+
 exports.recuperarDiscenteNome = (req, res, next) => {
     req.checkParams('nome', 'nome é obrigatório').notEmpty();
     let erros = req.validationErrors();

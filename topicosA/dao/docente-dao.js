@@ -1,6 +1,6 @@
 var mysql = require('mysql');  
 
-module.exports = class DoscenteDao{
+module.exports = class DocenteDao{
     constructor(connection){
         this._connection = connection;
     }
@@ -17,4 +17,19 @@ module.exports = class DoscenteDao{
             }
         });
     }
+
+    recuperarDocenteId(id_docente,callback){
+        var sql = "SELECT nome FROM Docente where id_docente = ?;"
+        var params = [];
+        params.push(id_docente);
+        sql = mysql.format(sql, params);
+        this._connection.query(sql, (error, results) =>{
+            if(error){
+                callback(error, null);
+            }else{
+                callback(error,results[0] ? results[0] : null);
+            }
+        });
+    }
+    
 }
