@@ -364,11 +364,13 @@ $(function () {
             },
             error: function(msg){
                 //alert(JSON.stringify(msg));
+                console.log(msg);
+                console.log(JSON.stringify(msg));
+                //msg = JSON.parse(msg);
                 //$('#resultado').html(JSON.stringify(msg)); 
                 //$('#resultado').html(JSON.stringify(msg.responseJSON.erro));
                 if(msg.responseJSON.erro != null && msg.responseJSON.erro != undefined && msg.responseJSON.erro.length > 0 ){
-
-                    for(var i = 0; 0 < msg.responseJSON.erro.length ; i++){
+                    for(var i = 0; i < msg.responseJSON.erro.length ; i++){
                         if(msg.responseJSON.erro[i].param != undefined && msg.responseJSON.erro[i].param !=  null)
                         switch(msg.responseJSON.erro[i].param){
                             case "cpf":

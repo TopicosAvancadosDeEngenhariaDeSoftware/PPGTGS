@@ -18,10 +18,12 @@ var index_Router = require('./routes/index');
 var login_Route = require('./routes/login-route');
 var utils_Route = require('./routes/utils-route');
 var discente_Route = require('./routes/discente-route');
+var secretaria_Route = require('./routes/secretaria-route');
 var coordenador_Route = require('./routes/coordenador-route');
 
 var tipo_discente_json_Route = require('./routes/json/tipo-discente-route');
 var discente_json_Route = require('./routes/json/discente-route');
+var secretaria_json_Route = require('./routes/json/secretaria-route');
 var cidade_json_Route = require('./routes/json/cidade-route');
 var estado_json_Route = require('./routes/json/estado-route');
 
@@ -68,10 +70,12 @@ app.use('/',login_Route);
 app.use('/',utils_Route);
 
 app.use('/discentes/',discente_Route);
+app.use('/secretaria/',secretaria_Route);
 app.use('/coordenador/', coordenador_Route);
 
 //Lugar de teste dos post get etc /json/
 app.use('/json/',discente_json_Route);
+app.use('/json/',secretaria_json_Route);
 app.use('/json/',tipo_discente_json_Route);
 app.use('/json/',cidade_json_Route);
 app.use('/json/',estado_json_Route);

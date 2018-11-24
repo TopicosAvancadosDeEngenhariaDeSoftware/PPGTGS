@@ -24,6 +24,34 @@ module.exports = class DiscenteDao{
         });
     }
 
+    recuperarDiscentesPendentes(callback){
+        var sql = "SELECT * FROM Discente WHERE isAceito IS NULL OR isAceito=0;"
+        var params = [];
+        sql = mysql.format(sql, params);
+        this._connection.query(sql, (error, results) =>{
+            if(error){
+                callback(error, null);
+            }else{
+                callback(error,results);
+            }
+            
+        });
+    }
+
+    recuperarDiscentesAceitos(callback){
+        var sql = "SELECT * FROM Discente WHERE isAceito=1;"
+        var params = [];
+        sql = mysql.format(sql, params);
+        this._connection.query(sql, (error, results) =>{
+            if(error){
+                callback(error, null);
+            }else{
+                callback(error,results);
+            }
+            
+        });
+    }
+
     recuperarDiscentePorId(id_discente, callback){
         var sql = "SELECT * FROM Discente WHERE id_discente = ? ;"
         var params = [];
@@ -165,6 +193,21 @@ module.exports = class DiscenteDao{
         params.push(discente.id_titulo);
         params.push(discente.sexo);
         params.push(discente.telefone);
+        params.push(discente.id_discente);
+       
+        sql = mysql.format(sql, params);
+
+        this._connection.query(sql, (error, results) =>{
+            console.log('Resultado',results);
+            callback(error, discente);
+        });
+}
+
+
+aprovarDiscente(discente, callback){
+        var sql = "UPDATE discente SET isAceito = 1 WHERE id_discente = ?;"
+
+        var params = [];
         params.push(discente.id_discente);
        
         sql = mysql.format(sql, params);
