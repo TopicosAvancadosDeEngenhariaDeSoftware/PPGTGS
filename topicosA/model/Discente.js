@@ -190,6 +190,11 @@ module.exports = class Discente{
 		this._numero_residencia = parseInt(params.endereco_num_residencia) != null ? parseInt(params.endereco_num_residencia) : null;
 		this._complemento = params.endereco_complemento != null ? params.endereco_complemento : null;
 		this._id_docente = parseInt(params.id_orientador);
+
+		if (params.id_orientador == undefined || params.id_orientador == null){
+			this._id_docente = parseInt(params.id_docente);
+		}
+
 		this._is_aceito = null;
 		this._situacao = parseInt(params.situacao);
         this._id_titulo = parseInt(params.id_titulo);

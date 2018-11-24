@@ -174,11 +174,12 @@ module.exports = class DiscenteDao{
     }
 
     editarDiscente(discente, callback){
-        var sql = "UPDATE Discente SET nome = ?, data_nascimento = ?, rg = ?, cpf = ?, username = ?, "+
-        "senha = ?, link_lattes = ?, email = ?, id_endereco = ?, numero_residencia = ?, complemento = ?, "+
-        "id_docente = ?, isAceito = ?, situacao = ?, id_titulo = ?, sexo = ?, telefone = ? WHERE id_discente = ?;"
+        var sql = "UPDATE Discente SET nome = ?, sobrenome = ?, data_nascimento = ?, rg = ?, cpf = ?, username = ?, "+
+        "senha = ?, link_lattes = ?, email = ?, "+
+        "id_docente = ?, isAceito = ?, id_titulo = ?, sexo = ?, telefone = ? WHERE id_discente = ?;"
         var params = [];
         params.push(discente.nome);
+        params.push(discente.sobrenome);
         params.push(discente.data_nascimento);
         params.push(discente.rg);
         params.push(discente.cpf);
@@ -186,12 +187,12 @@ module.exports = class DiscenteDao{
         params.push(discente.senha);
         params.push(discente.link_lattes);
         params.push(discente.email);
-        params.push(discente.id_endereco);
-        params.push(discente.numero_residencia);
-        params.push(discente.complemento);
+        // params.push(discente.id_endereco);
+        // params.push(discente.numero_residencia);
+        // params.push(discente.complemento);
         params.push(discente.id_docente);
         params.push(discente.isAceito);
-        params.push(discente.situacao);
+        // params.push(discente.situacao);
         params.push(discente.id_titulo);
         params.push(discente.sexo);
         params.push(discente.telefone);
