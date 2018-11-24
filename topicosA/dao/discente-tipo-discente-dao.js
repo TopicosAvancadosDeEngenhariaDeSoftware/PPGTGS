@@ -33,4 +33,25 @@ module.exports = class DiscenteTipoDiscenteDao{
             }
         });
     }
+
+    inserirDiscenteTipoDiscente(id_tipo_discente, id_discente, data_inicial, callback){
+
+        var sql = "INSERT INTO DiscenteTipoDiscente (id_tipo_discente, id_discente, data_inicial, isAtual) VALUES (?,?,?,?);"
+        var params = [];
+        params.push(id_tipo_discente);
+        params.push(id_discente);
+        params.push(data_inicial);
+        params.push(true);
+
+        sql = mysql.format(sql, params);
+        console.log(sql);
+        this._connection.query(sql, (error, results) =>{
+            if(error){
+                callback(error, null);
+            }else{
+                callback(error,true ? true : null);
+            }
+        });
+    }
+
 }

@@ -184,7 +184,7 @@ module.exports = class Discente{
 		this._cpf = params.cpf != null ? params.cpf : null;;
 		this._username = params.username;
 		this._senha = params.senha;
-		this._link_lattes = params.link_lattes != null ? params.link_perfil_lattes : null;
+		this._link_lattes = params.link_perfil_lattes != null ? params.link_perfil_lattes : null;
 		this._email = params.email;
 		this._id_endereco = parseInt(params.id_endereco);
 		this._numero_residencia = parseInt(params.endereco_num_residencia) != null ? parseInt(params.endereco_num_residencia) : null;

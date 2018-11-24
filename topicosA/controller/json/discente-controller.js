@@ -369,6 +369,8 @@ exports.cadastrarDiscente = (req, res, next) => {
     req.body.data_nascimento = moment(req.body.data_nascimento, "DD/MM/YYYY").format("YYYY-MM-DD");
     //console.log(req.body.data_nascimento); return;
 
+    console.log('req: ', req.body);
+    
 
     req.assert('nome', 'Nome é obrigatório').notEmpty();
     req.assert('nome', "Verifique seu nome").isLength({ min: 1, max: 40}); 
@@ -586,6 +588,7 @@ exports.cadastrarDiscente = (req, res, next) => {
                                                         //res.status(201).json({resultado: result, erro: null});
 
                                                         let id_discente_cadastrado = result.id_discente;
+                                                        
                                                         console.log('id discente cad: ', id_discente_cadastrado);
 
                                                         //cadastrar cargos instituição discente
@@ -776,8 +779,41 @@ exports.cadastrarDiscente = (req, res, next) => {
                                                                         
                                                                     })).then(result => {
                                                                         //resolve(result_disc_cargo);
-                                                                        console.log('cad ok');
-                                                                        res.status(201).json({resultado: result, erro: null});
+                                                                        //console.log('cad ok');
+                                                                        //res.status(201).json({resultado: result, erro: null});
+
+                                                                        let id_tipo_discente = parseInt(req.body.id_tipo_discente);
+
+
+                                                                        let date_atual = moment();
+                                                                        let mes = date_atual.month()+1;
+                                                                        let date_certa = date_atual.year()+"/"+mes+"/"+date_atual.date();
+                                                                        console.log('date atual: ', date_atual, discente.id_discente, discente.id_tipo_discente, date_certa);
+
+                                                                        (new Promise(
+                                                                            function (resolve, reject) {
+                                                                                    //console.log('Administrador');
+                                                                                    let dtipod = new DiscenteTipoDiscenteDao(req.connection);
+                                                                                   dtipod.inserirDiscenteTipoDiscente(id_tipo_discente, discente.id_discente, date_certa, (error, tipo_d_result) => {
+                                                                                        if(error){
+                                                                                            reject(error);
+                                                                                        }else{
+                                                                                            resolve(tipo_d_result);
+                                                                                        }
+                                                                                    });
+                                                                        })).then(result => {
+                                                                            //console.log(result); console.log('aq');
+                                                                            console.log('cad ok');
+                                                                            res.status(200).json({resultado: result, erro: null});
+                                                                    
+                                                                        }).catch(error => {
+                                                                            next(error);
+                                                                        });
+
+
+                                                                        
+
+
                                                                     }).catch(error => {
                                                                         next(error);
                                                                 });   
