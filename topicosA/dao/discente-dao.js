@@ -2,6 +2,7 @@
 const moment = require('moment');
 var mysql = require('mysql');  
 const Discente = require('../model/Discente');
+const crypto = require('../utils/crypto');
 
 
 
@@ -138,6 +139,7 @@ module.exports = class DiscenteDao{
 
     inserirDiscente(discente, callback){
 
+        let c = new crypto();
         var sql = "INSERT INTO Discente (nome,sobrenome, data_nascimento, rg, cpf, username, senha, link_lattes, "+
         "email, id_endereco, numero_residencia, complemento, id_docente, isAceito, situacao, id_titulo, sexo, telefone, id_nacionalidade, passaporte) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
         var params = [];
@@ -147,7 +149,7 @@ module.exports = class DiscenteDao{
         params.push(discente.rg);
         params.push(discente.cpf);
         params.push(discente.username);
-        params.push(discente.senha);
+        params.push(c.encrypt(discente.senha));
         params.push(discente.link_lattes);
         params.push(discente.email);
         params.push(discente.id_endereco);

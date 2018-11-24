@@ -21,9 +21,11 @@ exports.consultaTodosDiscente = async (req, res, next) => {
 
 exports.consultaDiscenteFiltro = async (req, res, next) => {
         var idSituacao = 0;
+        var idUsuario = 1;
         if(req.query.idSituacao != null) idSituacao = req.query.idSituacao;
+        if(req.query.idUsuario != null) idUsuario = req.query.idUsuario;
         //console.log("idSituacao = "+ idSituacao);
-        res.render('discentes-filtro', {idSituacao : idSituacao});
+        res.render('discentes-filtro', {idSituacao : idSituacao, idUsuario: idUsuario});
 };
 
 exports.cadastrarOk = async (req, res, next) => {

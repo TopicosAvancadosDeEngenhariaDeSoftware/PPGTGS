@@ -29,3 +29,12 @@ exports.aprovarDiscente = async (req, res, next) => {
                 res.render('secretaria-aprovar', {discentes : resultados});
         });
 }
+
+
+//SECRETARIA CLEBER
+exports.carregarTelaAprovacoes= async (req, res, next) => {
+        res.render('secretaria-aprovacao', {idSituacao : 0});
+    }
+    exports.carregarTelaHome= async (req, res, next) => {
+        res.redirect('/secretaria/aprovacoes');
+}

@@ -7,5 +7,8 @@ router.get('/', controllerSecretaria.recuperarDiscentesPendentes);
 router.get('/aceitos', controllerSecretaria.recuperarDiscentesAceitos);
 router.get('/aprovar', controllerSecretaria.aprovarDiscente);
 
+
+router.get('/cleber/aprovacoes', controllerSecretaria.carregarTelaAprovacoes);
+
 module.exports = router;
 
