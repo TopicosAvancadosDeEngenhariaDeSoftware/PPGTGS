@@ -1,0 +1,182 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Discentes / Registro</title>
+    <!-- Select2 -->
+    <link rel="stylesheet" href="../bower_components/select2/dist/css/select2.min.css">
+
+    <% include partes/scripts-base %>
+    <script src="../plugins/input-mask/jquery.inputmask.js"></script>
+    <script src="../plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+    <script src="../plugins/input-mask/jquery.inputmask.extensions.js"></script>
+    
+
+</head>
+<body class="hold-transition skin-blue sidebar-mini" >
+    <div class="wrapper ">
+         <% include partes/header %>
+        
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+          <section class="sidebar">
+            <!-- Sidebar Menu -->
+            <ul class="sidebar-menu" data-widget="tree">
+              <!-- Optionally, you can add icons to the links -->
+              <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
+              <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
+              <li class="treeview">
+                <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
+                  <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                  <li><a href="#">Link in level 2</a></li>
+                  <li><a href="#">Link in level 2</a></li>
+                </ul>
+              </li>
+            </ul>
+            <!-- /.sidebar-menu -->
+          </section>
+          <!-- /.sidebar -->
+        </aside>
+
+        <div class="content-wrapper" > 
+                    <section class="content container-fluid">
+
+                        <!-- general form elements -->
+                        <div class="box box-primary">
+                          <div class="box-header with-border">
+                            <h1 class="box-title">Alterar dados de Discente</h1>
+                          </div>
+                          <!-- /.box-header -->
+                          <!-- form start -->
+                            <div class="box-body">
+                                
+                              <div id="div_discente_nome" class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6" >
+                                        <label >Nome *</label>
+                                        <div id="discente_nome">Olar </div>
+                                        <span id="err_discente_nome" class="help-block"></span>
+                              </div>
+                              <div id="div_discente_sobrenome" class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6" >
+                                  <label >Sobrenome *</label>
+                                  <div id="discente_sobrenome" placeholder="Silva">Silva </div>
+                              </div>
+                              
+                              <div id="div_discente_datanascimento" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                                  <label >Data de nascimento *</label>
+                                  <div id="discente_datanascimento">dd/mm/yyyy</div>
+                              </div>
+                              <div id="div_discente_nascionalidade" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                                    <label >Nacionalidade: </label>
+                                    <div id="nacionalidade">Py </div>
+                                    
+                              </div>
+                              <div id="card_discente_rg"  class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                                  <label >RG</label>
+                                  <div id="discente_rg">88</div>
+                              </div>
+                              <div id="div_discente_cpf" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                                  <label >CPF</label>
+                                  <div type="text" class="form-control" id="discente_cpf">88 </div>
+                              </div>
+                              <div id="card_discente_passaporte" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                                  <label >Nº do Passaporte</label>
+                                  <div id="discente_passaporte">pass</div>
+                              </div>
+
+                              <div id="div_discente_sexo" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                                    <label >Sexo: </label>
+                                    
+                                    <div id="list_sexo" class="form-control" style="width: 100%;" name="id_sexo">M </div>
+                              </div>
+
+                              <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <label>Telefone</label> 
+                                        <div id="discente_telefone">999</div>
+                                        
+                                        <!-- /.input group -->
+                              </div>
+
+                              
+                                <div id="div_discente_id_pais" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                                        <label >Endereço: País * </label>
+                                        
+                                        <div id="list_pais" class="form-control select2" style="width: 100%;" name="endereco_id_pais">Br</div>
+                                        <span id="err_discente_id_pais" class="help-block"></span>   
+                                </div>
+                              <div id="div_discente_username" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                                    <label >Nome de usuário * </label>
+                                    <div class="form-control" id="discente_username">@.com</div>
+                                    <span id="err_discente_username" class="help-block"></span>
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                                    <label >Link perfil do Lattes</label>
+                                    <div class="form-control" id="discente_linkperfillattes" ></div>
+                                </div>
+  
+                                <div id="div_discente_id_titulo" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                                      <label >Título * </label>
+                                      
+                                      <div id="list_titulos" class="form-control select2" style="width: 100%;" name="id_titulo">
+                                          
+                                      </div>
+                                  </div>
+
+                                <div id="div_discente_id_orientador" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                                        <label >Orientador * </label>
+                                        
+                                        <div id="list_docentes" class="form-control select2" style="width: 100%;" name="id_titulo">
+                                               
+                                        </div>
+                                </div>
+                                  <div id="div_discente_id_tipo" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                                        <label >Tipo de discente * </label>
+                                        
+                                        <div id="list_tipos_discente" class="form-control select2" style="width: 100%;" name="id_titulo">
+                                             
+                                        </div>
+                                         
+                                </div>
+                                           
+                                
+                              <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                                        <label>Ocupação * </label>
+                                        
+                                        
+                                        <div class="box-body table-responsive no-padding ">
+                                        <table id="tabela_ocupacoes" class="table table-hover">
+                                                
+                                                 
+                                        </table>
+                                        </div>
+                                              
+                              </div>
+                              
+                              <div id="div_discente_email" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <label for="exampleInputEmail1">Email * </label>
+                                <div  class="form-control" id="discente_email" placeholder="exemplo@email.com"></div>
+                                <span id="err_discente_email" class="help-block"></span> 
+                              </div>
+                              <div id="div_discente_senha" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <label for="exampleInputPassword1">Senha * </label>
+                                <div type="password" class="form-control" id="discente_senha" placeholder="Password"></div>
+                                <span id="err_discente_senha" class="help-block"></span>
+                              </div>
+                            </div>
+                </div>
+        </section>
+    </div>
+</body>
+<script src="../bower_components/select2/dist/js/select2.full.min.js"></script>
+<script src="../javascripts/discente-alterar.js"></script>
+
+<script>
+        var lista_tipo_instituicao = '<%-JSON.stringify(tipos_instituicao) %>';
+        lista_tipo_instituicao = JSON.parse(lista_tipo_instituicao);
+
+        var lista_instituicao = '<%-JSON.stringify(instituicoes) %>';
+        lista_instituicao = JSON.parse(lista_instituicao);
+</script>
+</html>

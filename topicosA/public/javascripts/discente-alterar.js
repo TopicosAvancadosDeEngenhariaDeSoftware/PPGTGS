@@ -5,7 +5,94 @@ $(function () {
     $('.select2').select2();
     var urlParams = new URLSearchParams(window.location.search);
     var id = urlParams.get('id');
-    recuperarDiscente(id);
+    $.ajax({ 
+        type: "GET",
+        data: {},
+        url: "../json/discentes/"+id,
+        success: function(result){
+           //alert(JSON.stringify(result.resultado.tipo_discente[0].id_tipo_discente));
+           $("#discente_nome").val( result.resultado.nome);
+           $("#discente_sobrenome").val(result.resultado.sobrenome);
+           var data_nascimento = new Date(result.resultado.data_nascimento);
+           if (!isNaN(data_nascimento.getTime())) {
+                let month = String(data_nascimento.getMonth() + 1);
+                let day = String(data_nascimento.getDate());
+                const year = String(data_nascimento.getFullYear());
+                if (month.length < 2) month = '0' + month;
+                if (day.length < 2) day = '0' + day;
+                $("#discente_datanascimento").val(`${day}/${month}/${year}`);
+           }
+           $("#discente_rg").val(result.resultado.rg);
+           $("#discente_cpf").val(result.resultado.cpf);
+           $("#discente_passaporte").val(result.resultado.passaporte);
+           $("#discente_telefone").val(result.resultado.telefone);
+           $("#discente_username").val(result.resultado.username);
+           $("#discente_linkperfillattes").val(result.resultado.link_lattes);
+           $("#discente_email").val(result.resultado.email);
+           $("#list_docentes").val(result.resultado.id_docente).change();
+           $("#discente_senha").val(result.resultado.senha);
+           $("#list_nacionalidade").val(result.resultado.id_nacionalidade).change();
+           $("#list_sexo").val(result.resultado.sexo).change();
+           $("#list_titulos").val(result.resultado.id_titulo).change();
+           $("#list_tipos_discente").val(result.resultado.tipo_discente[0].id_tipo_discente).change();
+           for(var j=0;j<result.resultado.lista_ocupacoes.length;j++){
+            var ocupacao = new Object();
+            ocupacao.cargo = result.resultado.lista_ocupacoes[j].cargo.nome_cargo
+            ocupacao.id_instituicao = result.resultado.lista_ocupacoes[j].cargo.instituicao.id_instituicao;
+            if(ocupacao.id_instituicao == 0){
+            var instituicao = new Object();
+            instituicao.nome = result.resultado.lista_ocupacoes[j].cargo.instituicao.nome_instituicao;
+            instituicao.sigla =result.resultado.lista_ocupacoes[j].cargo.instituicao.sigla_intituicao;
+            instituicao.id_tipo_instituicao = result.resultado.lista_ocupacoes[j].cargo.instituicao.tipo_instituicao;
+            
+            for(var i = 0;i < lista_tipo_instituicao.length; i++){
+                if(lista_tipo_instituicao[i].id == instituicao.id_tipo_instituicao){
+                    instituicao.tipo_instituicao = lista_tipo_instituicao[i];
+                }
+            }
+            ocupacao.instituicao = instituicao;
+            }else{
+                for(var i = 0;i < lista_instituicao.length; i++){
+                    if(lista_instituicao[i]._id_instituicao == ocupacao.id_instituicao){
+                        var obj = new Object();
+                        obj.id_instituicao = lista_instituicao[i]._id_instituicao;
+                        obj.nome = lista_instituicao[i]._nome;
+                        obj.sigla = lista_instituicao[i]._sigla;
+                        obj.tipo_instituicao = lista_instituicao[i]._tipo_instituicao;
+                        ocupacao.instituicao = obj;
+                }
+            }
+        }
+        lista_ocupacoes.push(ocupacao);
+    }
+        var isOkay = true;
+        if(ocupacao.cargo == null || ocupacao.cargo == undefined || ocupacao.cargo.length < 2){
+            $('#div_add_ocupacao_cargo').addClass('has-error');
+            $('#erro_add_ocupacao_cargo').html("Cargo é obrigatório.");
+            isOkay = false;
+        }
+        if(ocupacao.id_instituicao == 0){
+            if(ocupacao.instituicao.nome == null || ocupacao.instituicao.nome== undefined || ocupacao.instituicao.nome.length < 2){
+                $('#div_add_instituicao_nome').addClass('has-error');
+                $('#erro_add_instituicao_nome').html("Nome da instituição é obrigatório.");
+                isOkay = false;
+            }
+        }
+
+        if(isOkay == false) return;
+        atualizarListaOcupacoes();
+           
+        },
+        beforeSend: function(){
+            //$('#loading').css({display:"block"});
+        },
+        complete: function(msg){
+            //$('#loading').css({display:"none"});
+        },
+        error: function(msg){
+            //alert(JSON.stringify(msg));
+        }
+    });
     function verificarNacionalidade(){
         if ($('#list_nacionalidade').val() == 1) {
             $('#card_discente_cpf').removeClass('remover');
@@ -19,97 +106,12 @@ $(function () {
             $('#card_discente_cpf').val("");
             $('#card_discente_passaporte').removeClass('remover');
         }
-    }
-
-    function verificarPais(){
-        atualizarListaEstado();
-        if ($('#list_pais').val() == 1) {
-            $('#endereco_brasil').removeClass('remover');
-            
-        }else{
-            $('#endereco_brasil').addClass('remover');
-            $('#discente_endereco_cep').val("");
-            $('#discente_endereco_bairro').val("");
-            $('#discente_endereco_logradouro').val("");
-            $('#discente_endereco_numresidencia').val("");
-        }
-    }
-
-
-    function atualizarListaEstado(){
-        var id_pais = $('#list_pais').val();
-        $("#list_estado").html("");
-        var html = "<option value='-1'>Atualizando...</option>";
-        $("#list_estado").append(html);
-        $.ajax({ 
-            type: "GET",
-            data: {},
-            url: "../json/paises/"+id_pais+"/estados",
-            success: function(result){
-                //alert(result);
-                $("#list_estado").html("");
-                for(var i = 0; i < result.resultado.length; i++){
-                    var html = "<option value='"+result.resultado[i].id_estado+"'>"+result.resultado[i].nome+"</option>";
-                    $("#list_estado").append(html);
-                }
-                atualizarListaCidade();
-            },
-            beforeSend: function(){
-                //$('#loading').css({display:"block"});
-            },
-            complete: function(msg){
-                //$('#loading').css({display:"none"});
-            },
-            error: function(msg){
-                alert(JSON.stringify(msg));
-            }
-        });
-    }
-
-    function atualizarListaCidade(){
-        var id_estado = $('#list_estado').val();
-        //alert(id_estado+"dd");
-        if(id_estado == null || undefined) return;
-        $("#list_cidade").html("");
-        var html = "<option value='-1'>Atualizando...</option>";
-        $("#list_cidade").append(html);
-        $.ajax({ 
-            type: "GET",
-            data: {},
-            url: "../json/estados/"+id_estado+"/cidades",
-            success: function(result){
-                //alert(result);
-                $("#list_cidade").html("");
-                for(var i = 0; i < result.resultado.length; i++){
-                    var html = "<option value='"+result.resultado[i].id_cidade+"'>"+result.resultado[i].nome+"</option>";
-                    $("#list_cidade").append(html);
-                }
-                
-            },
-            beforeSend: function(){
-                //$('#loading').css({display:"block"});
-            },
-            complete: function(msg){
-                //$('#loading').css({display:"none"});
-            },
-            error: function(msg){
-                alert(JSON.stringify(msg));
-            }
-        });
-    }
-
+    }  
     $('#list_nacionalidade').change(function() {
         verificarNacionalidade();
     });
 
-    $('#list_pais').change(function() {
-        verificarPais();
-    });
-
-    $('#list_estado').change(function() {
-        atualizarListaCidade();
-    });
-    
+  
     $('#list_instituicoes').change(function() {
         //alert($('#list_instituicoes').val());
         if($('#list_instituicoes').val() == 0){
@@ -118,7 +120,6 @@ $(function () {
             $('#nova_instituicao').addClass('remover');
         }
     });
-    verificarPais();
     verificarNacionalidade();
 
     $('#button_add_ocupacao').click(function(){
@@ -172,7 +173,7 @@ $(function () {
             $("#tabela_ocupacoes").append(html);
 
         }else{
-            var html = "<tr><th> Não há ocupações registradas.</th></tr>";
+            //var html = "<tr><th> Não há ocupações registradas.</th></tr>";
             $("#tabela_ocupacoes").append(html);
         }
         $('#tabela_ocupacoes').removeClass('table');
@@ -265,23 +266,7 @@ $(function () {
         $('#err_discente_sexo').html("");
 
         $('#div_discente_cpf').removeClass('has-error');
-        $('#err_discente_cpf').html("");
-
-        $('#div_discente_id_pais').removeClass('has-error');
-        $('#err_discente_id_pais').html("");
-
-        $('#div_discente_id_cidade').removeClass('has-error');
-        $('#err_discente_id_cidade').html("");
-
-        $('#div_discente_cep').removeClass('has-error');
-        $('#err_discente_cep').html("");
-
-        $('#div_discente_bairro').removeClass('has-error');
-        $('#err_discente_bairro').html("");
-
-        $('#div_discente_logradouro').removeClass('has-error');
-        $('#err_discente_logradouro').html("");
-
+        $('#err_discente_cpf').html("");       
         $('#div_discente_num_residencia').removeClass('has-error');
         $('#err_discente_num_residencia').html("");
 
@@ -315,26 +300,18 @@ $(function () {
             obj.rg = $('#discente_rg').val();
             obj.cpf = $('#discente_cpf').val();
         }else{
+            obj.cpf = $('#discente_cpf').val();
             obj.passaporte = $('#discente_passaporte').val();
         }
         obj.id_sexo = $('#list_sexo').val();
         obj.endereco_id_pais = $('#list_pais').val();
-        if(obj.endereco_id_pais == 1){
-            obj.endereco_id_estado = $('#list_estado').val();
-            obj.endereco_id_cidade = $('#list_cidade').val();
-            obj.endereco_cep = $('#discente_endereco_cep').val();
-            obj.endereco_bairro = $('#discente_endereco_bairro').val();
-            obj.endereco_logradouro = $('#discente_endereco_logradouro').val();
-            obj.numero_residencia = $('#discente_endereco_numresidencia').val();
-            obj.endereco_complemento = $('#discente_endereco_complemento').val();
-        }
         obj.username = $('#discente_username').val();
         obj.link_perfil_lattes = $('#discente_linkperfillattes').val();
         obj.id_titulo = $('#list_titulos').val();
         obj.id_docente = $('#list_docentes').val();
         obj.email = $('#discente_email').val();
         obj.senha = $('#discente_senha').val();
-
+        obj.id_tipo_discente = $('#list_tipos_discente').val();
         var lista_ocup = lista_ocupacoes;
         for(var i = 0; i < lista_ocup.length; i++){
             lista_ocup[i].id = undefined;
@@ -352,8 +329,9 @@ $(function () {
             data: obj,
             url: "../json/discentes/"+id,
             success: function(result){
-                //alert(JSON.stringify(result));
+                alert("Alterado com sucesso");
                 //$('#resultado').html(JSON.stringify(result));
+                window.location.replace("/discentes/filtro");
                
             },
             beforeSend: function(){
@@ -395,30 +373,6 @@ $(function () {
                                 $('#div_discente_sexo').addClass('has-error');
                                 $('#err_discente_sexo').html(msg.responseJSON.erro[i].msg);
                                 break;
-                            case "endereco_id_pais":
-                                $('#div_discente_id_pais').addClass('has-error');
-                                $('#err_discente_id_pais').html(msg.responseJSON.erro[i].msg);
-                                break;
-                            case "endereco_id_cidade":
-                                $('#div_discente_id_cidade').addClass('has-error');
-                                $('#err_discente_id_cidade').html(msg.responseJSON.erro[i].msg);
-                                break;
-                            case "endereco_cep":
-                                $('#div_discente_cep').addClass('has-error');
-                                $('#err_discente_cep').html(msg.responseJSON.erro[i].msg);
-                                break;
-                            case "endereco_bairro":
-                                $('#div_discente_bairro').addClass('has-error');
-                                $('#err_discente_bairro').html(msg.responseJSON.erro[i].msg);
-                                break;
-                            case "endereco_logradouro":
-                                $('#div_discente_logradouro').addClass('has-error');
-                                $('#err_discente_logradouro').html(msg.responseJSON.erro[i].msg);
-                                break;
-                            case "endereco_num_residencia":
-                                $('#div_discente_num_residencia').addClass('has-error');
-                                $('#err_discente_num_residencia').html(msg.responseJSON.erro[i].msg);
-                                break;
                             case "username":
                                 $('#div_discente_username').addClass('has-error');
                                 $('#err_discente_username').html(msg.responseJSON.erro[i].msg);
@@ -450,70 +404,5 @@ $(function () {
         
     });
 });
-function recuperarDiscente(id){
-     $.ajax({ 
-        type: "GET",
-        data: {},
-        url: "../json/discentes/"+id,
-        success: function(result){
-           //alert(JSON.stringify(result));
-           $("#discente_nome").val( result.resultado.nome);
-           $("#discente_sobrenome").val(result.resultado.sobrenome);
-           var data_nascimento = new Date(result.resultado.data_nascimento);
-           if (!isNaN(data_nascimento.getTime())) {
-                let month = String(data_nascimento.getMonth() + 1);
-                let day = String(data_nascimento.getDate());
-                const year = String(data_nascimento.getFullYear());
-                if (month.length < 2) month = '0' + month;
-                if (day.length < 2) day = '0' + day;
-                $("#discente_datanascimento").val(`${day}/${month}/${year}`);
-           }
-           $("#discente_rg").val(result.resultado.rg);
-           $("#discente_cpf").val(result.resultado.cpf);
-           $("#discente_passaporte").val(result.resultado.passaporte);
-           $("#discente_telefone").val(result.resultado.telefone);
-           $("#discente_endereco_numresidencia").val(result.resultado.numero_residencia);
-           $("#discente_endereco_complemento").val(result.resultado.complemento);
-           $("#discente_username").val(result.resultado.username);
-           $("#discente_linkperfillattes").val(result.resultado.link_lattes);
-           $("#discente_email").val(result.resultado.email);
-           $("#discente_senha").val(result.resultado.senha);
-           $("#list_nacionalidade").val(result.resultado.id_nacionalidade).change();
-           $("#list_sexo").val(result.resultado.sexo).change();
-           recuperarEnderecoDiscente(result.resultado.id_endereco);
-        },
-        beforeSend: function(){
-            //$('#loading').css({display:"block"});
-        },
-        complete: function(msg){
-            //$('#loading').css({display:"none"});
-        },
-        error: function(msg){
-            alert(JSON.stringify(msg));
-        }
-    });
-}
-function recuperarEnderecoDiscente(id_endereco){      
-    $.ajax({ 
-        type: "GET",
-        data: {},
-        url: "#",
-        success: function(result){
-          /*$("#discente_endereco_cep").val(result.resultado.cep);
-          $("#discente_endereco_bairro").val(result.resultado.bairro);
-          $("#discente_endereco_logradouro").val(result.resultado.logradouro);*/
-          $("#discente_endereco_cep").val("85869090");
-          $("#discente_endereco_bairro").val("Vila A");
-          $("#discente_endereco_logradouro").val("Rua Mangueira");
-        },
-        beforeSend: function(){
-            //$('#loading').css({display:"block"});
-        },
-        complete: function(msg){
-            //$('#loading').css({display:"none"});
-        },
-        error: function(msg){
-            alert(JSON.stringify(msg));
-        }
-    });
-}
+     
+

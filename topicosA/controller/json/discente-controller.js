@@ -72,7 +72,7 @@ exports.recuperarDiscenteId = (req, res, next) => {
             id_docente : dados_pessoais_discente.id_docente,
             isAceito : dados_pessoais_discente.isAceito,
             situacao : dados_pessoais_discente.situacao,
-            id_titulo : dados_pessoais_discente.titulo,
+            id_titulo : dados_pessoais_discente.id_titulo,
             sexo : dados_pessoais_discente.sexo,
             telefone : dados_pessoais_discente.telefone,
             passaporte : dados_pessoais_discente.passaporte,
@@ -897,7 +897,6 @@ exports.editarDiscente = (req, res, next) => {
         req.assert('data_nascimento', 'data de nascimento incorreta').isISO8601();
         req.assert('id_nacionalidade', 'Nacionalidade é obrigatório').notEmpty();
         req.assert('id_sexo', 'Sexo é obrigatório').notEmpty();
-        req.assert('endereco_id_pais', 'País é obrigatório').notEmpty();
         //req.assert('ocupacoes', 'ocupação é obrigatório').isValidoListaOcupacoes();
         
         if(req.body.endereco_id_pais != undefined && req.body.endereco_id_pais != null && parseInt(req.body.endereco_id_pais) == 1){
@@ -921,7 +920,6 @@ exports.editarDiscente = (req, res, next) => {
         req.assert('username', 'username é obrigatório').notEmpty();
         req.assert('senha', 'senha é obrigatório').notEmpty();
         req.assert('email', 'email é obrigatório').notEmpty();
-        req.assert('numero_residencia', 'número da residência é obrigatório').notEmpty();
         req.assert('id_docente', 'docente é obrigatório').notEmpty();
         req.assert('id_titulo', 'titulo é obrigatório').notEmpty();
         req.assert('id_sexo', 'sexo é obrigatório').notEmpty();

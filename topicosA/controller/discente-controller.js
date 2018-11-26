@@ -74,7 +74,8 @@ exports.cadastrarDiscente = async (req, res, next) => {
 }
 
 exports.alterarDiscente = async (req, res, next) => {
-        var pDao = new paisesDao(req.connection);
+       var idUsuario = 1;
+       var pDao = new paisesDao(req.connection);
         pDao.recuperarPaises((err, resultado_paises) =>{
                 if(err) return next(err);
                 var tDao = new titulosDao(req.connection);
@@ -99,10 +100,17 @@ exports.alterarDiscente = async (req, res, next) => {
                                         lista_tipo_instituicao.push(config.tipo_instituicao.publica);
                                         lista_tipo_instituicao.push(config.tipo_instituicao.privada);
 
-                                        res.render('discentes-alterar', {paises : resultado_paises, titulos : resultados_titulos, docentes: resultados_docentes, instituicoes : lista_instituicoes, tipos_instituicao : lista_tipo_instituicao});
-                                });
-                       
+                                        var tipoDiscenteD = new tipoDiscenteDao(req.connection);
+                                        if(req.query.idUsuario != null) idUsuario = req.query.idUsuario;
+                                        tipoDiscenteD.recuperarTiposDiscente((err, results_tipos_discentes) =>{
+                                                if(err) return next(err);
+                                                res.render('discentes-alterar', {tipos_discente: results_tipos_discentes,  paises : resultado_paises, titulos : resultados_titulos, docentes: resultados_docentes, instituicoes : lista_instituicoes, tipos_instituicao : lista_tipo_instituicao,idUsuario: idUsuario});                                });
+                                                
+                                        });
+
+                                        
+
                         });
                 });      
-        });   
+        });     
 }
