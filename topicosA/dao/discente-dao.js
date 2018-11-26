@@ -25,6 +25,25 @@ module.exports = class DiscenteDao{
         });
     }
 
+    recuperarDiscentePorStatusCadastro(status_Cadastro, callback){
+    if(status_Cadastro == 0){
+        var sql = "SELECT * FROM Discente WHERE isAceito IS NULL OR isAceito=0;"
+    }else{
+        var sql = "SELECT * FROM Discente WHERE isAceito=1;"
+    }
+   
+    var params = [];
+    sql = mysql.format(sql, params);
+    this._connection.query(sql, (error, results) =>{
+        if(error){
+            callback(error, null);
+        }else{
+            callback(error,results ? results : null);
+        }
+    });
+}
+
+    /*
     recuperarDiscentesPendentes(callback){
         var sql = "SELECT * FROM Discente WHERE isAceito IS NULL OR isAceito=0;"
         var params = [];
@@ -52,6 +71,7 @@ module.exports = class DiscenteDao{
             
         });
     }
+    */
 
     recuperarDiscentePorId(id_discente, callback){
         var sql = "SELECT * FROM Discente WHERE id_discente = ? ;"
