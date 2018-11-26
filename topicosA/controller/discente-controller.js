@@ -12,10 +12,12 @@ const instituicaoModel = require('../model/Instituicao');
 const config = require('../config/config');
 
 exports.consultaTodosDiscente = async (req, res, next) => {
+        var idUsuario = 1;
+        if(req.query.idSituacao != null) idUsuario = req.query.idUsuario;
         var dDao = new discenteDao(req.connection);
         dDao.recuperarDiscentes((err, resultados) =>{
                 if(err) next(err);
-                res.render('discentes-consulta', {discentes : resultados});
+                res.render('discentes-consulta', {discentes : resultados, idUsuario: idUsuario});
         });
         
 };
