@@ -60,7 +60,7 @@ function consultarPendentes(){
                 "<td>" +result.resultado[i].nome + " " + result.resultado[i].sobrenome + "</td>"+
                 "<td>" + result.resultado[i].email + "</td>"+
                 "<td> <a href='"+result.resultado[i].link_lattes+"'>"+result.resultado[i].link_lattes+"</td>"+
-                "<td> <div style='float: right;'>  <a class='btn btn-default' href='/discentes' >Visualizar </a><button id='aprovar' style='margin-left:20px;margin-right:20px;' class='btn btn-primary' data-id='"+result.resultado[i].id_discente+"' >Aprovar</button> </div>  </td>"+
+                "<td> <div style='float: right;'>  <a class='btn btn-default' href='/discentes/visualizar?id="+result.resultado[i].id_discente+"' >Visualizar </a><button id='aprovar' style='margin-left:20px;margin-right:20px;' class='btn btn-primary' data-id='"+result.resultado[i].id_discente+"' >Aprovar</button> </div>  </td>"+
                 "</tr>";
                 $('#tabela_discentes').append(html);
             }
