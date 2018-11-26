@@ -2,6 +2,7 @@
 const moment = require('moment');
 var mysql = require('mysql');  
 const Discente = require('../model/Discente');
+const crypto = require('../utils/crypto');
 
 
 
@@ -24,6 +25,25 @@ module.exports = class DiscenteDao{
         });
     }
 
+    recuperarDiscentePorStatusCadastro(status_Cadastro, callback){
+    if(status_Cadastro == 0){
+        var sql = "SELECT * FROM Discente WHERE isAceito IS NULL OR isAceito=0;"
+    }else{
+        var sql = "SELECT * FROM Discente WHERE isAceito=1;"
+    }
+   
+    var params = [];
+    sql = mysql.format(sql, params);
+    this._connection.query(sql, (error, results) =>{
+        if(error){
+            callback(error, null);
+        }else{
+            callback(error,results ? results : null);
+        }
+    });
+}
+
+    /*
     recuperarDiscentesPendentes(callback){
         var sql = "SELECT * FROM Discente WHERE isAceito IS NULL OR isAceito=0;"
         var params = [];
@@ -51,6 +71,7 @@ module.exports = class DiscenteDao{
             
         });
     }
+    */
 
     recuperarDiscentePorId(id_discente, callback){
         var sql = "SELECT * FROM Discente WHERE id_discente = ? ;"
@@ -138,6 +159,7 @@ module.exports = class DiscenteDao{
 
     inserirDiscente(discente, callback){
 
+        let c = new crypto();
         var sql = "INSERT INTO Discente (nome,sobrenome, data_nascimento, rg, cpf, username, senha, link_lattes, "+
         "email, id_endereco, numero_residencia, complemento, id_docente, isAceito, situacao, id_titulo, sexo, telefone, id_nacionalidade, passaporte) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
         var params = [];
@@ -147,7 +169,7 @@ module.exports = class DiscenteDao{
         params.push(discente.rg);
         params.push(discente.cpf);
         params.push(discente.username);
-        params.push(discente.senha);
+        params.push(c.encrypt(discente.senha));
         params.push(discente.link_lattes);
         params.push(discente.email);
         params.push(discente.id_endereco);
@@ -172,11 +194,12 @@ module.exports = class DiscenteDao{
     }
 
     editarDiscente(discente, callback){
-        var sql = "UPDATE Discente SET nome = ?, data_nascimento = ?, rg = ?, cpf = ?, username = ?, "+
-        "senha = ?, link_lattes = ?, email = ?, id_endereco = ?, numero_residencia = ?, complemento = ?, "+
-        "id_docente = ?, isAceito = ?, situacao = ?, id_titulo = ?, sexo = ?, telefone = ? WHERE id_discente = ?;"
+        var sql = "UPDATE Discente SET nome = ?, sobrenome = ?, data_nascimento = ?, rg = ?, cpf = ?, username = ?, "+
+        "senha = ?, link_lattes = ?, email = ?, "+
+        "id_docente = ?, isAceito = ?, id_titulo = ?, sexo = ?, telefone = ? WHERE id_discente = ?;"
         var params = [];
         params.push(discente.nome);
+        params.push(discente.sobrenome);
         params.push(discente.data_nascimento);
         params.push(discente.rg);
         params.push(discente.cpf);
@@ -184,12 +207,12 @@ module.exports = class DiscenteDao{
         params.push(discente.senha);
         params.push(discente.link_lattes);
         params.push(discente.email);
-        params.push(discente.id_endereco);
-        params.push(discente.numero_residencia);
-        params.push(discente.complemento);
+        // params.push(discente.id_endereco);
+        // params.push(discente.numero_residencia);
+        // params.push(discente.complemento);
         params.push(discente.id_docente);
         params.push(discente.isAceito);
-        params.push(discente.situacao);
+        // params.push(discente.situacao);
         params.push(discente.id_titulo);
         params.push(discente.sexo);
         params.push(discente.telefone);

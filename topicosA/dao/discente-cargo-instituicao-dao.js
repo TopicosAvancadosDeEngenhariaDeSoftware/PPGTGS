@@ -35,6 +35,22 @@ module.exports = class DiscenteCargoInstituicaoDao{
         });
     }
 
+    recuperarCargoDiscentePorIds(id_discente, id_instituicao, id_cargo_discente, callback){
+        var sql = "SELECT * FROM DiscenteCargoInstituicao WHERE id_discente = ? AND id_instituicao = ? AND id_cargo_discente = ?;"
+        var params = [];
+        params.push(id_discente);
+        params.push(id_instituicao);
+        params.push(id_cargo_discente);
+        sql = mysql.format(sql, params);
+        this._connection.query(sql, (error, results) =>{
+            if(error){
+                callback(error, null);
+            }else{
+                callback(null, results[0] ? results[0] : null);
+            }
+        });
+    }
+
     inserirDiscenteCargoInstituicao(id_discente, id_instituicao, id_cargo_discente, callback){
         //console.log('id disc: ', id_discente);
         //console.log('is instituicao: ', id_instituicao);

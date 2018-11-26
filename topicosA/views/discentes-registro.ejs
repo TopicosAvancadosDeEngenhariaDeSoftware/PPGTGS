@@ -192,6 +192,17 @@
                                         </select>
                                         <span id="err_discente_id_orientador" class="help-block"></span>   
                                 </div>
+
+                                <div id="div_discente_id_tipo" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                                        <label >Tipo de discente * </label>
+                                        
+                                        <select id="list_tipos_discente" class="form-control select2" style="width: 100%;" name="id_titulo">
+                                                <% for(var i = 0; i < tipos_discente.length ; i++){ %> 
+                                                    <option value="<%= tipos_discente[i].id_tipo_discente %>"><%= tipos_discente[i].nome %> </option>
+                                                <% } %>
+                                        </select>
+                                         
+                                </div>
                                 
                               <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
                                         <label>Ocupação * </label>

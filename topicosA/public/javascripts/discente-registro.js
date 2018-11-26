@@ -308,6 +308,7 @@ $(function () {
         obj.data_nascimento = $('#discente_datanascimento').val();
         obj.id_nacionalidade = $('#list_nacionalidade').val();
         obj.telefone = $('#discente_telefone').val();
+        obj.id_tipo_discente = $('#list_tipos_discente').val();
         if(parseInt(obj.id_nacionalidade) == 1){
             obj.rg = $('#discente_rg').val();
             obj.cpf = $('#discente_cpf').val();
@@ -344,6 +345,8 @@ $(function () {
         }
         obj.ocupacoes = JSON.stringify(lista_ocup);
 
+
+        console.log(JSON.stringify(obj));
 
         $.ajax({ 
             type: "POST",

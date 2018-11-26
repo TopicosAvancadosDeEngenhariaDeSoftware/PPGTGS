@@ -887,10 +887,10 @@ exports.cadastrarDiscente = (req, res, next) => {
 
 exports.editarDiscente = (req, res, next) => {
     //let id_tipo_usuario = req.id_tipo_usuario;
-
+    
     let id_tipo_usuario = 1;
-
-    if(id_tipo_usuario == config.tipo_usuario.admin || id_tipo_usuario == config.tipo_usuario.coordenador || id_tipo_usuario == config.tipo_usuario.discente || id_tipo_usuario == config.tipo_usuario.secretaria){
+    
+    //if(id_tipo_usuario == config.tipo_usuario.admin || id_tipo_usuario == config.tipo_usuario.coordenador || id_tipo_usuario == config.tipo_usuario.discente || id_tipo_usuario == config.tipo_usuario.secretaria){
         req.checkParams('id_discente', 'id é obrigatorio ser do tipo int').isInt();
         req.assert('nome', 'nome é obrigatório').notEmpty(); 
         req.assert('data_nascimento', 'data de nascimento é obrigatório').notEmpty();
@@ -898,6 +898,8 @@ exports.editarDiscente = (req, res, next) => {
         req.assert('id_nacionalidade', 'Nacionalidade é obrigatório').notEmpty();
         req.assert('id_sexo', 'Sexo é obrigatório').notEmpty();
         req.assert('endereco_id_pais', 'País é obrigatório').notEmpty();
+        //req.assert('ocupacoes', 'ocupação é obrigatório').isValidoListaOcupacoes();
+        
         if(req.body.endereco_id_pais != undefined && req.body.endereco_id_pais != null && parseInt(req.body.endereco_id_pais) == 1){
         if(req.body.cpf != null && req.body.cpf != undefined && req.body.cpf.length > 0 && CPF.isValid(req.body.cpf) != true){
             var responseJSON = new Object();
@@ -909,10 +911,13 @@ exports.editarDiscente = (req, res, next) => {
             responseJSON.erro = erro_lista;
             return res.status(400).json({resultado: null, erro : erro_lista});
         }
-    }
-    else if(req.body.endereco_id_pais != undefined && req.body.endereco_id_pais != null && parseInt(req.body.endereco_id_pais) != 1){
+    //}
+    //else 
+    if(req.body.endereco_id_pais != undefined && req.body.endereco_id_pais != null && parseInt(req.body.endereco_id_pais) != 1){
         req.assert('passaporte', 'Passaporte é obrigatório').notEmpty();
     }
+
+        console.log("Editar");
         req.assert('username', 'username é obrigatório').notEmpty();
         req.assert('senha', 'senha é obrigatório').notEmpty();
         req.assert('email', 'email é obrigatório').notEmpty();
@@ -927,35 +932,217 @@ exports.editarDiscente = (req, res, next) => {
             res.status(400).json({resultado: null, erro: erros});
         return;
         }
-        //let params = req.body;
-        (new Promise(
-        function (resolve, reject) {
-            let discente = new Discente();
-            
-            discente.construtorParametrosRequisicao(req.body);
 
-            discente.id_discente = parseInt(req.params.id_discente);
-            
-            console.log('id', discente.id_discente);
+        console.log("editar 2");
 
-                let disc = new DiscenteDao(req.connection);
-                disc.editarDiscente(discente, (error, discente_result) => {
-                    if(error){
-                        reject(error);
-                    }else{
-                        resolve(discente_result);
+        // dps de passar por isValidoListaOcupacoes, 
+        // com JSON.parse abaixo transforma em uma lista de ocupações.
+        req.body.ocupacoes = JSON.parse(req.body.ocupacoes);
+        
+        let cargoDao = new cargoDiscenteDao(req.connection);
+        let listaOcupacoes = req.body.ocupacoes;
+        let id_cargo_discente = [];
+        
+        (new Promise(function (resolve, reject) {
+            async.each(listaOcupacoes, function (result, callback) {
+                console.log("result.cargo: "+result.cargo);
+                cargoDao.recuperarCargoDiscentePorNome(result.cargo, (error, result_cargo_discente) => {
+                    if (error) {
+                        callback(error);
+                        //return res.status(500).json({ resultado: null, erro: error });
+                    } else {
+                        if (result_cargo_discente == null) {
+                            (new Promise(function (resolve, reject) {
+                                    cargoDao.inserirCargoDiscente(result.cargo, (error, result_cadastro_cargo_discente) => {
+                                        if (error) {
+                                            reject(error);
+                                        } else {
+                                            resolve(result_cadastro_cargo_discente);
+                                        }
+                                    });
+                            })).then(result => {
+                                //pega id e insere na lista
+                                id_cargo_discente.push(result.insertId);
+                                callback();
+
+                            }).catch(error => {
+                                next(error);
+                            })
+
+                        } else {
+                            console.log("id_cargo_discente push: ", result_cargo_discente.id_cargo_discente);
+                            id_cargo_discente.push(result_cargo_discente.id_cargo_discente);
+                            callback();
+                            //res.status(200).json({ resultado: result, erro: null });
+                        }
                     }
-                });
+                })
+            }, function(err){
+                if(!err){
+                    console.log('FINAL cargoo:  ');
+                    resolve(id_cargo_discente);
+                }else{
+                    reject(err);
+                }
+            
+            }); 
+        }).then(result => {
+            // resolve(id_cargo_discente);
+            let iDao = new instituicaoDao(req.connection);
+            let id_instituicao = [];
+            (new Promise(function (resolve, reject) {
+                // fazer o mesmo para instituição
+                async.each(req.body.ocupacoes, function (result, callback) {
+                    console.log("result.id_instituição: "+ result.id_instituicao);
+                    iDao.recuperarInstituicaoPorId(result.id_instituicao, (error, result_instituicao) => {
+                        if(error){
+                            callback(error);
+                        }else{
+                            if (result_instituicao == null) {
+                                (new Promise(function (resolve, reject) {
+                                    iDao.inserirInstituicao(result.nome, result.sigla, result.id_tipo_instituicao, (error, result_cadastro_instituicao) => {
+                                        if (error) {
+                                            reject(error);
+                                        } else {
+                                            resolve(result_cadastro_instituicao);
+                                        }
+                                    });
+                                })).then(result => {
+                                    id_instituicao.push(result.insertId);
+                                    callback();
+                                }).catch(error => {
+                                    next(error);
+                                })
+                            } else {
+                                console.log("id_id_instituicao push: ", result.id_instituicao);
+                                id_instituicao.push(result.id_instituicao);
+                                callback();
+                                //res.status(200).json({ resultado: result, erro: null });
+                            }
+                        }
+                    })
+                }, function(err){
+                    if(!err){
+                        console.log('FINAL inst:  ');
+                        resolve(id_instituicao);
+                    }else{
+                        reject(err);
+                    }
                 
-        })).then(result => {
-            res.status(200).json({resultado: result, erro: null});
+                }); 
+                // }).then(result => {
+                //     // resolve(id_instituicao);
+                //     // insere esses id no discente, e chama editarDiscente
+                //     callback();
+                // }).catch(error => {
+                //     next(error);
+                // })
+            })).then(result => {
+                // resolve(id_instituicao);
+                (new Promise(function (resolve, reject) {
+    
+                    let discenteCIDao = new DiscenteCargoInstituicaoDao(req.connection);
+                    let id_discente = parseInt(req.params.id_discente);
+                    let lista_inst_carg = [];
+                    console.log("lista i: ", id_instituicao);
+                    console.log("lista c: ", id_cargo_discente);
+            
+                    for(var j = 0; j < id_instituicao.length; j++){
+                        
+                        var obj = new Object();
+                        obj.inst = id_instituicao[j];
+                        obj.carg = id_cargo_discente[j];
+                        lista_inst_carg.push(obj);
+                    }
+                   
+                    //(new Promise(function(resolve,reject){
+                        async.each(lista_inst_carg, function(result, callback){
+                            console.log("result.inst ", result.inst);
+                            console.log("parse int parseInt(result.inst) ", parseInt(result.inst));
+                            discenteCIDao.recuperarCargoDiscentePorIds(id_discente, parseInt(result.inst), result.carg, (error, result_disc_inst)=> {
+                                if(error){
+                                    console.log('ERRO cargo inst');
+                                    callback(error);
+                                }else{
+                                    // console.log('cadastrou cargo inst');
+                                    // //resolve(result_disc_inst);
+                                    // callback();
+                                    if (result_disc_inst == null) {
+                                        (new Promise(function(resolve,reject){
+                                            discenteCIDao.inserirDiscenteCargoInstituicao(id_discente, parseInt(result.inst), result.carg, (error, result_cadastro_cdi) => {
+                                                if (error) {
+                                                    reject(error);
+                                                } else {
+                                                    resolve(result_cadastro_cdi);
+                                                }
+                                            });
+                                        })).then(result => {
+                                            // id_instituicao.push(result.insertId);
+                                            callback();
+                                        }).catch(error => {
+                                            next(error);
+                                        })
+                                    } else {
+                                        callback();
+                                    }
+                                }
+                            })
+                        }, function(err){
+                            if(!err){
+                                console.log('FINAL cargo inst  ');
+                                // resolve(lista_inst_carg);
+                                resolve(true);
+                            }else{
+                                console.log('oi cargo inst  ');
+                                reject(err);
+                            }
+                        
+                        }); 
+        
+                })).then(result => {
+                    // res.status(200).json({resultado: result, erro: null});
+                    // console.log("lista: ", lista_inst_carg);
+                    console.log('oiii');
+
+                    (new Promise(function (resolve, reject) {
+
+                        let discente = new Discente();
+                        discente.construtorParametrosRequisicao(req.body);
+                        console.log('req body ', req.body);
+
+                        console.log('id discente ', discente.id_discente);
+        
+                        let disc = new DiscenteDao(req.connection);
+                        console.log('discente ', discente);
+
+                        disc.editarDiscente(discente, (error, discente_result) => {
+                            if(error){
+                                console.log('ERRO Editar discente: ' + error);
+                                reject(error);
+                            }else{
+                                console.log('Editou discente');
+                                resolve(discente_result);
+                            }
+                        })
+                    })).then(result => {
+                        res.status(200).json({ resultado: result, erro: null });
+                    }).catch(error => {
+                        next(error);
+                    })
+                }).catch(error => {
+                    next(error);
+                })
+    
+            }).catch(error => {
+                next(error);
+            })
+
         }).catch(error => {
             next(error);
-        });
-    }
-    else  res.status(401).json({resultado: null, erro: erros_mensagem.erro_usuario_permissao});
-  }
+        }))
 
+    } else  res.status(401).json({resultado: null, erro: erros_mensagem.erro_usuario_permissao});
+  }
 
   exports.excluirDiscente = (req, res, next) => {
     //let id_tipo_usuario = req.id_tipo_usuario;
