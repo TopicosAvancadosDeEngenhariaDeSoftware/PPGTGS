@@ -10,6 +10,7 @@ router.get('/filtro', controllerDiscente.consultaDiscenteFiltro);
 router.get('/registro', controllerDiscente.cadastrarDiscente);
 router.get('/registro_ok', controllerDiscente.cadastrarOk);
 router.get('/alterar', controllerDiscente.alterarDiscente);
+router.get('/visualizar', controllerDiscente.visualizarDiscente);
 router.post('/teste', async (req, res, next) =>{
     req.assert('nome', 'Nome é obrigatório').notEmpty();
     req.assert('nome', "Verifique seu nome").isLength({ min: 1, max: 40}); 

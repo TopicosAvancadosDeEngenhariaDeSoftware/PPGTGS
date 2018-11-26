@@ -30,7 +30,7 @@ function buscarIndicadorSituacao(){
                 var html = "<tr>"+
                 "<td>" +result.resultado[i].nome + " " + result.resultado[i].sobrenome + "</td>"+
                 "<td> <a href='"+result.resultado[i].link_lattes+"'>"+result.resultado[i].link_lattes+"</td>"+
-                "<td><a href= ../discentes/alterar?id="+result.resultado[i].id_discente+" class='glyphicon glyphicon-pencil' TITLE='Alterar dados do discente'></a></td>"+
+                "<td><a class='btn btn-default' href='/discentes/visualizar?id="+result.resultado[i].id_discente+"' >Visualizar</a> &nbsp&nbsp&nbsp&nbsp<a href= ../discentes/alterar?id="+result.resultado[i].id_discente+" class='glyphicon glyphicon-pencil' TITLE='Alterar dados do discente'></a></td>"+
                 "</tr>";
                 $('#tabela_discentes').append(html);
             }
