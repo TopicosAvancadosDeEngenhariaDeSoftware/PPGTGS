@@ -25,6 +25,25 @@ module.exports = class DiscenteDao{
         });
     }
 
+    recuperarDiscentePorStatusCadastro(status_Cadastro, callback){
+    if(status_Cadastro == 0){
+        var sql = "SELECT * FROM Discente WHERE isAceito IS NULL OR isAceito=0;"
+    }else{
+        var sql = "SELECT * FROM Discente WHERE isAceito=1;"
+    }
+   
+    var params = [];
+    sql = mysql.format(sql, params);
+    this._connection.query(sql, (error, results) =>{
+        if(error){
+            callback(error, null);
+        }else{
+            callback(error,results ? results : null);
+        }
+    });
+}
+
+    /*
     recuperarDiscentesPendentes(callback){
         var sql = "SELECT * FROM Discente WHERE isAceito IS NULL OR isAceito=0;"
         var params = [];
@@ -52,6 +71,7 @@ module.exports = class DiscenteDao{
             
         });
     }
+    */
 
     recuperarDiscentePorId(id_discente, callback){
         var sql = "SELECT * FROM Discente WHERE id_discente = ? ;"
@@ -175,7 +195,7 @@ module.exports = class DiscenteDao{
 
     editarDiscente(discente, callback){
         var sql = "UPDATE Discente SET nome = ?, sobrenome = ?, data_nascimento = ?, rg = ?, cpf = ?, username = ?, "+
-        "senha = ?, link_lattes = ?, email = ?, "+
+        "senha = ?, link_lattes = ?, email = ?, id_nacionalidade = ?, "+
         "id_docente = ?, isAceito = ?, id_titulo = ?, sexo = ?, telefone = ? WHERE id_discente = ?;"
         var params = [];
         params.push(discente.nome);
@@ -187,6 +207,7 @@ module.exports = class DiscenteDao{
         params.push(discente.senha);
         params.push(discente.link_lattes);
         params.push(discente.email);
+        params.push(discente.id_nacionalidade);
         // params.push(discente.id_endereco);
         // params.push(discente.numero_residencia);
         // params.push(discente.complemento);

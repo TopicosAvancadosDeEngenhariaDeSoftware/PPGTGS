@@ -1,9 +1,23 @@
 'use strict'
 
+const config = require('../config/config');
+
 const discenteDao = require('../dao/discente-dao');
 
 
-const config = require('../config/config');
+exports.carregarTelaAprovacoes= async (req, res, next) => {
+    res.render('secretaria-aprovacao', {status_Cadastro : 0});
+}
+
+exports.carregarTelaHome= async (req, res, next) => {
+    res.redirect('/secretaria/aprovacoes');
+}
+
+
+/*
+exports.carregarTelaAprovacoes= async (req, res, next) => {
+    res.render('secretaria-aprovacao', {idSituacao : 0});
+}
 
 exports.recuperarDiscentesPendentes = async (req, res, next) => {
         var dDao = new discenteDao(req.connection);
@@ -22,19 +36,4 @@ exports.recuperarDiscentesAceitos = async (req, res, next) => {
         });
 };
 
-exports.aprovarDiscente = async (req, res, next) => {
-        var dDao = new discenteDao(req.connection);
-        dDao.aprovarDiscente((err, resultados) =>{
-                if(err) next(err);
-                res.render('secretaria-aprovar', {discentes : resultados});
-        });
-}
-
-
-//SECRETARIA CLEBER
-exports.carregarTelaAprovacoes= async (req, res, next) => {
-        res.render('secretaria-aprovacao', {idSituacao : 0});
-    }
-    exports.carregarTelaHome= async (req, res, next) => {
-        res.redirect('/secretaria/aprovacoes');
-}
+*/

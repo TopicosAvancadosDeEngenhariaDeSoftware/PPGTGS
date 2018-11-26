@@ -6,6 +6,9 @@ const secretaria_controller = require('../../controller/json/secretaria-controll
 // READ   = GET method
 // UPDATE = PUT method
 
+//Status Cadastro
+router.get('/secretaria/consultar/status/:status_Cadastro',secretaria_controller.recuperarDiscentePorStatusCadastro);
+
 router.put('/secretaria/aprovar/:id_discente', secretaria_controller.aprovarDiscente);
 
 
