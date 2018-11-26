@@ -18,6 +18,7 @@ var index_Router = require('./routes/index');
 var login_Route = require('./routes/login-route');
 var utils_Route = require('./routes/utils-route');
 var discente_Route = require('./routes/discente-route');
+var discenteV_Route = require('./routes/discentev-route');
 var secretaria_Route = require('./routes/secretaria-route');
 var coordenador_Route = require('./routes/coordenador-route');
 
@@ -69,6 +70,7 @@ app.use(cookieSession({
 app.use('/',login_Route);
 app.use('/',utils_Route);
 
+app.use('/discente/',discenteV_Route);
 app.use('/discentes/',discente_Route);
 app.use('/secretaria/',secretaria_Route);
 app.use('/coordenador/', coordenador_Route);
