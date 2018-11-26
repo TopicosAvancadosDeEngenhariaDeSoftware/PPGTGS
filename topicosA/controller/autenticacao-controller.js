@@ -35,7 +35,7 @@ exports.autenticarUsuario = async (req, res, next) => {
 
                         if(req.body.password == discente.senha){
                             req.session.token = jwt.sign({ email: req.body.email, id_tipo_usuario: config.tipo_usuario.discente, id_usuario: discente.id_discente }, configuracao.config.chave, { expiresIn: '12h'});
-                            res.redirect('/discente');
+                            res.redirect('/discentes/visualizar?id='+discente.id_discente);
                         }else{
                             res.redirect('/login?erro='+"Verifique suas informações");
                         }

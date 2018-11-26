@@ -26,9 +26,9 @@ exports.consultaDiscenteFiltro = async (req, res, next) => {
         var idSituacao = 0;
         var idUsuario = 1;
         if(req.query.idSituacao != null) idSituacao = req.query.idSituacao;
-        if(req.query.idUsuario != null) idUsuario = req.query.idUsuario;
+        //if(req.query.idUsuario != null) idUsuario = req.query.idUsuario;
         //console.log("idSituacao = "+ idSituacao);
-        res.render('discentes-filtro', {idSituacao : idSituacao, idUsuario: idUsuario});
+        res.render('discentes-filtro', {idSituacao : idSituacao , id_tipo_usuario: req.id_tipo_usuario, id_usuario: req.id_usuario});
 };
 
 exports.cadastrarOk = async (req, res, next) => {
@@ -76,7 +76,10 @@ exports.cadastrarDiscente = async (req, res, next) => {
 }
 
 exports.alterarDiscente = async (req, res, next) => {
-       var idUsuario = 1;
+       //var idUsuario = 1;
+       //var id_tipo_usuario = req.id_tipo_usuario;
+
+       console.log("ALTERAR DISCENTE COM USUARIO ["+ req.id_tipo_usuario);
        var pDao = new paisesDao(req.connection);
         pDao.recuperarPaises((err, resultado_paises) =>{
                 if(err) return next(err);
@@ -103,10 +106,10 @@ exports.alterarDiscente = async (req, res, next) => {
                                         lista_tipo_instituicao.push(config.tipo_instituicao.privada);
 
                                         var tipoDiscenteD = new tipoDiscenteDao(req.connection);
-                                        if(req.query.idUsuario != null) idUsuario = req.query.idUsuario;
+                                        //if(req.query.idUsuario != null) idUsuario = req.query.idUsuario;
                                         tipoDiscenteD.recuperarTiposDiscente((err, results_tipos_discentes) =>{
                                                 if(err) return next(err);
-                                                res.render('discentes-alterar', {tipos_discente: results_tipos_discentes,  paises : resultado_paises, titulos : resultados_titulos, docentes: resultados_docentes, instituicoes : lista_instituicoes, tipos_instituicao : lista_tipo_instituicao,idUsuario: idUsuario});                                });
+                                                res.render('discentes-alterar', {tipos_discente: results_tipos_discentes,  paises : resultado_paises, titulos : resultados_titulos, docentes: resultados_docentes, instituicoes : lista_instituicoes, tipos_instituicao : lista_tipo_instituicao, id_tipo_usuario: req.id_tipo_usuario, id_usuario: req.id_usuario});                                });
                                                 
                                         });
 
@@ -117,7 +120,7 @@ exports.alterarDiscente = async (req, res, next) => {
 }
 
 exports.visualizarDiscente = async (req, res, next) => {
-       var idUsuario = 1;
+       //var idUsuario = 1;
        var pDao = new paisesDao(req.connection);
         pDao.recuperarPaises((err, resultado_paises) =>{
                 if(err) return next(err);
@@ -147,7 +150,7 @@ exports.visualizarDiscente = async (req, res, next) => {
                                         if(req.query.idUsuario != null) idUsuario = req.query.idUsuario;
                                         tipoDiscenteD.recuperarTiposDiscente((err, results_tipos_discentes) =>{
                                                 if(err) return next(err);
-                                                res.render('discentes-visualizar', {tipos_discente: results_tipos_discentes,  paises : resultado_paises, titulos : resultados_titulos, docentes: resultados_docentes, instituicoes : lista_instituicoes, tipos_instituicao : lista_tipo_instituicao,idUsuario: idUsuario});                                });
+                                                res.render('discentes-visualizar', {tipos_discente: results_tipos_discentes,  paises : resultado_paises, titulos : resultados_titulos, docentes: resultados_docentes, instituicoes : lista_instituicoes, tipos_instituicao : lista_tipo_instituicao, id_tipo_usuario: req.id_tipo_usuario, id_usuario: req.id_usuario});                                });
                                                 
                                         });
 

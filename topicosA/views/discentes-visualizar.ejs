@@ -19,21 +19,32 @@
         
         <!-- Left side column. contains the logo and sidebar -->
         <aside class="main-sidebar">
-          <section class="sidebar">
-            <!-- Sidebar Menu -->
-            <ul class="sidebar-menu" data-widget="tree">
-              <!-- Optionally, you can add icons to the links -->
-          
-                  <li ><a href="/coordenador/indicadores"><i class="fa fa-area-chart"></i> <span>Indicadores</span></a></li>
-        
-                  <li ><a href="/secretaria/aprovacoes"><i class="glyphicon glyphicon-ok"></i> <span>Aprovações</span></a></li>
-                
-                  <li class="active"><a href="/discentes/filtro"><i class="fa fa-book"></i> <span>Discentes</span></a></li>
-            </ul>
-            <!-- /.sidebar-menu -->
-          </section>
-          <!-- /.sidebar -->
-        </aside>
+                <section class="sidebar">
+                  <!-- Sidebar Menu -->
+                  <ul class="sidebar-menu" data-widget="tree">
+                    
+                    <% switch(id_tipo_usuario){ 
+                        case 2:    %>  
+                              <li ><a href="/coordenador/indicadores"><i class="fa fa-area-chart"></i> <span>Indicadores</span></a></li>
+                              <li class="active"><a href="/discentes/filtro"><i class="fa fa-book"></i> <span>Discentes</span></a></li>
+                        <% break;
+                        case 5: %> 
+                              <li ><a href="/secretaria/aprovacoes"><i class="glyphicon glyphicon-ok"></i> <span>Aprovações</span></a></li>     
+                              <li class="active"><a href="/discentes/filtro"><i class="fa fa-book"></i> <span>Discentes</span></a></li>
+                        <% break; 
+                        case 3: %> 
+                        <li class="active"><a href="/discentes/visualizar?id=<%= id_usuario %>"><i class="glyphicon glyphicon-ok"></i> <span>MEU PERFIL</span></a></li>
+                        <li ><a href="/discentes/alterar?id=<%= id_usuario %>"><i class="glyphicon glyphicon-ok"></i> <span>EDITAR PERFIL</span></a></li>           
+                    <% break;
+                      }%>  
+      
+                    
+                    
+                  </ul>
+                  <!-- /.sidebar-menu -->
+                </section>
+                <!-- /.sidebar -->
+              </aside>
       
 
         <div class="content-wrapper" > 
