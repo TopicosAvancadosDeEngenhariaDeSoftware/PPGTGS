@@ -5,6 +5,7 @@ var controllerSecretaria = require('../controller/secretaria-controller');
 /* GET home page. */
 
 router.get('/aprovacoes', controllerSecretaria.carregarTelaAprovacoes);
+router.get('/', controllerSecretaria.carregarTelaHome);
 
 module.exports = router;
 
