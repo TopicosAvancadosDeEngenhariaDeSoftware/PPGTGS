@@ -3,7 +3,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <title>Teste Dashboard</title>
+  <title>Consultar Discentes | Teste</title>
 
     <% include partes/scripts-base %>
 
@@ -18,19 +18,16 @@
             <!-- Sidebar Menu -->
             <ul class="sidebar-menu" data-widget="tree">
               <!-- Optionally, you can add icons to the links -->
-              <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-              <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
-              <li class="treeview">
-                <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
-                  <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                  <li><a href="#">Link in level 2</a></li>
-                  <li><a href="#">Link in level 2</a></li>
-                </ul>
-              </li>
+              <% if(idUsuario == 1)
+              { %>
+                  <li ><a href="/coordenador/indicadores"><i class="fa fa-area-chart"></i> <span>Indicadores</span></a></li>
+              <% } else {
+
+              %>
+                  <li ><a href="/secretaria/aprovacoes"><i class="fa fa-bolt"></i> <span>Aprovações</span></a></li>
+                <%
+              }%>
+              <li class="active"><a href="/discentes/filtro"><i class="fa fa-book"></i> <span>Discentes</span></a></li>
             </ul>
             <!-- /.sidebar-menu -->
           </section>

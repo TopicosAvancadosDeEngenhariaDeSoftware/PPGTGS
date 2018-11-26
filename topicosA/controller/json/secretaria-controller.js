@@ -8,7 +8,7 @@ const DiscenteDao = require('../../dao/discente-dao');
 
 exports.aprovarDiscente = (req, res, next) => {
     //let id_tipo_usuario = req.id_tipo_usuario;
-    console.log("foi q foi!")
+    
     let id_tipo_usuario = 1;
 
     if(id_tipo_usuario == config.tipo_usuario.admin || id_tipo_usuario == config.tipo_usuario.coordenador || id_tipo_usuario == config.tipo_usuario.discente || id_tipo_usuario == config.tipo_usuario.secretaria){
