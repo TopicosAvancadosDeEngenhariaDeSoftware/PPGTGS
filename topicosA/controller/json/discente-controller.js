@@ -72,7 +72,7 @@ exports.recuperarDiscenteId = (req, res, next) => {
             id_docente : dados_pessoais_discente.id_docente,
             isAceito : dados_pessoais_discente.isAceito,
             situacao : dados_pessoais_discente.situacao,
-            id_titulo : dados_pessoais_discente.titulo,
+            id_titulo : dados_pessoais_discente.id_titulo,
             sexo : dados_pessoais_discente.sexo,
             telefone : dados_pessoais_discente.telefone,
             passaporte : dados_pessoais_discente.passaporte,
