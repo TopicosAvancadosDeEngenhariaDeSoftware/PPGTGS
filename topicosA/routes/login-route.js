@@ -4,7 +4,9 @@ var autenticacao_controller = require('../controller/autenticacao-controller');
 
 /* GET home page. */
 router.get('/login', function(req, res, next) {
-  res.render('login', {});
+  let erro = "";
+  if(req.query.erro) erro = req.query.erro;
+  res.render('login', { erro: erro});
 });
 
 router.get('/logout', function(req, res, next) {

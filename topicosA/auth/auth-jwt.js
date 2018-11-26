@@ -16,6 +16,8 @@ exports.verificarSessao = (req, res, next) => {
             return res.redirect('/naoautorizado');
         }else{
             req.email = data.email;
+            req.id_tipo_usuario = data.id_tipo_usuario;
+            req.id_usuario = data.id_usuario;
             next();
         }    
     });
