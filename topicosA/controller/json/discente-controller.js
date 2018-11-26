@@ -970,7 +970,7 @@ exports.editarDiscente = (req, res, next) => {
                             })
 
                         } else {
-                            console.log("id_cargo_discente push: ", result_cargo_discente.id_cargo_discente);
+                            // console.log("id_cargo_discente push: ", result_cargo_discente.id_cargo_discente);
                             id_cargo_discente.push(result_cargo_discente.id_cargo_discente);
                             callback();
                             //res.status(200).json({ resultado: result, erro: null });
@@ -979,7 +979,7 @@ exports.editarDiscente = (req, res, next) => {
                 })
             }, function(err){
                 if(!err){
-                    console.log('FINAL cargoo:  ');
+                    // console.log('FINAL cargoo:  ');
                     resolve(id_cargo_discente);
                 }else{
                     reject(err);
@@ -993,7 +993,7 @@ exports.editarDiscente = (req, res, next) => {
             (new Promise(function (resolve, reject) {
                 // fazer o mesmo para instituição
                 async.each(req.body.ocupacoes, function (result, callback) {
-                    console.log("result.id_instituição: "+ result.id_instituicao);
+                    // console.log("result.id_instituição: "+ result.id_instituicao);
                     iDao.recuperarInstituicaoPorId(result.id_instituicao, (error, result_instituicao) => {
                         if(error){
                             callback(error);
@@ -1014,7 +1014,7 @@ exports.editarDiscente = (req, res, next) => {
                                     next(error);
                                 })
                             } else {
-                                console.log("id_id_instituicao push: ", result.id_instituicao);
+                                // console.log("id_id_instituicao push: ", result.id_instituicao);
                                 id_instituicao.push(result.id_instituicao);
                                 callback();
                                 //res.status(200).json({ resultado: result, erro: null });
@@ -1023,7 +1023,7 @@ exports.editarDiscente = (req, res, next) => {
                     })
                 }, function(err){
                     if(!err){
-                        console.log('FINAL inst:  ');
+                        // console.log('FINAL inst:  ');
                         resolve(id_instituicao);
                     }else{
                         reject(err);
@@ -1044,8 +1044,8 @@ exports.editarDiscente = (req, res, next) => {
                     let discenteCIDao = new DiscenteCargoInstituicaoDao(req.connection);
                     let id_discente = parseInt(req.params.id_discente);
                     let lista_inst_carg = [];
-                    console.log("lista i: ", id_instituicao);
-                    console.log("lista c: ", id_cargo_discente);
+                    // console.log("lista i: ", id_instituicao);
+                    // console.log("lista c: ", id_cargo_discente);
             
                     for(var j = 0; j < id_instituicao.length; j++){
                         
@@ -1057,11 +1057,11 @@ exports.editarDiscente = (req, res, next) => {
                    
                     //(new Promise(function(resolve,reject){
                         async.each(lista_inst_carg, function(result, callback){
-                            console.log("result.inst ", result.inst);
-                            console.log("parse int parseInt(result.inst) ", parseInt(result.inst));
+                            // console.log("result.inst ", result.inst);
+                            // console.log("parse int parseInt(result.inst) ", parseInt(result.inst));
                             discenteCIDao.recuperarCargoDiscentePorIds(id_discente, parseInt(result.inst), result.carg, (error, result_disc_inst)=> {
                                 if(error){
-                                    console.log('ERRO cargo inst');
+                                    // console.log('ERRO cargo inst');
                                     callback(error);
                                 }else{
                                     // console.log('cadastrou cargo inst');
@@ -1089,11 +1089,11 @@ exports.editarDiscente = (req, res, next) => {
                             })
                         }, function(err){
                             if(!err){
-                                console.log('FINAL cargo inst  ');
+                                // console.log('FINAL cargo inst  ');
                                 // resolve(lista_inst_carg);
                                 resolve(true);
                             }else{
-                                console.log('oi cargo inst  ');
+                                // console.log('oi cargo inst  ');
                                 reject(err);
                             }
                         
@@ -1102,7 +1102,7 @@ exports.editarDiscente = (req, res, next) => {
                 })).then(result => {
                     // res.status(200).json({resultado: result, erro: null});
                     // console.log("lista: ", lista_inst_carg);
-                    console.log('oiii');
+                    // console.log('oiii');
 
                     (new Promise(function (resolve, reject) {
 
@@ -1110,7 +1110,7 @@ exports.editarDiscente = (req, res, next) => {
                         discente.construtorParametrosRequisicao(req.body);
                         console.log('req body ', req.body);
 
-                        console.log('id discente ', discente.id_discente);
+                        console.log('id nacionalidade ', discente.id_nacionalidade);
         
                         let disc = new DiscenteDao(req.connection);
                         console.log('discente ', discente);
