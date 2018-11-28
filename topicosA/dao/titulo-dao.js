@@ -6,7 +6,7 @@ module.exports = class TituloDao{
     }
 
     recuperarTitulos(callback){
-        var sql = "SELECT * FROM Titulo;"
+        var sql = "select * from titulo;"
         var params = [];
         sql = mysql.format(sql, params);
         this._connection.query(sql, (error, results) =>{
@@ -20,7 +20,7 @@ module.exports = class TituloDao{
     }
 
     recuperarTituloId(id_titulo,callback){
-        var sql = "SELECT * FROM Titulo where id_titulo = ?;"
+        var sql = "select * from titulo where id_titulo = ?;"
         var params = [];
         params.push(id_titulo);
         sql = mysql.format(sql, params);

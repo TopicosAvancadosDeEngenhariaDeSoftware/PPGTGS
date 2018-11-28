@@ -6,7 +6,7 @@ module.exports = class BairroDao{
         this._connection = connection;
     }
     recuperarBairroPorId(id_bairro, callback){
-        var sql = "SELECT * FROM Bairro WHERE id_bairro = ?;"
+        var sql = "select * from bairro where id_bairro = ?;"
         var params = [];
         params.push(id_bairro);
         sql = mysql.format(sql, params);
@@ -21,7 +21,7 @@ module.exports = class BairroDao{
     }
         
     recuperarBairroPorNome(nome, callback){
-        var sql = "SELECT * FROM Bairro WHERE nome = ? ;"
+        var sql = "select * from bairro where nome = ? ;"
         var params = [];
         params.push(nome);
         sql = mysql.format(sql, params);
@@ -38,7 +38,7 @@ module.exports = class BairroDao{
     }
 
     inserirBairro(nome, callback){
-        var sql = "INSERT INTO Bairro (nome) VALUES (?);"
+        var sql = "insert into bairro (nome) values (?);"
         var params = [];
         params.push(nome);
         sql = mysql.format(sql, params);
@@ -53,7 +53,7 @@ module.exports = class BairroDao{
     }
 
     editarBairro(id_bairro,nome, callback){
-        var sql = "UPDATE Bairro SET nome = ? WHERE id_bairro = ?;"
+        var sql = "update bairro set nome = ? where id_bairro = ?;"
         var params = [];
         params.push(nome);
         params.push(id_bairro);
@@ -67,7 +67,7 @@ module.exports = class BairroDao{
     }
 
     excluirBairro(id_bairro, callback){
-        var sql = "DELETE FROM Bairro WHERE id_bairro = ? ;"
+        var sql = "delete from bairro where id_bairro = ? ;"
         var params = [];
         params.push(id_bairro);
         sql = mysql.format(sql, params);

@@ -6,7 +6,7 @@ module.exports = class DocenteDao{
     }
 
     recuperarDocentesSomenteNome(callback){
-        var sql = "SELECT id_docente, nome, sobrenome FROM Docente;"
+        var sql = "select id_docente, nome, sobrenome from docente;"
         var params = [];
         sql = mysql.format(sql, params);
         this._connection.query(sql, (error, results) =>{
@@ -19,7 +19,7 @@ module.exports = class DocenteDao{
     }
 
     recuperarDocenteId(id_docente,callback){
-        var sql = "SELECT nome FROM Docente where id_docente = ?;"
+        var sql = "select nome from docente where id_docente = ?;"
         var params = [];
         params.push(id_docente);
         sql = mysql.format(sql, params);

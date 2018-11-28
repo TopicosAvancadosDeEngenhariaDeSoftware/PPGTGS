@@ -6,7 +6,7 @@ module.exports = class EstadoDao{
     }
 
     recuperarEstadosPorPais(id_pais, callback){
-        var sql = "SELECT * FROM Estado WHERE id_pais = ?;"
+        var sql = "select * from estado where id_pais = ?;"
         var params = [];
         params.push(id_pais);
         sql = mysql.format(sql, params);

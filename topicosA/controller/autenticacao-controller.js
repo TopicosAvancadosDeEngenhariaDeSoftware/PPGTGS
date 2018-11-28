@@ -30,10 +30,9 @@ exports.autenticarUsuario = async (req, res, next) => {
                     }catch(e){
                         isOK = false;
                     }
-
                     if(isOK == false){
 
-                        if(req.body.password == discente.senha){
+                        if(discente != null && req.body.password == discente.senha){
                             req.session.token = jwt.sign({ email: req.body.email, id_tipo_usuario: config.tipo_usuario.discente, id_usuario: discente.id_discente }, configuracao.config.chave, { expiresIn: '12h'});
                             res.redirect('/discentes/visualizar?id='+discente.id_discente);
                         }else{

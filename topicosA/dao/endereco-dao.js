@@ -6,7 +6,7 @@ module.exports = class EnderecoDao{
         this._connection = connection;
     }
     recuperarEnderecoPorId(id_endereco, callback){
-        var sql = "SELECT * FROM Endereco WHERE id_endereco = ?;"
+        var sql = "select * from endereco where id_endereco = ?;"
         var params = [];
         params.push(id_bairro);
         sql = mysql.format(sql, params);
@@ -20,7 +20,7 @@ module.exports = class EnderecoDao{
         });
     }
     recuperarEnderecosPorLogradouro(id_logradouro, callback){
-        var sql = "SELECT * FROM Endereco WHERE id_logradouro = ?;"
+        var sql = "select * from endereco where id_logradouro = ?;"
         var params = [];
         params.push(id_logradouro);
         sql = mysql.format(sql, params);
@@ -34,7 +34,7 @@ module.exports = class EnderecoDao{
         });
     }
     recuperarEnderecoPorBairro(id_bairro, callback){
-        var sql = "SELECT * FROM Endereco WHERE id_bairro = ?;"
+        var sql = "select * from endereco where id_bairro = ?;"
         var params = [];
         params.push(id_bairro);
         sql = mysql.format(sql, params);
@@ -48,7 +48,7 @@ module.exports = class EnderecoDao{
         });
     }
     recuperarEnderecosPorCidade(id_cidade, callback){
-        var sql = "SELECT * FROM Endereco WHERE id_cidade = ?;"
+        var sql = "select * from endereco where id_cidade = ?;"
         var params = [];
         params.push(id_bairro);
         sql = mysql.format(sql, params);
@@ -62,7 +62,7 @@ module.exports = class EnderecoDao{
         });
     }
     recuperarEnderecosPorCep(cep, callback){
-        var sql = "SELECT * FROM Endereco WHERE cep = ? ;"
+        var sql = "select * from endereco where cep = ? ;"
         var params = [];
         params.push(cep);
         sql = mysql.format(sql, params);
@@ -79,7 +79,7 @@ module.exports = class EnderecoDao{
     }
     inserirEndereco(endereco,callback){
 
-        var sql = "INSERT INTO Endereco (id_cidade,id_bairro,id_logradouro,cep) VALUES (?,?,?,?);"
+        var sql = "insert into endereco (id_cidade,id_bairro,id_logradouro,cep) values (?,?,?,?);"
         var params = [];
         params.push(endereco.id_cidade);
         params.push(endereco.id_bairro);
@@ -98,7 +98,7 @@ module.exports = class EnderecoDao{
     }
 
     editarEndereco(id_cidade,id_bairro,id_logradouro,cep,id_endereco, callback){
-        var sql = "UPDATE Endereco SET id_cidade = ?, id_bairro = ?,id_logradouro = ?, cep = ? WHERE id_endereco = ?;"
+        var sql = "update endereco set id_cidade = ?, id_bairro = ?,id_logradouro = ?, cep = ? where id_endereco = ?;"
         var params = [];
         params.push(id_cidade);
         params.push(id_bairro);
@@ -114,7 +114,7 @@ module.exports = class EnderecoDao{
     }
 
     excluirEndereco(id_endereco, callback){
-        var sql = "DELETE FROM Endereco WHERE id_endereco = ? ;"
+        var sql = "delete from endereco where id_endereco = ? ;"
         var params = [];
         params.push(id_endereco);
         sql = mysql.format(sql, params);

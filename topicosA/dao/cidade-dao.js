@@ -6,7 +6,7 @@ module.exports = class CidadeDao{
     }
 
     recuperarCidadesPorEstado(id_estado, callback){
-        var sql = "SELECT * FROM Cidade WHERE id_estado = ?;"
+        var sql = "select * from cidade where id_estado = ?;"
         var params = [];
         params.push(id_estado);
         sql = mysql.format(sql, params);

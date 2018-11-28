@@ -5,7 +5,7 @@ module.exports = class LogradouroDao{
         this._connection = connection;
     }
     recuperarLogradouroPorId(id_logradouro, callback){
-        var sql = "SELECT * FROM Logradouro WHERE id_logradouro = ?;"
+        var sql = "select * from logradouro where id_logradouro = ?;"
         var params = [];
         params.push(id_logradouro);
         sql = mysql.format(sql, params);
@@ -20,7 +20,7 @@ module.exports = class LogradouroDao{
     }
 
     recuperarLogradouroPorNome(nome, callback){
-        var sql = "SELECT * FROM Logradouro WHERE nome = ? ;"
+        var sql = "select * from logradouro where nome = ? ;"
         var params = [];
         params.push(nome);
         sql = mysql.format(sql, params);
@@ -39,7 +39,7 @@ module.exports = class LogradouroDao{
 
     inserirLogradouro(nome, callback){
 
-        var sql = "INSERT INTO Logradouro (nome) VALUES (?);"
+        var sql = "insert into logradouro (nome) values (?);"
         var params = [];
         params.push(nome);
         sql = mysql.format(sql, params);
@@ -55,7 +55,7 @@ module.exports = class LogradouroDao{
     }
 
     editarLogradouro(id_logradouro,nome, callback){
-        var sql = "UPDATE Logradouro SET nome = ? WHERE id_logradouro = ?;"
+        var sql = "update logradouro set nome = ? where id_logradouro = ?;"
         var params = [];
         params.push(nome);
         params.push(id_logradouro);
@@ -69,7 +69,7 @@ module.exports = class LogradouroDao{
     }
 
     excluirLogradouro(id_logradouro, callback){
-        var sql = "DELETE FROM Logradouro WHERE id_logradouro = ? ;"
+        var sql = "delete from logradouro where id_logradouro = ? ;"
         var params = [];
         params.push(id_logradouro);
         sql = mysql.format(sql, params);
