@@ -6,23 +6,29 @@ $(function () {
     });
     buscarIndicadorSituacao();
 
+    $('#discente_nome').keyup(function() {
+        buscarIndicadorSituacao();
+    });
+
 });
 
 function buscarIndicadorSituacao(){
 
     var filtro_idSituacao = $('#filtro_situacao').val();
-    $('#tabela_discentes').html("<tr>"+
-        "<th>Nome</th>"+
-        "<th>Lattes</th>"+
-        "<th>Visualizar/Editar</th>"+
-        "</tr>");
+    $('#tabela_discentes').html("<tr><th>PROCURANDO</th></tr>");
 
     $.ajax({ 
         type: "GET",
         data: {},
-        url: "../../json/discentes/situacoes_discente/"+filtro_idSituacao,
+        url: "../../json/discentes/situacoes_discente/"+filtro_idSituacao+"/nomes?nome="+$('#discente_nome').val(),
         success: function(result){
             //alert(JSON.stringify(result.resultado[0].id_discente));
+
+            $('#tabela_discentes').html("<tr>"+
+            "<th>Nome</th>"+
+            "<th>Lattes</th>"+
+            "<th>Visualizar/Editar</th>"+
+            "</tr>");
 
             var dadosGrafico = new Object();
             dadosGrafico.categorias = [];

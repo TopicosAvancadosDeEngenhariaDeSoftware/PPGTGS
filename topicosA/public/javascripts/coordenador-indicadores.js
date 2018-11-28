@@ -55,12 +55,12 @@ function buscarIndicadorNumeroAlunosPorTipoInstituicao(){
 
             var soma = obj_privada.count + obj_publica.count;
 
-            var count_privada = (obj_privada.count / soma * 100).toFixed(1);
+            var count_privada = (obj_privada.count / soma * 100).toFixed(0);
             if(soma == 0) count_privada = 0;
             $('#privada_indicador_por').text((""+ count_privada));
             $('#privada_indicador_text').text(""+ obj_privada.count+" de instituições privadas");
 
-            var count_publica = (obj_publica.count / soma * 100).toFixed(1);
+            var count_publica = (obj_publica.count / soma * 100).toFixed(0);
             if(soma == 0) count_publica = 0;
             $('#publica_indicador_por').text((""+ count_publica));
             $('#publica_indicador_text').text(""+ obj_publica.count+" de instituições públicas");
@@ -176,7 +176,7 @@ function buscarIndicadorNumeroAlunosNascionalidade(){
 
             if(brasileiro_count != 0){
             
-                $('#brasileiro_indicador').html(""+ ((brasileiro_count / (brasileiro_count+outros_count)*100).toFixed(1)));
+                $('#brasileiro_indicador').html(""+ ((brasileiro_count / (brasileiro_count+outros_count)*100).toFixed(0)));
                 $('#brasileiro_indicador_text').html(""+brasileiro_count + " de nacionalidade brasileira");
             }else{
                 $('#brasileiro_indicador').html("0");
@@ -184,7 +184,7 @@ function buscarIndicadorNumeroAlunosNascionalidade(){
             }
 
             if(outros_count != 0){
-                $('#outros_indicador').html(""+ ((outros_count / (brasileiro_count+outros_count)*100).toFixed(1)));
+                $('#outros_indicador').html(""+ ((outros_count / (brasileiro_count+outros_count)*100).toFixed(0)));
                 $('#outros_indicador_text').html(""+outros_count+ " de nacionalidade extrangeira");
             }else{
                 $('#outros_indicador').html("0");
@@ -319,8 +319,9 @@ function grafico_indicador_cargo_aluno(dadosGrafico){
       tickInterval: 1
     },
     tooltip: {
-          enabled: false
-      },
+        enabled: true,
+        valueSuffix: ' discentes'
+    },
     legends: {
       enabled: false
     },
@@ -357,7 +358,8 @@ function grafico_indicador_instituicao_aluno(dadosGrafico){
     tickInterval: 1
   },
   tooltip: {
-        enabled: false
+    enabled: true,
+    valueSuffix: ' discentes'
     },
   legends: {
     enabled: false
@@ -395,7 +397,8 @@ function grafico_indicador_nascionalidade(dadosGrafico){
       tickInterval: 1
     },
     tooltip: {
-          enabled: false
+          enabled: true,
+          valueSuffix: ' discentes'
       },
     legends: {
       enabled: false
@@ -423,7 +426,7 @@ function grafico_indicador_titulos(dadosGrafico){
           text: ''
         },
         tooltip: {
-          pointFormat: '{series.name}: <b>{point.y}</b>'
+          pointFormat: '{series.name}: <b>{point.percentage:.1f} %</b>'
         },
         plotOptions: {
           pie: {
@@ -457,7 +460,7 @@ function grafico_indicador_titulos(dadosGrafico){
           text: ''
         },
         tooltip: {
-          pointFormat: '{series.name}: <b>{point.y}</b>'
+          pointFormat: '{series.name}: <b>{point.percentage:.1f} %</b>'
         },
         plotOptions: {
           pie: {
