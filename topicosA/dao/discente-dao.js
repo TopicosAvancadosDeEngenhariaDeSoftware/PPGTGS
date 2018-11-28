@@ -93,7 +93,7 @@ module.exports = class DiscenteDao{
          
         nome = "%"+nome+"%";
         if(situacao == 0){
-            var sql = "select * from discente where nome like ?;"
+            var sql = "select * from discente where nome = ?;"
         }
         else{
             var sql = "select * from discente where nome like ? and situacao = ?;"
