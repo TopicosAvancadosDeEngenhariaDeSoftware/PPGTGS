@@ -92,15 +92,19 @@ module.exports = class DiscenteDao{
     recuperarDiscentePorNome(nome, situacao, callback){
          
         nome = "%"+nome+"%";
+        var params = [];
+        params.push(nome);
+        
         if(situacao == 0){
-            var sql = "select * from discente where nome = ?;"
+            var sql = "select * from discente where nome like ?;"
         }
         else{
             var sql = "select * from discente where nome like ? and situacao = ?;"
+            params.push(situacao);
         }
-        var params = [];
-        params.push(nome);
-        params.push(situacao);
+        
+        
+       
         sql = mysql.format(sql, params);
         this._connection.query(sql, (error, results) =>{
             console.log('RESULTs ',results);
