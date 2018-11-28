@@ -1,327 +1,292 @@
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Discentes / Registro</title>
-    <!-- Select2 -->
-    <link rel="stylesheet" href="../bower_components/select2/dist/css/select2.min.css">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Discentes / Registro</title>
+      <!-- Select2 -->
+      <link rel="stylesheet" href="../bower_components/select2/dist/css/select2.min.css">
+      <% include partes/scripts-base %>
+      <script src="../plugins/input-mask/jquery.inputmask.js"></script>
+      <script src="../plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+      <script src="../plugins/input-mask/jquery.inputmask.extensions.js"></script>
+   </head>
+   <body >
+      <div class="backSite wrapper ">
+      <div class="container " >
+         <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:10px;">
+            <section class="content-header" >
+               <div class="row">
+                  <div class="col-xs-5 col-sm-4 col-md-3 col-lg-2" >
+                     <img src="https://www5.unioeste.br/eventos/identidadevisual/LOGOTIPOUNIOESTE.png" width="100%;" />
+                  </div>
+                  <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 pull-right">
+                     <h2><b>PPGTGS</b></h2>
+                  </div>
+               </div>
+            </section>
+         </div>
+         <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <!-- general form elements -->
+            <div class="box box-primary">
+               <div class="box-header with-border" style="text-align: center;">
+                  <h1 class="box-title"><b>Registro de Discente</b></h1>
+               </div>
+               <!-- /.box-header -->
+               <!-- form start -->
+               <form role="form" >
+                  <div class="box-body">
+                     <div id="div_discente_nome" class="form-group col-xs-12 col-sm-12 col-md-5 col-lg-5" >
+                        <label >Nome*</label>
+                        <input type="text" class="form-control" id="discente_nome" placeholder="João">
+                        <span id="err_discente_nome" class="help-block"></span>
+                     </div>
+                     <div id="div_discente_sobrenome" class="form-group col-xs-12 col-sm-12 col-md-5 col-lg-5" >
+                        <label >Sobrenome*</label>
+                        <input type="text" class="form-control" id="discente_sobrenome" placeholder="Silva">
+                        <span id="err_discente_sobrenome" class="help-block"></span>
+                     </div>
+                     <div id="div_discente_datanascimento" class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-2" >
+                        <label >Data de nascimento*</label>
+                        <input id="discente_datanascimento" placeholder="dd/mm/yyyy" type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
+                        <span id="err_discente_datanascimento" class="help-block"></span>
+                     </div>
 
-    <% include partes/scripts-base %>
-    <script src="../plugins/input-mask/jquery.inputmask.js"></script>
-    <script src="../plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-    <script src="../plugins/input-mask/jquery.inputmask.extensions.js"></script>
-    
 
-</head>
-<body >
-    <div class="backSite wrapper ">
-        
-        <div class="container " >
-                <div style="margin:30px;">
-                <section class="content-header" >
-                        <div class="col-xs-5 col-sm-4 col-md-3 col-lg-2" >
-                            <img src="https://www5.unioeste.br/eventos/identidadevisual/LOGOTIPOUNIOESTE.png" width="100%;" />
+                     <div id="div_discente_nascionalidade" class="form-group col-xs-12 col-sm-12 col-md-2 col-lg-2" >
+                        <label >Nacionalidade</label>
+                        <select id="list_nacionalidade" class="form-control select2" style="width: 100%;" name="id_nacionalidade">
+                           <% for(var i = 0; i < paises.length ; i++){ %> 
+                           <option value="<%= paises[i].id_pais %>"><%= paises[i].nacionalidade %> </option>
+                           <% } %>
+                        </select>
+                        <span id="err_discente_nascionalidade" class="help-block"></span>      
+                     </div>
+                     <div id="div_discente_sexo" class="form-group col-xs-12 col-sm-12 col-md-2 col-lg-2" >
+                        <label >Sexo</label>
+                        <select id="list_sexo" class="form-control" style="width: 100%;" name="id_sexo">
+                           <option value="1">Masculino</option>
+                           <option value="2">Feminino</option>
+                           <option value="3">Outro</option>
+                        </select>
+                        <span id="err_discente_sexo" class="help-block"></span>   
+                     </div>
+                     
+                     <div id="card_discente_rg"  class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3" >
+                        <label >RG</label>
+                        <input type="text" class="form-control" id="discente_rg">
+                     </div>
+                     <div id="div_discente_cpf" class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3" >
+                        <label >CPF</label>
+                        <input type="text" class="form-control" id="discente_cpf">
+                        <span id="err_discente_cpf" class="help-block"></span>  
+                     </div>
+                     <div id="card_discente_passaporte" class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6" >
+                        <label >Nº do Passaporte</label>
+                        <input type="text" class="form-control" id="discente_passaporte">
+                     </div>
+
+
+
+                     <div id="div_discente_id_titulo" class="form-group col-xs-12 col-sm-12 col-md-2 col-lg-2" >
+                        <label >Título*</label>
+                        <select id="list_titulos" class="form-control select2" style="width: 100%;" name="id_titulo">
+                           <% for(var i = 0; i < titulos.length ; i++){ %> 
+                           <option value="<%= titulos[i].id_titulo %>"><%= titulos[i].nome %> </option>
+                           <% } %>
+                        </select>
+                        <span id="err_discente_id_titulo" class="help-block"></span>
+                     </div>
+                     <div id="div_discente_id_orientador" class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3" >
+                        <label >Orientador*</label>
+                        <select id="list_docentes" class="form-control select2" style="width: 100%;" name="id_titulo">
+                           <% for(var i = 0; i < docentes.length ; i++){ %> 
+                           <option value="<%= docentes[i].id_docente %>"><%= docentes[i].nome + " " + docentes[i].sobrenome %> </option>
+                           <% } %>
+                        </select>
+                        <span id="err_discente_id_orientador" class="help-block"></span>   
+                     </div>
+                     <div id="div_discente_id_tipo" class="form-group col-xs-12 col-sm-12 col-md-2 col-lg-2" >
+                        <label >Tipo de discente*</label>
+                        <select id="list_tipos_discente" class="form-control select2" style="width: 100%;" name="id_titulo">
+                           <% for(var i = 0; i < tipos_discente.length ; i++){ %> 
+                           <option value="<%= tipos_discente[i].id_tipo_discente %>"><%= tipos_discente[i].nome %> </option>
+                           <% } %>
+                        </select>
+                    </div>
+                    <div class="form-group col-xs-12 col-sm-12 col-md-5 col-lg-5" >
+                        <label >Link Perfil do Lattes</label>
+                        <input type="text" class="form-control" id="discente_linkperfillattes" >
+                     </div>
+                     <div class="form-group col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                        <label>Telefone</label> 
+                        <input id="discente_telefone" type="text" class="form-control" data-inputmask='"mask": "(99) 99999-9999"' data-mask>
+                        <!-- /.input group -->
+                     </div>
+
+                     <!--cool <br> -->
+                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><p>&nbsp</p></div>
+
+
+                     <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                        <label>Ocupação* </label>
+                        <div class="box-body table-responsive no-padding ">
+                           <table id="tabela_ocupacoes" class="table table-hover">
+                           </table>
                         </div>
-                        <h1 style="float:right;">
-                                <b>PPGTGS</b>
-                          
-                        </h1>
-                        
-                </section>
-                </div>
-                
-                <div class="col-md-12" style="margin-top:30px;">
-                        <!-- general form elements -->
-                        <div class="box box-primary">
-                          <div class="box-header with-border">
-                            <h1 class="box-title">Registro de Discente</h1>
-                          </div>
-                          <!-- /.box-header -->
-                          <!-- form start -->
-                          <form role="form" >
-                            <div class="box-body">
-                                
-                              <div id="div_discente_nome" class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6" >
-                                        <label >Nome *</label>
-                                        <input type="text" class="form-control" id="discente_nome" placeholder="João">
-                                        <span id="err_discente_nome" class="help-block"></span>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                           <button id="button_add_ocupacao" type="button" class="btn btn-block btn-primary" >Adicionar Cargo</button>
+                        </div>
+                        <div id="div_add_ocupacao" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 remover" >
+                           <div class="box box-solid " style="background:#F0F8FF; margin-top: 10px;">
+                              <div class="box-header with-border" style="background:#ADD8E6;">
+                                 <h3 class="box-title">Nova Ocupação</h3>
                               </div>
-                              <div id="div_discente_sobrenome" class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6" >
-                                  <label >Sobrenome *</label>
-                                  <input type="text" class="form-control" id="discente_sobrenome" placeholder="Silva">
-                                  <span id="err_discente_sobrenome" class="help-block"></span>
-                              </div>
-                              
-                              <div id="div_discente_datanascimento" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
-                                  <label >Data de nascimento *</label>
-                                  <input id="discente_datanascimento" type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
-                                  <span id="err_discente_datanascimento" class="help-block"></span>
-                              </div>
-                              <div id="div_discente_nascionalidade" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
-                                    <label >Nacionalidade: </label>
-                                    
-                                    <select id="list_nacionalidade" class="form-control select2" style="width: 100%;" name="id_nacionalidade">
-                                            <% for(var i = 0; i < paises.length ; i++){ %> 
-                                                <option value="<%= paises[i].id_pais %>"><%= paises[i].nacionalidade %> </option>
-                                            <% } %>
-
+                              <!-- /.box-header -->
+                              <div class="box-body">
+                                 <div id="div_add_ocupacao_cargo" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <label >Cargo* </label>
+                                    <input type="text" class="form-control" id="add_ocupacao_cargo" >
+                                    <span id="erro_add_ocupacao_cargo" class="help-block"></span>
+                                 </div>
+                                 <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <label >Instituição* </label>
+                                    <select id="list_instituicoes" class="form-control select2" style="width: 100%;" >
+                                       <% for(var i = 0; i < instituicoes.length ; i++){ %> 
+                                       <option value="<%= instituicoes[i].id_instituicao %>"><%= "[" + instituicoes[i].sigla + "] " + instituicoes[i].nome + " - "+ instituicoes[i].tipo_instituicao.nome %> </option>
+                                       <% } %>
+                                       <option value="0"> Outra </option>
                                     </select>
-                                    <span id="err_discente_nascionalidade" class="help-block"></span>      
-                                </div>
-
-                              <div id="card_discente_rg"  class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
-                                  <label >RG</label>
-                                  <input type="text" class="form-control" id="discente_rg">
-                              </div>
-                              <div id="div_discente_cpf" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
-                                  <label >CPF</label>
-                                  <input type="text" class="form-control" id="discente_cpf">
-                                  <span id="err_discente_cpf" class="help-block"></span>  
-                              </div>
-                              <div id="card_discente_passaporte" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
-                                  <label >Nº do Passaporte</label>
-                                  <input type="text" class="form-control" id="discente_passaporte">
-                              </div>
-
-                              <div id="div_discente_sexo" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
-                                    <label >Sexo: </label>
-                                    
-                                    <select id="list_sexo" class="form-control" style="width: 100%;" name="id_sexo">
-                                                <option value="1">Masculino</option>
-                                                <option value="2">Feminino</option>
-                                                <option value="3">Outro</option>
-                                    </select>
-                                    <span id="err_discente_sexo" class="help-block"></span>   
-                                </div>
-
-                                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <label>Telefone</label> 
-                                        <input id="discente_telefone" type="text" class="form-control" data-inputmask='"mask": "(99) 99999-9999"' data-mask>
-                                        
-                                        <!-- /.input group -->
-                                </div>
-
-                              
-                                <div id="div_discente_id_pais" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
-                                        <label >Endereço: País * </label>
-                                        
-                                        <select id="list_pais" class="form-control select2" style="width: 100%;" name="endereco_id_pais">
-                                                <% for(var i = 0; i < paises.length ; i++){ %> 
-                                                    <option value="<%= paises[i].id_pais %>"><%= paises[i].nome %> </option>
-                                                <% } %>
-                                        </select>
-                                        <span id="err_discente_id_pais" class="help-block"></span>   
-                                </div>
-
-                              <div id="endereco_brasil" >
-
-                                    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
-                                            <label >Estado * </label>
-                                            
-                                            <select id="list_estado" class="form-control select2" style="width: 100%;" name="endereco_id_estado">
-                                            </select>
+                                 </div>
+                                 <div id="nova_instituicao" class="remover">
+                                    <div id="div_add_instituicao_nome" class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-6">
+                                       <label >Nome da Instituição* </label>
+                                       <input type="text" class="form-control" id="add_instituicao_nome" >
+                                       <span id="erro_add_instituicao_nome" class="help-block"></span>
                                     </div>
-
-                                    <div id="div_discente_id_cidade" class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6" >
-                                            <label >Cidade * </label>
-                                            <select id="list_cidade" class="form-control select2" style="width: 100%;" name="endereco_id_cidade">
-                                                    
-                                            </select>
-                                            <span id="err_discente_id_cidade" class="help-block"></span>
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-3">
+                                       <label >Sigla da Instituição* </label>
+                                       <input type="text" class="form-control" id="add_instituicao_sigla" >
                                     </div>
-                                    
-                                    <div id="div_discente_cep" class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6" >
-                                            <label >CEP *</label>
-                                            <input type="text" class="form-control" id="discente_endereco_cep" name="endereco_cep">
-                                            <span id="err_discente_cep" class="help-block"></span>
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-3">
+                                       <label >Tipo* </label>
+                                       <select id="list_tipo_instituicoes" class="form-control select2" style="width: 100%;" >
+                                          <% for(var i = 0; i < tipos_instituicao.length ; i++){ %> 
+                                          <option value="<%= tipos_instituicao[i].id %>"><%=tipos_instituicao[i].nome %> </option>
+                                          <% } %>
+                                       </select>
                                     </div>
-
-                                    
-                                    <div id="div_discente_bairro" class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3" >
-                                            <label >Bairro *</label>
-                                            <input type="text" class="form-control" id="discente_endereco_bairro" name="endereco_bairro">
-                                            <span id="err_discente_bairro" class="help-block"></span>
+                                 </div>
+                                 <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">
+                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-2 pull-right" >
+                                       <button id="button_add_ocupacao_lista_salvar" type="button" class="btn btn-block btn-info " >Salvar</button>
                                     </div>
-                                    <div id="div_discente_logradouro" class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3" >
-                                            <label >Logradouro *</label>
-                                            <input type="text" class="form-control" id="discente_endereco_logradouro" name="endereco_logradouro">
-                                            <span id="err_discente_logradouro" class="help-block"></span>
+                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-2 pull-right" >
+                                       <button id="button_add_ocupacao_lista_fechar" type="button" class="btn btn-block btn-default " >Cancelar</button>
                                     </div>
-
-                                    <div id="div_discente_num_residencia" class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3" >
-                                            <label >Nº Residência *</label>
-                                            <input type="text" class="form-control" id="discente_endereco_numresidencia" name="endereco_num_residencia">
-                                            <span id="err_discente_num_residencia" class="help-block"></span>
-                                    </div>
-                                    <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3" >
-                                            <label >Complemento</label>
-                                            <input type="text" class="form-control" id="discente_endereco_complemento" name="endereco_complemento">
-                                    </div>
-                                
+                                 </div>
                               </div>
+                              <!-- /.box-body -->
+                           </div>
+                        </div>
+                     </div>
 
 
-                              <div id="div_discente_username" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
-                                    <label >Nome de usuário * </label>
-                                    <input type="text" class="form-control" id="discente_username" placeholder="exemplosilva2018">
-                                    <span id="err_discente_username" class="help-block"></span>
-                                </div>
-                                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
-                                    <label >Link perfil do Lattes</label>
-                                    <input type="text" class="form-control" id="discente_linkperfillattes" >
-                                </div>
-  
-                                <div id="div_discente_id_titulo" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
-                                      <label >Título * </label>
-                                      
-                                      <select id="list_titulos" class="form-control select2" style="width: 100%;" name="id_titulo">
-                                              <% for(var i = 0; i < titulos.length ; i++){ %> 
-                                                  <option value="<%= titulos[i].id_titulo %>"><%= titulos[i].nome %> </option>
-                                              <% } %>
-                                      </select>
-                                      <span id="err_discente_id_titulo" class="help-block"></span>
-                                  </div>
-
-                                <div id="div_discente_id_orientador" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
-                                        <label >Orientador * </label>
-                                        
-                                        <select id="list_docentes" class="form-control select2" style="width: 100%;" name="id_titulo">
-                                                <% for(var i = 0; i < docentes.length ; i++){ %> 
-                                                    <option value="<%= docentes[i].id_docente %>"><%= docentes[i].nome + " " + docentes[i].sobrenome %> </option>
-                                                <% } %>
-                                        </select>
-                                        <span id="err_discente_id_orientador" class="help-block"></span>   
-                                </div>
-
-                                <div id="div_discente_id_tipo" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
-                                        <label >Tipo de discente * </label>
-                                        
-                                        <select id="list_tipos_discente" class="form-control select2" style="width: 100%;" name="id_titulo">
-                                                <% for(var i = 0; i < tipos_discente.length ; i++){ %> 
-                                                    <option value="<%= tipos_discente[i].id_tipo_discente %>"><%= tipos_discente[i].nome %> </option>
-                                                <% } %>
-                                        </select>
-                                         
-                                </div>
-                                
-                              <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
-                                        <label>Ocupação * </label>
-                                        
-                                        
-                                        <div class="box-body table-responsive no-padding ">
-                                                <table id="tabela_ocupacoes" class="table table-hover">
-                                                
-                                                 
-                                                </table>
-                                        </div>
-                                              <div class="col-xs-12 col-sm-12 col-md-4 col-lg-2 pull-right" >
-                                                    <button id="button_add_ocupacao" type="button" class="btn btn-block btn-default " >Adicionar</button>
-                                              </div>
-                                              <div id="div_add_ocupacao" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 remover" >
-
-                                                    <div class="box box-solid " style="background:#F0F8FF; margin-top: 10px;">
-                                                            <div class="box-header with-border" style="background:#ADD8E6;">
-                                                              <h3 class="box-title">Nova Ocupação</h3>
-                                                            </div>
-                                                            <!-- /.box-header -->
-                                                            <div class="box-body">
-                                                                    <div id="div_add_ocupacao_cargo" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                                                            <label >Cargo * </label>
-                                                                            <input type="text" class="form-control" id="add_ocupacao_cargo" >
-                                                                            <span id="erro_add_ocupacao_cargo" class="help-block"></span>
-                                                                    </div>
-                                                                    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                                                            <label >Instituição * </label>
-                                                                            <select id="list_instituicoes" class="form-control select2" style="width: 100%;" >
-                                                                        
-                                                                                    <% for(var i = 0; i < instituicoes.length ; i++){ %> 
-                                                                                        <option value="<%= instituicoes[i].id_instituicao %>"><%= "[" + instituicoes[i].sigla + "] " + instituicoes[i].nome + " - "+ instituicoes[i].tipo_instituicao.nome %> </option>
-                                                                                    <% } %>
-                                                                                        <option value="0"> Outra </option>
-                                                                            </select>
-                                                                    </div>
-
-                                                                    <div id="nova_instituicao" class="remover">
-                                                                            <div id="div_add_instituicao_nome" class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-6">
-                                                                                    <label >Nome da Instituição * </label>
-                                                                                    <input type="text" class="form-control" id="add_instituicao_nome" >
-                                                                                    <span id="erro_add_instituicao_nome" class="help-block"></span>
-                                                                                    
-                                                                            </div>
-                                                                            <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-3">
-                                                                                    <label >Sigla da Instituição * </label>
-                                                                                    <input type="text" class="form-control" id="add_instituicao_sigla" >
-                                                                            </div>
-                                                                            <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-3">
-                                                                                    <label >Tipo * </label>
-                                                                                    <select id="list_tipo_instituicoes" class="form-control select2" style="width: 100%;" >
-                                                                                
-                                                                                            <% for(var i = 0; i < tipos_instituicao.length ; i++){ %> 
-                                                                                                <option value="<%= tipos_instituicao[i].id %>"><%=tipos_instituicao[i].nome %> </option>
-                                                                                            <% } %>
-                                                                                                
-                                                                                    </select>
-                                                                            </div>
-                                                                           
-                                                                    </div>
-                                                                    
-                                                                    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">
-                                                                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-2 pull-right" >
-                                                                                    <button id="button_add_ocupacao_lista_salvar" type="button" class="btn btn-block btn-info " >Salvar</button>
-                                                                            </div>  
-                                                                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-2 pull-right" >
-                                                                                    <button id="button_add_ocupacao_lista_fechar" type="button" class="btn btn-block btn-default " >Cancelar</button>
-                                                                            </div>  
-                                                                                 
-                                                                    </div>
-                                                            </div>
-                                                            <!-- /.box-body -->
-                                                          </div>
-
-                                              </div>
-                                              
-                              </div>
-                              
-                              <div id="div_discente_email" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <label for="exampleInputEmail1">Email * </label>
-                                <input  type="email" class="form-control" id="discente_email" placeholder="exemplo@email.com">
-                                <span id="err_discente_email" class="help-block"></span> 
-                              </div>
-                              <div id="div_discente_senha" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <label for="exampleInputPassword1">Senha * </label>
-                                <input type="password" class="form-control" id="discente_senha" placeholder="Password">
-                                <span id="err_discente_senha" class="help-block"></span>
-                              </div>
-                              <div id="div_discente_senha_conf" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                  <label for="exampleInputPassword1">Confirmar Senha *</label>
-                                  <input type="password" class="form-control" id="discente_senha_conf" placeholder="Password">
-                                  <span id="err_discente_senha_conf" class="help-block"></span>
-                              </div>
+                     <!--cool <br> -->
+                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><p>&nbsp</p></div>
 
 
-                              
-                            </div>
-                            <!-- /.box-body -->
-              
-                            <div class="box-footer col-xs-12 col-sm-12 col-md-12 col-lg-12" >
-                              <button id="button_cadastrar" type="button" class="btn btn-primary" style="float: right;">Cadastrar</button>
-                            </div>
-                          </form>
+                     <div id="div_discente_id_pais" class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4" >
+                        <label >País*</label>
+                        <select id="list_pais" class="form-control select2" style="width: 100%;" name="endereco_id_pais">
+                           <% for(var i = 0; i < paises.length ; i++){ %> 
+                           <option value="<%= paises[i].id_pais %>"><%= paises[i].nome %> </option>
+                           <% } %>
+                        </select>
+                        <span id="err_discente_id_pais" class="help-block"></span>   
+                     </div>
+                     <div id="endereco_brasil" >
+                        <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4" >
+                           <label >Estado*</label>
+                           <select id="list_estado" class="form-control select2" style="width: 100%;" name="endereco_id_estado">
+                           </select>
+                        </div>
+                        <div id="div_discente_id_cidade" class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4" >
+                           <label >Cidade*</label>
+                           <select id="list_cidade" class="form-control select2" style="width: 100%;" name="endereco_id_cidade">
+                           </select>
+                           <span id="err_discente_id_cidade" class="help-block"></span>
+                        </div>
 
-                          <div id="resultado"></div>
-                </div>
-        </div>
-        
-    </div>
-</body>
-<script src="../bower_components/select2/dist/js/select2.full.min.js"></script>
-<script src="../javascripts/discente-registro.js"></script>
 
-<script>
-        var lista_tipo_instituicao = '<%-JSON.stringify(tipos_instituicao) %>';
-        lista_tipo_instituicao = JSON.parse(lista_tipo_instituicao);
 
-        var lista_instituicao = '<%-JSON.stringify(instituicoes) %>';
-        lista_instituicao = JSON.parse(lista_instituicao);
-</script>
+                        <div id="div_discente_cep" class="form-group col-xs-12 col-sm-12 col-md-2 col-lg-2" >
+                           <label >CEP*</label>
+                           <input type="text" class="form-control" id="discente_endereco_cep" name="endereco_cep">
+                           <span id="err_discente_cep" class="help-block"></span>
+                        </div>
+                        <div id="div_discente_bairro" class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3" >
+                           <label >Bairro*</label>
+                           <input type="text" class="form-control" id="discente_endereco_bairro" name="endereco_bairro">
+                           <span id="err_discente_bairro" class="help-block"></span>
+                        </div>
+
+                        <div id="div_discente_logradouro" class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3" >
+                           <label >Logradouro*</label>
+                           <input type="text" class="form-control" id="discente_endereco_logradouro" name="endereco_logradouro">
+                           <span id="err_discente_logradouro" class="help-block"></span>
+                        </div>
+                        <div id="div_discente_num_residencia" class="form-group col-xs-12 col-sm-12 col-md-1 col-lg-1" >
+                           <label >Número*</label>
+                           <input type="text" class="form-control" id="discente_endereco_numresidencia" name="endereco_num_residencia">
+                           <span id="err_discente_num_residencia" class="help-block"></span>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3" >
+                           <label >Complemento</label>
+                           <input type="text" class="form-control" id="discente_endereco_complemento" name="endereco_complemento">
+                        </div>
+                     </div>
+
+
+                    <!--cool <br> -->
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><p>&nbsp</p></div>
+
+                     
+                     <div id="div_discente_email" class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                        <label for="exampleInputEmail1">Email* </label>
+                        <input  type="email" class="form-control" id="discente_email" placeholder="exemplo@email.com">
+                        <span id="err_discente_email" class="help-block"></span> 
+                     </div>
+                     <div id="div_discente_senha" class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                        <label for="exampleInputPassword1">Senha* </label>
+                        <input type="password" class="form-control" id="discente_senha" placeholder="Password">
+                        <span id="err_discente_senha" class="help-block"></span>
+                     </div>
+                     <div id="div_discente_senha_conf" class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                        <label for="exampleInputPassword1">Confirmar Senha*</label>
+                        <input type="password" class="form-control" id="discente_senha_conf" placeholder="Password">
+                        <span id="err_discente_senha_conf" class="help-block"></span>
+                     </div>
+                     <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                        <p>*Campos Obrigatórios!</p>
+                     </div>
+                  </div>
+                  <!-- /.box-body -->
+                  <div class="box-footer col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                     <button id="button_cadastrar" type="button" class="btn btn-primary" style="float: right;">Cadastrar</button>
+                  </div>
+               </form>
+               <div id="resultado"></div>
+            </div>
+         </div>
+      </div>
+   </body>
+   <script src="../bower_components/select2/dist/js/select2.full.min.js"></script>
+   <script src="../javascripts/discente-registro.js"></script>
+   <script>
+      var lista_tipo_instituicao = '<%-JSON.stringify(tipos_instituicao) %>';
+      lista_tipo_instituicao = JSON.parse(lista_tipo_instituicao);
+      
+      var lista_instituicao = '<%-JSON.stringify(instituicoes) %>';
+      lista_instituicao = JSON.parse(lista_instituicao);
+   </script>
 </html>
