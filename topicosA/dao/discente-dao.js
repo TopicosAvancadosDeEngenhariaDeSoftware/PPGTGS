@@ -90,9 +90,9 @@ module.exports = class DiscenteDao{
     }
 
     recuperarDiscentePorNome(nome, situacao, callback){
-        
+         
         nome = "%"+nome+"%";
-        if(id_situacao == 0){
+        if(situacao == 0){
             var sql = "select * from discente where nome like ?;"
         }
         else{
