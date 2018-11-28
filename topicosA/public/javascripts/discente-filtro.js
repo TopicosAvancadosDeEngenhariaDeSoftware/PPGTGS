@@ -10,7 +10,37 @@ $(function () {
         buscarIndicadorSituacao();
     });
 
+    $("body").on("click","#excluir", function(){
+        var id = $(this).parent().data("id");
+        var nome = $(this).parent().data("nome");
+        if(confirm("Tem certeza que deseja EXCLUIR/Desativar : "+nome)){
+            excluirDiscenteLogicamente(id);
+        }
+    });
+
 });
+
+
+function excluirDiscenteLogicamente(id){
+    
+    $.ajax({ 
+        type: "DELETE",
+        url: "../json/discentes/"+id,
+        success: function(result){
+            console.log(result);
+            alert("Excluido!");
+            consultarPendentes();
+        },
+        beforeSend: function(){
+        },
+        complete: function(msg){
+        },
+        error: function(msg){
+            console.log(msg);
+            alert("Erro :/ \n Contatar o suporte.");
+        }
+    });
+}
 
 function buscarIndicadorSituacao(){
 
@@ -27,7 +57,7 @@ function buscarIndicadorSituacao(){
             $('#tabela_discentes').html("<tr>"+
             "<th>Nome</th>"+
             "<th>Lattes</th>"+
-            "<th>Visualizar/Editar</th>"+
+            "<th>Opções</th>"+
             "</tr>");
 
             var dadosGrafico = new Object();
@@ -37,7 +67,7 @@ function buscarIndicadorSituacao(){
                 var html = "<tr>"+
                 "<td>" +result.resultado[i].nome + " " + result.resultado[i].sobrenome + "</td>"+
                 "<td> <a href='"+result.resultado[i].link_lattes+"'>"+result.resultado[i].link_lattes+"</td>"+
-                "<td>&nbsp&nbsp<a href='/discentes/visualizar?id="+result.resultado[i].id_discente+"' class='glyphicon glyphicon-eye-open ' TITLE='Visualizar dados do discente'></a>&nbsp&nbsp&nbsp&nbsp<a href= ../discentes/alterar?id="+result.resultado[i].id_discente+" class='glyphicon glyphicon-pencil' TITLE='Alterar dados do discente'></a></td>"+
+                "<td data-id='"+result.resultado[i].id_discente+"' data-nome='"+result.resultado[i].nome+"'><a class='btn btn-default' href='/discentes/visualizar?id="+result.resultado[i].id_discente+"' >Visualizar </a> <a id='alterar' class='btn btn-primary' href='/discentes/alterar?id="+result.resultado[i].id_discente+"' >Alterar</a> <a class='btn btn-danger' id='excluir' style='margin-left:20px;margin-right:20px;' class='btn btn-danger'>Excluir</a></td>"+
                 "</tr>";
                 $('#tabela_discentes').append(html);
             }
