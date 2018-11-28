@@ -68,9 +68,9 @@ app.use(cookieSession({
 
 
 app.use('/',login_Route);
+app.use('/',utils_Route);
 
 app.use(autenticacaoJWT.verificarSessao);
-app.use('/',utils_Route);
 
 app.use('/discente/',discenteV_Route);
 app.use('/discentes/',discente_Route);
