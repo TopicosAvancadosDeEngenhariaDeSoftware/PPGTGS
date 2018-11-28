@@ -12,7 +12,7 @@ module.exports = class DiscenteDao{
     }
 
     recuperarDiscentes(callback){
-        var sql = "SELECT * FROM Discente ;"
+        var sql = "select * from discente ;"
         var params = [];
         sql = mysql.format(sql, params);
         this._connection.query(sql, (error, results) =>{
@@ -27,9 +27,9 @@ module.exports = class DiscenteDao{
 
     recuperarDiscentePorStatusCadastro(status_Cadastro, callback){
     if(status_Cadastro == 0){
-        var sql = "SELECT * FROM Discente WHERE isAceito IS NULL OR isAceito=0;"
+        var sql = "select * from discente where isaceito is null or isaceito=0;"
     }else{
-        var sql = "SELECT * FROM Discente WHERE isAceito=1;"
+        var sql = "select * from discente where isaceito=1;"
     }
    
     var params = [];
@@ -74,7 +74,7 @@ module.exports = class DiscenteDao{
     */
 
     recuperarDiscentePorId(id_discente, callback){
-        var sql = "SELECT * FROM Discente WHERE id_discente = ? ;"
+        var sql = "select * from discente where id_discente = ? ;"
         var params = [];
         params.push(id_discente);
         sql = mysql.format(sql, params);
@@ -90,7 +90,7 @@ module.exports = class DiscenteDao{
     }
 
     recuperarDiscentePorNome(nome, callback){
-        var sql = "SELECT * FROM Discente WHERE nome = ? ;"
+        var sql = "select * from discente where nome = ? ;"
         var params = [];
         params.push(nome);
         sql = mysql.format(sql, params);
@@ -107,7 +107,7 @@ module.exports = class DiscenteDao{
     }
 
     recuperarDiscentePorEmail(email, callback){
-        var sql = "SELECT * FROM Discente WHERE email = ? ;"
+        var sql = "select * from discente where email = ? ;"
         var params = [];
         params.push(email);
         sql = mysql.format(sql, params);
@@ -160,8 +160,8 @@ module.exports = class DiscenteDao{
     inserirDiscente(discente, callback){
 
         let c = new crypto();
-        var sql = "INSERT INTO Discente (nome,sobrenome, data_nascimento, rg, cpf, username, senha, link_lattes, "+
-        "email, id_endereco, numero_residencia, complemento, id_docente, isAceito, situacao, id_titulo, sexo, telefone, id_nacionalidade, passaporte) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
+        var sql = "insert into discente (nome,sobrenome, data_nascimento, rg, cpf, username, senha, link_lattes, "+
+        "email, id_endereco, numero_residencia, complemento, id_docente, isaceito, situacao, id_titulo, sexo, telefone, id_nacionalidade, passaporte) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
         var params = [];
         params.push(discente.nome);
         params.push(discente.sobrenome);
@@ -194,9 +194,9 @@ module.exports = class DiscenteDao{
     }
 
     editarDiscente(discente, callback){
-        var sql = "UPDATE Discente SET nome = ?, sobrenome = ?, data_nascimento = ?, rg = ?, cpf = ?, username = ?, "+
+        var sql = "update discente set nome = ?, sobrenome = ?, data_nascimento = ?, rg = ?, cpf = ?, username = ?, "+
         "senha = ?, link_lattes = ?, email = ?, id_nacionalidade = ?, "+
-        "id_docente = ?, isAceito = ?, id_titulo = ?, sexo = ?, telefone = ? WHERE id_discente = ?;"
+        "id_docente = ?, isaceito = ?, id_titulo = ?, sexo = ?, telefone = ? where id_discente = ?;";
         var params = [];
         params.push(discente.nome);
         params.push(discente.sobrenome);
@@ -229,7 +229,7 @@ module.exports = class DiscenteDao{
 
 
 aprovarDiscente(discente, callback){
-        var sql = "UPDATE discente SET isAceito = 1 WHERE id_discente = ?;"
+        var sql = "update discente set isaceito = 1 where id_discente = ?;"
 
         var params = [];
         params.push(discente.id_discente);
@@ -243,7 +243,7 @@ aprovarDiscente(discente, callback){
 }
 
 excluirDiscente(id_discente, callback){ //exclusão lógica
-    var sql = "UPDATE Discente SET situacao = 2 WHERE id_discente = ? ;"
+    var sql = "update discente set situacao = 2 where id_discente = ? ;"
     var params = [];
     params.push(id_discente);
     sql = mysql.format(sql, params);
@@ -261,13 +261,13 @@ excluirDiscente(id_discente, callback){ //exclusão lógica
 
 buscarDiscenteInstituicao(id_instituicao, id_situacao, callback){
     if(id_situacao == 0){
-        var sql = "SELECT COUNT(Discente.id_discente) FROM Discente inner join DiscenteCargoInstituicao on Discente.id_discente = "+
-        "DiscenteCargoInstituicao.id_discente inner join Instituicao on DiscenteCargoInstituicao.id_instituicao = Instituicao.id_instituicao WHERE "+
-        "Instituicao.id_instituicao = ?;"
+        var sql = "select count(discente.id_discente) from discente inner join discentecargoinstituicao on discente.id_discente = "+
+        "discentecargoinstituicao.id_discente inner join instituicao on discentecargoinstituicao.id_instituicao = instituicao.id_instituicao where "+
+        "instituicao.id_instituicao = ?;";
     }else{
-        var sql = "SELECT COUNT(Discente.id_discente) FROM Discente inner join DiscenteCargoInstituicao on Discente.id_discente = "+
-        "DiscenteCargoInstituicao.id_discente inner join Instituicao on DiscenteCargoInstituicao.id_instituicao = Instituicao.id_instituicao WHERE "+
-        "Instituicao.id_instituicao = ? and Discente.situacao = ?;"
+        var sql = "select count(discente.id_discente) from discente inner join discentecargoinstituicao on discente.id_discente = "+
+        "discentecargoinstituicao.id_discente inner join instituicao on discentecargoinstituicao.id_instituicao = instituicao.id_instituicao where "+
+        "instituicao.id_instituicao = ? and discente.situacao = ?;";
     }
     var params = [];
     params.push(id_instituicao);
@@ -282,13 +282,13 @@ buscarDiscenteInstituicao(id_instituicao, id_situacao, callback){
 
 buscarCargoDiscente(id_cargo_discente, id_situacao, callback){
     if(id_situacao == 0){
-        var sql = "SELECT COUNT(Discente.id_discente) FROM Discente inner join DiscenteCargoInstituicao on Discente.id_discente = "+
-        "DiscenteCargoInstituicao.id_discente inner join CargoDiscente on DiscenteCargoInstituicao.id_cargo_discente = CargoDiscente.id_cargo_discente WHERE "+
-        "CargoDiscente.id_cargo_discente = ?;"
+        var sql = "select count(discente.id_discente) from discente inner join discentecargoinstituicao on discente.id_discente = "+
+        "discentecargoinstituicao.id_discente inner join cargodiscente on discentecargoinstituicao.id_cargo_discente = cargodiscente.id_cargo_discente where "+
+        "cargodiscente.id_cargo_discente = ?;";
     }else{
-        var sql = "SELECT COUNT(Discente.id_discente) FROM Discente inner join DiscenteCargoInstituicao on Discente.id_discente = "+
-    "DiscenteCargoInstituicao.id_discente inner join CargoDiscente on DiscenteCargoInstituicao.id_cargo_discente = CargoDiscente.id_cargo_discente WHERE "+
-    "CargoDiscente.id_cargo_discente = ? and Discente.situacao = ?;"
+        var sql = "select count(discente.id_discente) from discente inner join discentecargoinstituicao on discente.id_discente = "+
+        "discentecargoinstituicao.id_discente inner join cargodiscente on discentecargoinstituicao.id_cargo_discente = cargodiscente.id_cargo_discente where "+
+        "cargodiscente.id_cargo_discente = ? and discente.situacao = ?;";
     }
     var params = [];
     params.push(id_cargo_discente);
@@ -302,11 +302,11 @@ buscarCargoDiscente(id_cargo_discente, id_situacao, callback){
 
 buscarPaisesDiscente(id_pais, id_situacao, callback){
     if(id_situacao == 0){
-        var sql = "SELECT COUNT(Discente.id_discente) FROM Discente inner join Pais on Discente.id_nacionalidade = Pais.id_pais "+
-        " WHERE Pais.id_pais = ?;"
+        var sql = "select count(discente.id_discente) from discente inner join pais on discente.id_nacionalidade = pais.id_pais "+
+        " where pais.id_pais = ?;";
     }else{
-        var sql = "SELECT COUNT(Discente.id_discente) FROM Discente inner join Pais on Discente.id_nacionalidade = Pais.id_pais "+
-        " WHERE Pais.id_pais = ? and Discente.situacao = ?;"
+        var sql = "select count(discente.id_discente) from discente inner join pais on discente.id_nacionalidade = pais.id_pais "+
+        " where pais.id_pais = ? and discente.situacao = ?;"
     }
     var params = [];
     params.push(id_pais);
@@ -320,13 +320,13 @@ buscarPaisesDiscente(id_pais, id_situacao, callback){
 
 buscarTipoInstituicaoDiscente(id_tipo_instituicao, id_situacao, callback){
     if(id_situacao == 0){
-        var sql = "SELECT COUNT(Discente.id_discente) FROM Discente inner join DiscenteCargoInstituicao on Discente.id_discente = "+
-        "DiscenteCargoInstituicao.id_discente inner join Instituicao on DiscenteCargoInstituicao.id_instituicao = Instituicao.id_instituicao WHERE "+
-        "Instituicao.id_tipo_instituicao = ?;"
+        var sql = "select count(discente.id_discente) from discente inner join discentecargoinstituicao on discente.id_discente = "+
+        "discentecargoinstituicao.id_discente inner join instituicao on discentecargoinstituicao.id_instituicao = instituicao.id_instituicao where "+
+        "instituicao.id_tipo_instituicao = ?;";
     }else{
-        var sql = "SELECT COUNT(Discente.id_discente) FROM Discente inner join DiscenteCargoInstituicao on Discente.id_discente = "+
-        "DiscenteCargoInstituicao.id_discente inner join Instituicao on DiscenteCargoInstituicao.id_instituicao = Instituicao.id_instituicao WHERE "+
-        "Instituicao.id_tipo_instituicao = ? and Discente.situacao = ?;"
+        var sql = "select count(discente.id_discente) from discente inner join discentecargoinstituicao on discente.id_discente = "+
+        "discentecargoinstituicao.id_discente inner join instituicao on discentecargoinstituicao.id_instituicao = instituicao.id_instituicao where "+
+        "instituicao.id_tipo_instituicao = ? and discente.situacao = ?;";
     }
     var params = [];
     params.push(id_tipo_instituicao);
@@ -339,9 +339,9 @@ buscarTipoInstituicaoDiscente(id_tipo_instituicao, id_situacao, callback){
 
 buscarTituloDiscente(id_titulo, id_situacao, callback){
     if(id_situacao == 0){
-        var sql = "SELECT COUNT(Discente.id_discente) FROM Discente WHERE id_titulo = ?;"
+        var sql = "select count(discente.id_discente) from discente where id_titulo = ?;"
     }else{
-        var sql = "SELECT COUNT(Discente.id_discente) FROM Discente WHERE id_titulo = ? and Discente.situacao = ?;"
+        var sql = "select count(discente.id_discente) from discente where id_titulo = ? and discente.situacao = ?;"
     }
     var params = [];
     params.push(id_titulo);
@@ -355,13 +355,13 @@ buscarTituloDiscente(id_titulo, id_situacao, callback){
 
 buscarTipoDiscente(id_tipo_discente, id_situacao, callback){
     if(id_situacao == 0){
-        var sql = "SELECT COUNT(Discente.id_discente) FROM Discente inner join DiscenteTipoDiscente on Discente.id_discente = "+
-        "DiscenteTipoDiscente.id_discente inner join TipoDiscente on DiscenteTipoDiscente.id_tipo_discente = TipoDiscente.id_tipo_discente WHERE "+
-        "TipoDiscente.id_tipo_discente = ?;"
+        var sql = "select count(discente.id_discente) from discente inner join discentetipodiscente on discente.id_discente = "+
+        "discentetipodiscente.id_discente inner join tipodiscente on discentetipodiscente.id_tipo_discente = tipodiscente.id_tipo_discente where "+
+        "tipodiscente.id_tipo_discente = ?;";
     }else{
-        var sql = "SELECT COUNT(Discente.id_discente) FROM Discente inner join DiscenteTipoDiscente on Discente.id_discente = "+
-        "DiscenteTipoDiscente.id_discente inner join TipoDiscente on DiscenteTipoDiscente.id_tipo_discente = TipoDiscente.id_tipo_discente WHERE "+
-        "TipoDiscente.id_tipo_discente = ? and Discente.situacao = ?;"
+        var sql = "select count(discente.id_discente) from discente inner join discentetipodiscente on discente.id_discente = "+
+        "discentetipodiscente.id_discente inner join tipodiscente on discentetipodiscente.id_tipo_discente = tipodiscente.id_tipo_discente where "+
+        "tipodiscente.id_tipo_discente = ? and discente.situacao = ?;";
     }
     var params = [];
     params.push(id_tipo_discente);
@@ -375,13 +375,13 @@ buscarTipoDiscente(id_tipo_discente, id_situacao, callback){
 
 buscarIdDiscentePorTipoDiscente(id_tipo_discente, id_situacao, callback){
     if(id_situacao == 0){
-        var sql = "SELECT Discente.id_discente FROM Discente inner join DiscenteTipoDiscente on Discente.id_discente = "+
-        "DiscenteTipoDiscente.id_discente inner join TipoDiscente on DiscenteTipoDiscente.id_tipo_discente = TipoDiscente.id_tipo_discente WHERE "+
-        "TipoDiscente.id_tipo_discente = ?;"
+        var sql = "select discente.id_discente from discente inner join discentetipodiscente on discente.id_discente = "+
+        "discentetipodiscente.id_discente inner join tipodiscente on discentetipodiscente.id_tipo_discente = tipodiscente.id_tipo_discente where "+
+        "tipodiscente.id_tipo_discente = ?;";
     }else{
-        var sql = "SELECT Discente.id_discente FROM Discente inner join DiscenteTipoDiscente on Discente.id_discente = "+
-        "DiscenteTipoDiscente.id_discente inner join TipoDiscente on DiscenteTipoDiscente.id_tipo_discente = TipoDiscente.id_tipo_discente WHERE "+
-        "TipoDiscente.id_tipo_discente = ? and Discente.situacao = ?;"
+        var sql = "select discente.id_discente from discente inner join discentetipodiscente on discente.id_discente = "+
+        "discentetipodiscente.id_discente inner join tipodiscente on discentetipodiscente.id_tipo_discente = tipodiscente.id_tipo_discente where "+
+        "tipodiscente.id_tipo_discente = ? and discente.situacao = ?;";
     }
     var params = [];
     params.push(id_tipo_discente);
@@ -399,10 +399,10 @@ buscarIdDiscentePorTipoDiscente(id_tipo_discente, id_situacao, callback){
 
 
 recuperarDiscenteConformeTipoDiscente(id_discente, id_tipo_discente, callback){
-    var sql = "SELECT Discente.id_discente, Discente.nome, Discente.sobrenome, Discente.email, Discente.id_docente, "+
-    "Discente.id_titulo,  Discente.link_lattes, Discente.situacao, Discente.sexo, DiscenteTipoDiscente.data_inicial, DiscenteTipoDiscente.data_final, DiscenteTipoDiscente.isAtual, TipoDiscente.id_tipo_discente, TipoDiscente.nome as nome_tipo_discente FROM Discente inner join DiscenteTipoDiscente on Discente.id_discente = "+
-    "DiscenteTipoDiscente.id_discente inner join TipoDiscente on DiscenteTipoDiscente.id_tipo_discente = TipoDiscente.id_tipo_discente WHERE "+
-    "DiscenteTipoDiscente.id_discente = ? and DiscenteTipoDiscente.id_tipo_discente = ?;"
+    var sql = "select discente.id_discente, discente.nome, discente.sobrenome, discente.email, discente.id_docente, "+
+    "discente.id_titulo,  discente.link_lattes, discente.situacao, discente.sexo, discentetipodiscente.data_inicial, discentetipodiscente.data_final, discentetipodiscente.isatual, tipodiscente.id_tipo_discente, tipodiscente.nome as nome_tipo_discente from discente inner join discentetipodiscente on discente.id_discente = "+
+    "discentetipodiscente.id_discente inner join tipodiscente on discentetipodiscente.id_tipo_discente = tipodiscente.id_tipo_discente where "+
+    "discentetipodiscente.id_discente = ? and discentetipodiscente.id_tipo_discente = ?;";
     var params = [];
     console.log('id discente: ', id_discente);
     console.log('id tipo discente: ', id_tipo_discente);
@@ -422,9 +422,9 @@ recuperarDiscenteConformeTipoDiscente(id_discente, id_tipo_discente, callback){
 
 buscarDiscentePorSituacao(id_situacao, callback){
     if(id_situacao == 0){
-        var sql = "SELECT * from Discente;"
+        var sql = "select * from discente;"
     }else{
-        var sql = "SELECT * from Discente WHERE situacao = ?;"
+        var sql = "select * from discente where situacao = ?;"
     }
    
     var params = [];
@@ -441,7 +441,7 @@ buscarDiscentePorSituacao(id_situacao, callback){
 }
 
 buscarQuantidadeDiscentePorSituacao(id_situacao, callback){
-    var sql = "SELECT COUNT(id_discente) from Discente WHERE situacao = ?;"
+    var sql = "select count(id_discente) from discente where situacao = ?;"
     var params = [];
     params.push(id_situacao);
     sql = mysql.format(sql, params);

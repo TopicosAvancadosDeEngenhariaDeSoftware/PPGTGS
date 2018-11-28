@@ -6,7 +6,7 @@ module.exports = class DiscenteCargoInstituicaoDao{
         this._connection = connection;
     }
     recuperaroDiscenteCargoInstituicaoPorIdDiscente(id_discente, callback){
-        var sql = "SELECT * FROM DiscenteCargoInstituicao WHERE id_discente = ?;"
+        var sql = "select * from discentecargoinstituicao where id_discente = ?;"
         var params = [];
         params.push(id_discente);
         sql = mysql.format(sql, params);
@@ -20,7 +20,7 @@ module.exports = class DiscenteCargoInstituicaoDao{
     }
 
     recuperarDiscenteCargosInstituicao(callback){
-        var sql = "SELECT * FROM DiscenteCargoInstituicao;"
+        var sql = "select * from discentecargoinstituicao;"
         var params = [];
         sql = mysql.format(sql, params);
         console.log(sql);
@@ -36,7 +36,7 @@ module.exports = class DiscenteCargoInstituicaoDao{
     }
 
     recuperarCargoDiscentePorIds(id_discente, id_instituicao, id_cargo_discente, callback){
-        var sql = "SELECT * FROM DiscenteCargoInstituicao WHERE id_discente = ? AND id_instituicao = ? AND id_cargo_discente = ?;"
+        var sql = "select * from discentecargoinstituicao where id_discente = ? and id_instituicao = ? and id_cargo_discente = ?;"
         var params = [];
         params.push(id_discente);
         params.push(id_instituicao);
@@ -56,7 +56,7 @@ module.exports = class DiscenteCargoInstituicaoDao{
         //console.log('is instituicao: ', id_instituicao);
         //console.log('id cargo_disc: ', id_cargo_discente);
 
-        var sql = "INSERT INTO DiscenteCargoInstituicao (id_discente, id_instituicao, id_cargo_discente) VALUES (?,?,?);"
+        var sql = "insert into discentecargoinstituicao (id_discente, id_instituicao, id_cargo_discente) values (?,?,?);"
         var params = [];
         params.push(id_discente);
         params.push(id_instituicao);

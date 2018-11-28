@@ -6,7 +6,7 @@ module.exports = class DiscenteTipoDiscenteDao{
     }
 
     recuperarDiscenteTiposDiscente(callback){
-        var sql = "SELECT * FROM DiscenteTipoDiscente;"
+        var sql = "select * from discentetipodiscente;"
         var params = [];
         sql = mysql.format(sql, params);
         this._connection.query(sql, (error, results) =>{
@@ -20,7 +20,7 @@ module.exports = class DiscenteTipoDiscenteDao{
     }
 
     recuperarDiscenteTipoDiscentePorIdDiscente(id_discente, callback){
-        var sql = "SELECT * FROM DiscenteTipoDiscente where id_discente = ?;"
+        var sql = "select * from discentetipodiscente where id_discente = ?;"
         var params = [];
         params.push(id_discente);
         sql = mysql.format(sql, params);
@@ -36,7 +36,7 @@ module.exports = class DiscenteTipoDiscenteDao{
 
     inserirDiscenteTipoDiscente(id_tipo_discente, id_discente, data_inicial, callback){
 
-        var sql = "INSERT INTO DiscenteTipoDiscente (id_tipo_discente, id_discente, data_inicial, isAtual) VALUES (?,?,?,?);"
+        var sql = "insert into discentetipodiscente (id_tipo_discente, id_discente, data_inicial, isatual) values (?,?,?,?);"
         var params = [];
         params.push(id_tipo_discente);
         params.push(id_discente);

@@ -6,7 +6,7 @@ module.exports = class CargoDiscenteDao{
         this._connection = connection;
     }
     recuperarCargoDiscentePorId(id_cargo_discente, callback){
-        var sql = "SELECT * FROM CargoDiscente WHERE id_cargo_discente = ?;"
+        var sql = "select * from cargodiscente where id_cargo_discente = ?;"
         var params = [];
         params.push(id_cargo_discente);
         sql = mysql.format(sql, params);
@@ -20,7 +20,7 @@ module.exports = class CargoDiscenteDao{
     }
 
     recuperarCargoDiscentePorNome(nome, callback){
-        var sql = "SELECT * FROM CargoDiscente WHERE nome = ?;"
+        var sql = "select * from cargodiscente where nome = ?;"
         var params = [];
         params.push(nome);
         sql = mysql.format(sql, params);
@@ -35,7 +35,7 @@ module.exports = class CargoDiscenteDao{
     }
 
     recuperarCargosDiscente(callback){
-        var sql = "SELECT * FROM CargoDiscente;"
+        var sql = "select * from cargodiscente;"
         var params = [];
         sql = mysql.format(sql, params);
         console.log(sql);
@@ -52,7 +52,7 @@ module.exports = class CargoDiscenteDao{
 
     inserirCargoDiscente(nome, callback){
 
-        var sql = "INSERT INTO CargoDiscente (nome) VALUES (?);"
+        var sql = "insert into cargodiscente (nome) values (?);"
         var params = [];
         params.push(nome);
         sql = mysql.format(sql, params);
@@ -68,10 +68,10 @@ module.exports = class CargoDiscenteDao{
     }
 
     editarCargosDiscente(id_cargo_discente, callback){
-        var sql = "UPDATE CargoDiscente SET nome = ? WHERE id_cargo_discente = ?;"
+        var sql = "update cargodiscente set nome = ? where id_cargo_discente = ?;"
         var params = [];
         params.push(nome);
-       
+        params.push(id_cargo_discente);
         sql = mysql.format(sql, params);
 
         this._connection.query(sql, (error, results) =>{
@@ -81,7 +81,7 @@ module.exports = class CargoDiscenteDao{
     }
 
     excluirCargoDiscente(id_cargo_discente, callback){
-        var sql = "DELETE FROM CargoDiscente WHERE id_cargo_discente = ? ;"
+        var sql = "delete from cargodiscente where id_cargo_discente = ? ;"
         var params = [];
         params.push(id_cargo_discente);
         sql = mysql.format(sql, params);

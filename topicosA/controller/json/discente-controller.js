@@ -1212,6 +1212,8 @@ exports.editarDiscente = (req, res, next) => {
                                 if(error){
                                     reject(error);
                                 }else{
+                                    console.log("------------AA----------")
+                                    console.log(result_inst_discente);
                                     console.log('Result: ', result.id_instituicao, result_inst_discente);
                                     instituicoes = {
                                         instituicao : {
@@ -1220,7 +1222,7 @@ exports.editarDiscente = (req, res, next) => {
                                             sigla: result.sigla,
                                             id_tipo_instituicao: result.id_tipo_instituicao 
                                         },
-                                        total : result_inst_discente[0]['COUNT(Discente.id_discente)']
+                                        total : result_inst_discente[0]['count(discente.id_discente)']
                                     }
                                     total_instituicao = {
                                         total_instituicao : instituicoes,
@@ -1290,7 +1292,7 @@ exports.editarDiscente = (req, res, next) => {
                                             nome: result.nome,
                                             
                                         },
-                                        total : result_cargo_discente[0]['COUNT(Discente.id_discente)']
+                                        total : result_cargo_discente[0]['count(discente.id_discente)']
                                     }
                                     total_cargo_discente = {
                                         total_cargo_discente : cargo_discente,
@@ -1360,7 +1362,7 @@ exports.editarDiscente = (req, res, next) => {
                                             nacionalidade: result.nacionalidade
                                             
                                         },
-                                        total : result_pais_discente[0]['COUNT(Discente.id_discente)']
+                                        total : result_pais_discente[0]['count(discente.id_discente)']
                                     }
                                     total_pais_discente = {
                                         total_pais_discente : pais_discente,
@@ -1429,7 +1431,7 @@ exports.editarDiscente = (req, res, next) => {
                             idTipoInstituicao: result.id,
                             nome: result.nome,   
                         },
-                        total : result_tipo_inst_discente[0]['COUNT(Discente.id_discente)']
+                        total : result_tipo_inst_discente[0]['count(discente.id_discente)']
                     }
                     total_tipo_instituicao_discente = {
                         total_tipo_instituicao_discente : tipo_instituicao_discente,
@@ -1496,7 +1498,7 @@ exports.editarDiscente = (req, res, next) => {
                                             nome: result.nome
                                            
                                         },
-                                        total : result_titulo_discente[0]['COUNT(Discente.id_discente)']
+                                        total : result_titulo_discente[0]['count(discente.id_discente)']
                                     }
                                     total_titulo_discente = {
                                         total_titulo_discente : titulo_discente,
@@ -1564,7 +1566,7 @@ exports.editarDiscente = (req, res, next) => {
                                             nome: result.nome,
                                             
                                         },
-                                        total : result_tipo_discente[0]['COUNT(Discente.id_discente)']
+                                        total : result_tipo_discente[0]['count(discente.id_discente)']
                                     }
                                     total_tipo_discente = {
                                         total_tipo_discente : tipos_discente,
@@ -1753,7 +1755,7 @@ exports.editarDiscente = (req, res, next) => {
                         id_situacao: result.id,
                         nome: result.nome
                     },
-                    total : total_result[0]['COUNT(id_discente)']
+                    total : total_result[0]['count(id_discente)']
                 }
 
                 total_quantidade_situacao = {

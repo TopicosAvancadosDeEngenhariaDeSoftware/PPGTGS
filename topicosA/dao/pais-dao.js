@@ -6,7 +6,7 @@ module.exports = class PaisDao{
     }
 
     recuperarPaises(callback){
-        var sql = "SELECT * FROM Pais;"
+        var sql = "select * from pais;"
         var params = [];
         sql = mysql.format(sql, params);
         this._connection.query(sql, (error, results) =>{
@@ -20,7 +20,7 @@ module.exports = class PaisDao{
     }
 
     recuperarPaisId(id_pais, callback){
-        var sql = "SELECT * FROM Pais where id_pais = ?;"
+        var sql = "select * from pais where id_pais = ?;"
         var params = [];
         params.push(id_pais);
         sql = mysql.format(sql, params);
