@@ -75,7 +75,7 @@ module.exports = class DiscenteCargoInstituicaoDao{
     }
 
     editarDiscenteCargoInstituicaoPorIdDiscente(id_discente, id_instituicao, id_cargo_discente, callback){
-        var sql = "UPDATE DiscenteCargoInstituicao SET id_discente = ?, id_instituicao = ?, id_cargo_discente = ? WHERE id_discente = ?;"
+        var sql = "update discentecargoinstituicao set id_discente = ?, id_instituicao = ?, id_cargo_discente = ? where id_discente = ?;"
         var params = [];
         params.push(id_discente);
         params.push(id_instituicao);
@@ -91,7 +91,7 @@ module.exports = class DiscenteCargoInstituicaoDao{
     }
 
     excluirDiscenteCargoInstituicao(id_discente, callback){
-        var sql = "DELETE FROM DiscenteCargoInstituicao WHERE id_discente = ? ;"
+        var sql = "delete from discentecargoinstituicao where id_discente = ? ;"
         var params = [];
         params.push(id_discente);
         sql = mysql.format(sql, params);

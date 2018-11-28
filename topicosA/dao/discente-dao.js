@@ -89,10 +89,22 @@ module.exports = class DiscenteDao{
         });
     }
 
-    recuperarDiscentePorNome(nome, callback){
-        var sql = "select * from discente where nome = ? ;"
+    recuperarDiscentePorNome(nome, situacao, callback){
+         
+        nome = "%"+nome+"%";
         var params = [];
         params.push(nome);
+        
+        if(situacao == 0){
+            var sql = "select * from discente where nome like ?;"
+        }
+        else{
+            var sql = "select * from discente where nome like ? and situacao = ?;"
+            params.push(situacao);
+        }
+        
+        
+       
         sql = mysql.format(sql, params);
         this._connection.query(sql, (error, results) =>{
             console.log('RESULTs ',results);
@@ -100,7 +112,7 @@ module.exports = class DiscenteDao{
             if(error){
                 callback(error, null);
             }else{
-                callback(error,results[0] ? results[0] : null);
+                callback(error,results ? results : null);
             }
             
         });
@@ -242,8 +254,23 @@ aprovarDiscente(discente, callback){
         });
 }
 
-excluirDiscente(id_discente, callback){ //exclusão lógica
+excluirDiscenteLogico(id_discente, callback){ //exclusão lógica
     var sql = "update discente set situacao = 2 where id_discente = ? ;"
+    var params = [];
+    params.push(id_discente);
+    sql = mysql.format(sql, params);
+    this._connection.query(sql, (error, results) =>{
+        if(error){
+            callback(error, null);
+        }else{
+            callback(null, true ? true : null);
+        }
+
+    });
+}
+
+excluirDiscente(id_discente, callback){ //exclusão lógica
+    var sql = "delete from discente where id_discente = ?;"
     var params = [];
     params.push(id_discente);
     sql = mysql.format(sql, params);

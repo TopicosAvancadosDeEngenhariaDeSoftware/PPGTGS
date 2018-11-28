@@ -25,6 +25,7 @@ router.get('/discentes/situacoes_discente/:id_situacao/titulos/total', discente_
 router.get('/discentes/situacoes_discente/:id_situacao/tipos_discente/total',discente_controller.RecuperarTipoDiscente);
 router.get('/discentes/situacoes_discente/:id_situacao/tipos_discente/:id_tipo_discente',discente_controller.RecuperarDiscentePorTipoDiscente);
 router.get('/discentes/situacoes_discente/:id_situacao',discente_controller.RecuperarDiscentePorSituacao);
+router.get('/discentes/situacoes_discente/:id_situacao/nomes', discente_controller.recuperarDiscenteNome);
 router.get('/discentes/situacoes_discente/quantidade/total', discente_controller.RecuperarQuantidadeDiscentePorSituacao);
 
 //router.get('/discentes', discente_controller.recuperarDiscentes);

@@ -52,7 +52,7 @@ exports.recuperarDiscenteId = (req, res, next) => {
     })).then(result => {
         //console.log(result); console.log('aq');
         //res.status(200).json({resultado: result, erro: null});
-
+        
         dados_pessoais_discente = result;
 
         dados_pessoais = {
@@ -329,21 +329,32 @@ exports.recuperarDiscenteId = (req, res, next) => {
 }
 
 exports.recuperarDiscenteNome = (req, res, next) => {
-    req.checkParams('nome', 'nome é obrigatório').notEmpty();
+    req.checkParams('id_situacao', 'id_situacao é obrigatorio ser do tipo int').isInt();
     let erros = req.validationErrors();
     if(erros){
       res.status(400).json(erros);
       return;
     }
 
-    let nome = parseInt(req.params.nome);
-    //console.log('id param', idparams);
+    let nome = req.query.nome;
+    if(nome == undefined || nome == null) nome = "";
+
+    let situacao = parseInt(req.params.id_situacao);
+    console.log('Nome: ', nome);
+    console.log('Situacao: ', situacao);
+    let pacote = {};
+    let resposta = [];
+    let dados_pessoais = {};
+    let lista_ocupacoes = {};
+    let resp = [];
+
+    let dados_pessoais_discente;
 
     (new Promise(
         function (resolve, reject) {
                 //console.log('Administrador');
-                let av = new DiscenteDao(req.connection);
-                av.recuperarDiscentePorNome(nome, (error, discente_result) => {
+                let d = new DiscenteDao(req.connection);
+                d.recuperarDiscentePorNome(nome, situacao, (error, discente_result) => {
                     if(error){
                         reject(error);
                     }else{
@@ -351,8 +362,11 @@ exports.recuperarDiscenteNome = (req, res, next) => {
                     }
                 });
     })).then(result => {
-        //console.log(result); console.log('aq');
+     //console.log(result); console.log('aq');
         res.status(200).json({resultado: result, erro: null});
+
+
+       
 
     }).catch(error => {
         next(error);
@@ -1142,7 +1156,7 @@ exports.editarDiscente = (req, res, next) => {
     } else  res.status(401).json({resultado: null, erro: erros_mensagem.erro_usuario_permissao});
   }
 
-  exports.excluirDiscente = (req, res, next) => {
+  exports.excluirDiscenteLogico = (req, res, next) => {
     //let id_tipo_usuario = req.id_tipo_usuario;
 
     let id_tipo_usuario = 1;
@@ -1160,7 +1174,7 @@ exports.editarDiscente = (req, res, next) => {
         (new Promise(
         function (resolve, reject) {
                 let disc = new DiscenteDao(req.connection);
-                disc.excluirDiscente(id_discente, (error, discente_result) => {
+                disc.excluirDiscenteLogico(id_discente, (error, discente_result) => {
                     if(error){
                         reject(error);
                     }else{
@@ -1169,6 +1183,78 @@ exports.editarDiscente = (req, res, next) => {
                 });
         })).then(result => {
             res.status(200).json({resultado: true, erro: null});
+        }).catch(error => {
+            next(error);
+        });
+    }
+    else  res.status(401).json({resultado: null, erro: erros_mensagem.erro_usuario_permissao});
+  
+  }
+
+  exports.excluirDiscente = (req, res, next) => {
+    //let id_tipo_usuario = req.id_tipo_usuario;
+
+    let id_tipo_usuario = 1;
+
+    if(id_tipo_usuario == config.tipo_usuario.admin || id_tipo_usuario == config.tipo_usuario.coordenador || id_tipo_usuario == config.tipo_usuario.secretaria){
+        req.checkParams('id_discente', 'id é obrigatorio ser do tipo int').isInt();
+        let erros = req.validationErrors();
+        if(erros){
+            res.status(400).json({resultado: null, erro: erros});
+        return;
+        }
+        let id_discente = parseInt(req.params.id_discente);
+        console.log('id', id_discente);
+       
+        (new Promise(
+        function (resolve, reject) {
+                let disc = new DiscenteTipoDiscenteDao(req.connection);
+                disc.excluirDiscenteTipoDiscente(id_discente, (error, discente_result) => {
+                    if(error){
+                        reject(error);
+                    }else{
+                        resolve(discente_result);
+                    }
+                });
+        })).then(result => {
+            //res.status(200).json({resultado: true, erro: null});
+
+            (new Promise(
+                function (resolve, reject) {
+                        let disc = new DiscenteCargoInstituicaoDao(req.connection);
+                        disc.excluirDiscenteCargoInstituicao(id_discente, (error, discente_result) => {
+                            if(error){
+                                reject(error);
+                            }else{
+                                resolve(discente_result);
+                            }
+                        });
+                })).then(result => {
+                    //res.status(200).json({resultado: true, erro: null});
+        
+                    (new Promise(
+                        function (resolve, reject) {
+                                let disc = new DiscenteDao(req.connection);
+                                disc.excluirDiscente(id_discente, (error, discente_result) => {
+                                    if(error){
+                                        reject(error);
+                                    }else{
+                                        resolve(discente_result);
+                                    }
+                                });
+                        })).then(result => {
+                            res.status(200).json({resultado: true, erro: null});
+                
+                
+                            
+                        }).catch(error => {
+                            next(error);
+                        });
+                    
+                }).catch(error => {
+                    next(error);
+                });
+
         }).catch(error => {
             next(error);
         });
@@ -1212,8 +1298,6 @@ exports.editarDiscente = (req, res, next) => {
                                 if(error){
                                     reject(error);
                                 }else{
-                                    console.log("------------AA----------")
-                                    console.log(result_inst_discente);
                                     console.log('Result: ', result.id_instituicao, result_inst_discente);
                                     instituicoes = {
                                         instituicao : {
