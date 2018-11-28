@@ -70,6 +70,8 @@ app.use(cookieSession({
 app.use('/',login_Route);
 app.use('/',utils_Route);
 
+app.use('/json/',discente_json_Route);
+
 app.use(autenticacaoJWT.verificarSessao);
 
 app.use('/discente/',discenteV_Route);
@@ -78,7 +80,7 @@ app.use('/secretaria/',secretaria_Route);
 app.use('/coordenador/', coordenador_Route);
 
 //Lugar de teste dos post get etc /json/
-app.use('/json/',discente_json_Route);
+
 app.use('/json/',secretaria_json_Route);
 app.use('/json/',tipo_discente_json_Route);
 app.use('/json/',cidade_json_Route);

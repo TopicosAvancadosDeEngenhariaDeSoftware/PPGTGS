@@ -54,4 +54,19 @@ module.exports = class DiscenteTipoDiscenteDao{
         });
     }
 
+    excluirDiscenteTipoDiscente(id_discente, callback){ //exclusão lógica
+        var sql = "delete from discentetipodiscente where id_discente = ?;"
+        var params = [];
+        params.push(id_discente);
+        sql = mysql.format(sql, params);
+        this._connection.query(sql, (error, results) =>{
+            if(error){
+                callback(error, null);
+            }else{
+                callback(null, true ? true : null);
+            }
+    
+        });
+    }
+
 }
