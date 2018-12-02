@@ -330,16 +330,36 @@ exports.recuperarDiscenteId = (req, res, next) => {
 
 exports.recuperarDiscenteNome = (req, res, next) => {
     req.checkParams('id_situacao', 'id_situacao é obrigatorio ser do tipo int').isInt();
+    req.checkQuery({
+        'pagina':{
+            optional: true,
+            isInt: {
+                errorMessage : 'pagina obrigatório ser do tipo int'
+            },
+            errorMessage : 'pagina Inválida'
+        }
+    });
+
     let erros = req.validationErrors();
     if(erros){
-      res.status(400).json(erros);
-      return;
+        res.status(400).json({resultado: null, erro: erros});
+    return;
     }
+
+    let num_pagina = req.query.pagina;
+    if(num_pagina == null){
+        num_pagina = 0;
+    }else{
+        num_pagina = parseInt(req.query.pagina);
+    } 
+    
+    let num_por_pagina = 10;
 
     let nome = req.query.nome;
     if(nome == undefined || nome == null) nome = "";
 
     let situacao = parseInt(req.params.id_situacao);
+
     console.log('Nome: ', nome);
     console.log('Situacao: ', situacao);
     let pacote = {};
@@ -354,7 +374,7 @@ exports.recuperarDiscenteNome = (req, res, next) => {
         function (resolve, reject) {
                 //console.log('Administrador');
                 let d = new DiscenteDao(req.connection);
-                d.recuperarDiscentePorNome(nome, situacao, (error, discente_result) => {
+                d.recuperarDiscentePorNome(nome, situacao, num_pagina, num_por_pagina, (error, discente_result) => {
                     if(error){
                         reject(error);
                     }else{
@@ -1773,6 +1793,16 @@ exports.editarDiscente = (req, res, next) => {
     req.assert('id_situacao', 'id é obrigatório').notEmpty();
     req.assert('id_situacao', 'id é obrigatório ser do tipo int').isInt();
 
+    req.checkQuery({
+        'pagina':{
+            optional: true,
+            isInt: {
+                errorMessage : 'pagina obrigatório ser do tipo int'
+            },
+            errorMessage : 'pagina Inválida'
+        }
+    });
+
     let erros = req.validationErrors();
     if(erros){
         res.status(400).json({resultado: null, erro: erros});
@@ -1780,12 +1810,23 @@ exports.editarDiscente = (req, res, next) => {
     }
 
     let id_situacao = parseInt(req.params.id_situacao); 
+
+    let num_pagina = req.query.pagina;
+    if(num_pagina == null){
+        num_pagina = 0;
+    }else{
+        num_pagina = parseInt(req.query.pagina);
+    } 
+    
+    let num_por_pagina = 10;
+
+    //console.log("Dados: ", id_situacao, num_pagina, num_por_pagina);
     
     (new Promise(
         function (resolve, reject) {
                
             let disc = new DiscenteDao(req.connection);
-            disc.buscarDiscentePorSituacao(id_situacao, (error, disc_result) => {
+            disc.buscarDiscentePorSituacao(id_situacao, num_pagina, num_por_pagina, (error, disc_result) => {
                 if(error){
                     reject(error);
                 }else{
