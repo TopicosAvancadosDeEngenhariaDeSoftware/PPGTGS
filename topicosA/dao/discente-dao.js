@@ -180,7 +180,7 @@ module.exports = class DiscenteDao{
         params.push(discente.data_nascimento);
         params.push(discente.rg);
         params.push(discente.cpf);
-        params.push(discente.username);
+        params.push('null');
         params.push(c.encrypt(discente.senha));
         params.push(discente.link_lattes);
         params.push(discente.email);
