@@ -25,7 +25,7 @@ module.exports = class Discente{
 		this._id_nacionalidade = null;
 		this._passaporte = null;
 		//this._cargo_instituicao =[];
-        //this._tipo_discente = [];
+        // this._id_tipo_discente = null;
         
 		//acho q é assim q faz enum mas se nao for, ignora. 
 		//se for dai so colocar desse jeito entao, so q n lembro os valores q deveriam ser alem.
@@ -174,6 +174,12 @@ module.exports = class Discente{
 	get passaporte(){
 		return this._passaporte;
 	}
+	// set id_tipo_discente(id_tipo_discente) {
+	// 	this._id_tipo_discente = id_tipo_discente;
+	// }
+	// get id_tipo_discente(){
+	// 	return this._id_tipo_discente;
+	// }
     
     construtorParametrosRequisicao(params){
         this._id_discente = parseInt(params.id_discente);
@@ -202,7 +208,8 @@ module.exports = class Discente{
 		this._telefone = params.telefone;
 		this._id_nacionalidade = parseInt(params.id_nacionalidade);
 		this._passaporte = params.passaporte != null ?  params.passaporte : null;
-		
+		// this._tipo_discente = parseInt(params.id_tipo_discente);
+
         /*calendars.forEach(function(params) {   
             this._cargo_instituicao.push(params.cargo_instituicao);
         });
