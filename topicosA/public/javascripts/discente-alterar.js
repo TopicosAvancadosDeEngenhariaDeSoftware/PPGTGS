@@ -1,13 +1,24 @@
 
 $(function () {
+
+
+
+
     var lista_ocupacoes = [];
     var lista_remover = [];
     $('[data-mask]').inputmask();
     $('.select2').select2();
+
+
+
     var id_instituicao = 0;
     var urlParams = new URLSearchParams(window.location.search);
     var id = urlParams.get('id');
     var idUser = urlParams.get('idUser');
+
+    
+
+
     $.ajax({ 
         type: "GET",
         data: {},
@@ -339,8 +350,8 @@ $(function () {
                 //$('#resultado').html(JSON.stringify(result));
                 if(idUser == 2|| idUser==5) 
                     window.location.replace("/discentes/filtro");
-                else if(idUser==3) 
-                    window.location.replace("/discentes/visualizar?id='"+id+"'");
+                else if(idUser==3||idUser==undefined||idUser==null) 
+                    window.location.replace("/discentes/visualizar?id="+id+"");
                
             },
             beforeSend: function(){
