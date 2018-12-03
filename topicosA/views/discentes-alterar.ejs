@@ -129,7 +129,9 @@
                         <label >Link Perfil do Lattes</label>
                         <input type="text" class="form-control" id="discente_linkperfillattes" >
                      </div>
-                     <div class="form-group col-xs-12 col-sm-12 col-md-2 col-lg-2" >
+
+                     
+                     <div class="form-group col-xs-12 col-sm-12 col-md-2 col-lg-2 <%= id_tipo_usuario == 3 ? 'remover' : '' %> " >
                                     <label>Situação</label>
                                     <select class="form-control" id="situacao_discentes">
                                       <option value="1">Ativo</option>
@@ -137,6 +139,9 @@
                                       <option value="3">Egresso</option>
                                     </select>
                      </div> 
+
+                     
+
                      <div class="form-group col-xs-12 col-sm-12 col-md-2 col-lg-2">
                         <label>Telefone</label> 
                         <input id="discente_telefone" type="text" class="form-control" data-inputmask='"mask": "(99) 99999-9999"' data-mask>
