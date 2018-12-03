@@ -957,11 +957,11 @@ exports.editarDiscente = (req, res, next) => {
         req.assert('id_sexo', 'sexo é obrigatório').notEmpty();
 
 
-        // let erros = req.validationErrors();
-        // if(erros){
-        //     res.status(400).json({resultado: null, erro: erros});
-        //     return;
-        // }
+        let erros = req.validationErrors();
+        if(erros){
+            res.status(400).json({resultado: null, erro: erros});
+            return;
+        }
 
         // console.log("editar 2");
 
@@ -977,11 +977,10 @@ exports.editarDiscente = (req, res, next) => {
         let id_cargo_discente = [];
         let iDao = new instituicaoDao(req.connection);
 
-        console.log("OCUPAÇÕES REMOVIDAS: ", listaOcupacoesRemovidas);
         
         (new Promise(function (resolve, reject) {
             async.each(listaOcupacoes, function (result, callback) {
-                console.log("result.cargo: "+result.cargo);
+                // console.log("result.cargo: "+result.cargo);
                 cargoDao.recuperarCargoDiscentePorNome(result.cargo, (error, result_cargo_discente) => {
                     if (error) {
                         callback(error);
@@ -1006,7 +1005,7 @@ exports.editarDiscente = (req, res, next) => {
                             })
 
                         } else {
-                            console.log("id_cargo_discente push: ", result_cargo_discente.id_cargo_discente);
+                            // console.log("id_cargo_discente push: ", result_cargo_discente.id_cargo_discente);
                             id_cargo_discente.push(result_cargo_discente.id_cargo_discente);
                             callback();
                             //res.status(200).json({ resultado: result, erro: null });
@@ -1015,7 +1014,7 @@ exports.editarDiscente = (req, res, next) => {
                 })
             }, function(err){
                 if(!err){
-                    console.log('FINAL cargoo:  ');
+                    // console.log('FINAL cargoo:  ');
                     resolve(id_cargo_discente);
                 }else{
                     reject(err);
@@ -1029,7 +1028,7 @@ exports.editarDiscente = (req, res, next) => {
             (new Promise(function (resolve, reject) {
                 // fazer o mesmo para instituição
                 async.each(req.body.ocupacoes, function (result, callback) {
-                    console.log("result.id_instituição: "+ result.id_instituicao);
+                    // console.log("result.id_instituição: "+ result.id_instituicao);
                     iDao.recuperarInstituicaoPorId(result.id_instituicao, (error, result_instituicao) => {
                         if(error){
                             callback(error);
@@ -1050,7 +1049,7 @@ exports.editarDiscente = (req, res, next) => {
                                     next(error);
                                 })
                             } else {
-                                console.log("id_id_instituicao push: ", result.id_instituicao);
+                                // console.log("id_id_instituicao push: ", result.id_instituicao);
                                 id_instituicao.push(result.id_instituicao);
                                 callback();
                                 //res.status(200).json({ resultado: result, erro: null });
@@ -1059,7 +1058,7 @@ exports.editarDiscente = (req, res, next) => {
                     })
                 }, function(err){
                     if(!err){
-                        console.log('FINAL inst:  ');
+                        // console.log('FINAL inst:  ');
                         resolve(id_instituicao);
                     }else{
                         reject(err);
@@ -1129,9 +1128,6 @@ exports.editarDiscente = (req, res, next) => {
                         }); 
         
                 })).then(result => {
-                    // res.status(200).json({resultado: result, erro: null});
-                    // console.log("lista: ", lista_inst_carg);
-                    // console.log(req.body);
                     let id_tipo_discente = parseInt(req.body.id_tipo_discente);
                     let id_discente = parseInt(req.body.id_discente);
 
@@ -1139,7 +1135,6 @@ exports.editarDiscente = (req, res, next) => {
                         let dtipod = new DiscenteTipoDiscenteDao(req.connection);
                         dtipod.recuperarDiscenteTiposDiscente((error, tipo_d_result) => {
                             if(error){
-                                console.log('ERRO 1 dtipod:  ');
                                 reject(error);
                             }else{
                                 console.log(tipo_d_result);
@@ -1148,16 +1143,14 @@ exports.editarDiscente = (req, res, next) => {
                                         if (error){
                                             reject(error);
                                         } else {
-                                            console.log("alterar dtipod");
                                             async.each(all_tipo_d_result, function (result, callback) {
                                                 if (result.isAtual == true && result.id_discente == id_discente){
                                                     (new Promise(function (resolve, reject) {
                                                         dtipod.alterarIsAtualFalseDiscenteTipoDiscente(id_discente, result.id_tipo_discente, (error, alt_tipo_d_result) => {
                                                             if(error){
-                                                                console.log('ERRO alt dtipod:  ');
                                                                 reject(error);
                                                             } else {
-                                                                console.log('FINAL alt dtipod:  ');
+                                                                // console.log('FINAL alt dtipod:  ');
                                                                 resolve(true);
                                                             }
                                                         });
@@ -1183,10 +1176,9 @@ exports.editarDiscente = (req, res, next) => {
                                                     (new Promise(function (resolve, reject) {
                                                         dtipod.alterarIsAtualTrueDiscenteTipoDiscente(id_discente, id_tipo_discente, (error, alt_existe_tipo_d_result) => {
                                                             if(error){
-                                                                console.log('ERRO alt true dtipod:  ');
                                                                 reject(error);
                                                             } else {
-                                                                console.log('FINAL alt true dtipod:  ');
+                                                                // console.log('FINAL alt true dtipod:  ');
                                                                 resolve(true);
                                                             }
                                                         });
@@ -1204,10 +1196,9 @@ exports.editarDiscente = (req, res, next) => {
                                                     (new Promise(function (resolve, reject) {
                                                         dtipod.inserirDiscenteTipoDiscente(id_tipo_discente, id_discente, date_certa, (error, cad_tipo_d_result) => {
                                                             if(error){
-                                                                console.log('ERRO 2 dtipod:  ');
                                                                 reject(error);
                                                             }else{
-                                                                console.log('FINAL cad dtipod:  ');
+                                                                // console.log('FINAL cad dtipod:  ');
                                                                 resolve(true);
                                                             }
                                                         });
@@ -1229,17 +1220,16 @@ exports.editarDiscente = (req, res, next) => {
                                     
                         });
                     })).then(result => {
-                        console.log("removendo ocupacoes");
+                        // console.log("removendo ocupacoes");
                          (new Promise(function (resolve, reject) {
                             console.log(1);
                             async.each(listaOcupacoesRemovidas, function (result, callback) {
-                                console.log("idao ", iDao);
                                 discCargoInstDao.excluirDiscenteCargoInstituicao(id_discente, result.id_instituicao, result.id_cargo, (error, del_cargo_inst) =>{
                                     if (error){
                                         console.log(3);
                                         callback(error);
                                     } else {
-                                        console.log("excluindo ocupacoes");
+                                        // console.log("excluindo ocupacoes");
                                         callback();
                                     }
                                 })
@@ -1251,7 +1241,7 @@ exports.editarDiscente = (req, res, next) => {
                                 }
                             })
                         }).then(result =>{
-                            console.log('editando discente');
+                            // console.log('editando discente');
                             (new Promise(function (resolve, reject) {
 
                                 let discente = new Discente();
@@ -1260,10 +1250,10 @@ exports.editarDiscente = (req, res, next) => {
 
                                 disc.editarDiscente(discente, (error, discente_result) => {
                                     if(error){
-                                        console.log('ERRO Editar discente: ' + error);
+                                        // console.log('ERRO Editar discente: ' + error);
                                         reject(error);
                                     }else{
-                                        console.log('Editou discente');
+                                        // console.log('Editou discente');
                                         resolve(discente_result);
                                     }
                                 })

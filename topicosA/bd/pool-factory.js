@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 
 const pool = mysql.createPool({
-    host: 'mysql995.umbler.com', //mysql995.umbler.com
+    host: 'localhost', //mysql995.umbler.com
     user: 'cleberppgtgs', //cleberppgtgs
     password: 'ppgtgs2018', //clebersant100 1234 ppgtgs2018
     database: 'ppgtgs', // ppgtgs
