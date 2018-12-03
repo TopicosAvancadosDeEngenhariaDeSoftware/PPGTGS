@@ -89,22 +89,22 @@ module.exports = class DiscenteDao{
         });
     }
 
-    recuperarDiscentePorNome(nome, situacao, callback){
+    recuperarDiscentePorNome(nome, situacao, num_pagina, num_por_pagina, callback){
          
         nome = "%"+nome+"%";
         var params = [];
         params.push(nome);
         
         if(situacao == 0){
-            var sql = "select * from discente where nome like ?;"
+            var sql = "select * from discente where nome like ? LIMIT ?,?;"
         }
         else{
-            var sql = "select * from discente where nome like ? and situacao = ?;"
+            var sql = "select * from discente where nome like ? and situacao = ? LIMIT ?,?;"
             params.push(situacao);
         }
         
-        
-       
+        params.push(num_pagina * num_por_pagina);
+        params.push(num_por_pagina);
         sql = mysql.format(sql, params);
         this._connection.query(sql, (error, results) =>{
             console.log('RESULTs ',results);
@@ -180,7 +180,7 @@ module.exports = class DiscenteDao{
         params.push(discente.data_nascimento);
         params.push(discente.rg);
         params.push(discente.cpf);
-        params.push(discente.username);
+        params.push('null');
         params.push(c.encrypt(discente.senha));
         params.push(discente.link_lattes);
         params.push(discente.email);
@@ -447,15 +447,17 @@ recuperarDiscenteConformeTipoDiscente(id_discente, id_tipo_discente, callback){
     });
 }
 
-buscarDiscentePorSituacao(id_situacao, callback){
+buscarDiscentePorSituacao(id_situacao, num_pagina, num_por_pagina, callback){
     if(id_situacao == 0){
-        var sql = "select * from discente;"
+        var sql = "select * from discente LIMIT ?,?;"
     }else{
-        var sql = "select * from discente where situacao = ?;"
+        var sql = "select * from discente where situacao = ? LIMIT ?,?;"
     }
    
     var params = [];
     params.push(id_situacao);
+    params.push(num_pagina * num_por_pagina);
+    params.push(num_por_pagina);
     sql = mysql.format(sql, params);
     console.log(sql);
     this._connection.query(sql, (error, results) =>{
