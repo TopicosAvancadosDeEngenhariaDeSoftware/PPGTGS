@@ -1,5 +1,4 @@
 $(function () { 
-
     $('#filtro_situacao').change(function() {
         $('#carregando_filtro').removeClass('remover');
         buscarIndicadorSituacao();
@@ -52,6 +51,8 @@ function buscarIndicadorSituacao(){
         data: {},
         url: "../../json/discentes/situacoes_discente/"+filtro_idSituacao+"/nomes?nome="+$('#discente_nome').val(),
         success: function(result){
+            var data1 = document.getElementsByName('yourdata')[0].content;
+
             //alert(JSON.stringify(result.resultado[0].id_discente));
 
             $('#tabela_discentes').html("<tr>"+
@@ -67,7 +68,7 @@ function buscarIndicadorSituacao(){
                 var html = "<tr>"+
                 "<td>" +result.resultado[i].nome + " " + result.resultado[i].sobrenome + "</td>"+
                 "<td> <a href='"+result.resultado[i].link_lattes+"'>"+result.resultado[i].link_lattes+"</td>"+
-                "<td data-id='"+result.resultado[i].id_discente+"' data-nome='"+result.resultado[i].nome+"'><a class='btn btn-default' href='/discentes/visualizar?id="+result.resultado[i].id_discente+"' >Visualizar </a> <a id='alterar' class='btn btn-primary' href='/discentes/alterar?id="+result.resultado[i].id_discente+"' >Alterar</a> <a class='btn btn-danger' id='excluir' style='margin-left:20px;margin-right:20px;' class='btn btn-danger'>Excluir</a></td>"+
+                "<td data-id='"+result.resultado[i].id_discente+"' data-nome='"+result.resultado[i].nome+"'><a class='btn btn-default' href='/discentes/visualizar?id="+result.resultado[i].id_discente+"&idUser="+data1+"' >Visualizar </a> <a id='alterar' class='btn btn-primary' href='/discentes/alterar?id="+result.resultado[i].id_discente+"&idUser="+data1+"' >Alterar</a> <a class='btn btn-danger' id='excluir' style='margin-left:20px;margin-right:20px;' class='btn btn-danger'>Excluir</a></td>"+
                 "</tr>";
                 $('#tabela_discentes').append(html);
             }

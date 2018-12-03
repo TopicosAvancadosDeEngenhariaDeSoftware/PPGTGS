@@ -5,6 +5,7 @@ $(function () {
     $('.select2').select2();
     var urlParams = new URLSearchParams(window.location.search);
     var id = urlParams.get('id');
+    var idUser = urlParams.get('idUser');
     $.ajax({ 
         type: "GET",
         data: {},
@@ -35,6 +36,7 @@ $(function () {
            $("#list_sexo").val(result.resultado.sexo).change();
            $("#list_titulos").val(result.resultado.id_titulo).change();
            $("#list_tipos_discente").val(result.resultado.tipo_discente[0].id_tipo_discente).change();
+           $("#situacao_discentes").val(result.resultado.situacao).change();
            for(var j=0;j<result.resultado.lista_ocupacoes.length;j++){
             var ocupacao = new Object();
             ocupacao.cargo = result.resultado.lista_ocupacoes[j].cargo.nome_cargo
@@ -249,160 +251,13 @@ $(function () {
     atualizarListaOcupacoes();
     
     $('#button_cadastrar').click(function(){
-
-        $('#div_discente_nome').removeClass('has-error');
-        $('#err_discente_nome').html("");
-
-        $('#div_discente_sobrenome').removeClass('has-error');
-        $('#err_discente_sobrenome').html("");
-
-        $('#div_discente_datanascimento').removeClass('has-error');
-        $('#err_discente_datanascimento').html("");
-
-        $('#div_discente_nascionalidade').removeClass('has-error');
-        $('#err_discente_nascionalidade').html("");
-
-        $('#div_discente_sexo').removeClass('has-error');
-        $('#err_discente_sexo').html("");
-
-        $('#div_discente_cpf').removeClass('has-error');
-        $('#err_discente_cpf').html("");       
-        $('#div_discente_num_residencia').removeClass('has-error');
-        $('#err_discente_num_residencia').html("");
-
-        $('#div_discente_username').removeClass('has-error');
-        $('#err_discente_username').html("");
-
-        $('#div_discente_id_titulo').removeClass('has-error');
-        $('#err_discente_id_titulo').html("");
-
-        $('#div_discente_id_orientador').removeClass('has-error');
-        $('#err_discente_id_orientador').html("");
-
-        $('#div_discente_email').removeClass('has-error');
-        $('#err_discente_email').html("");
-
-        $('#div_discente_senha').removeClass('has-error');
-        $('#err_discente_senha').html("");
-
-        var obj = new Object();
-        obj.nome =  $('#discente_nome').val();
-        obj.id_discente = id; 
-        obj.sobrenome = $('#discente_sobrenome').val();
-        dateStr = $('#discente_datanascimento').val();
-        const [day, month, year] = dateStr.split("/");
-        data_nascimento = new Date(year, month - 1, day);
-        data_nascimento =  data_nascimento.toISOString().slice(0, 19).replace('T', ' ');
-        obj.data_nascimento = data_nascimento;
-        obj.id_nacionalidade = $('#list_nacionalidade').val();
-        obj.telefone = $('#discente_telefone').val();
-        if(parseInt(obj.id_nacionalidade) == 1){
-            obj.rg = $('#discente_rg').val();
-            obj.cpf = $('#discente_cpf').val();
-        }else{
-            obj.cpf = $('#discente_cpf').val();
-            obj.passaporte = $('#discente_passaporte').val();
-        }
-        obj.id_sexo = $('#list_sexo').val();
-        obj.endereco_id_pais = $('#list_pais').val();
-        obj.username = $('#discente_username').val();
-        obj.link_perfil_lattes = $('#discente_linkperfillattes').val();
-        obj.id_titulo = $('#list_titulos').val();
-        obj.id_docente = $('#list_docentes').val();
-        obj.email = $('#discente_email').val();
-        obj.senha = $('#discente_senha').val();
-        obj.id_tipo_discente = $('#list_tipos_discente').val();
-        var lista_ocup = lista_ocupacoes;
-        for(var i = 0; i < lista_ocup.length; i++){
-            lista_ocup[i].id = undefined;
-            if(lista_ocup[i].id_instituicao != 0){
-                lista_ocup[i].instituicao = undefined;
-            }else{
-                lista_ocup[i].instituicao.tipo_instituicao = undefined;
-            }
-        }
-        obj.ocupacoes = JSON.stringify(lista_ocup);
-
-
-        $.ajax({ 
-            type: "PUT",
-            data: obj,
-            url: "../json/discentes/"+id,
-            success: function(result){
-                alert("Alterado com sucesso");
-                //$('#resultado').html(JSON.stringify(result));
-                window.location.replace("/discentes/filtro");
-               
-            },
-            beforeSend: function(){
-                //$('#loading').css({display:"block"});
-            },
-            complete: function(msg){
-                //$('#loading').css({display:"none"});
-            },
-            error: function(msg){
-                //alert(JSON.stringify(msg));
-                //$('#resultado').html(JSON.stringify(msg)); 
-                //$('#resultado').html(JSON.stringify(msg.responseJSON.erro));
-                if(msg.responseJSON.erro != null && msg.responseJSON.erro != undefined && msg.responseJSON.erro.length > 0 ){
-
-                    for(var i = 0; 0 < msg.responseJSON.erro.length ; i++){
-                        if(msg.responseJSON.erro[i].param != undefined && msg.responseJSON.erro[i].param !=  null)
-                        switch(msg.responseJSON.erro[i].param){
-                            case "cpf":
-                                $('#div_discente_cpf').addClass('has-error');
-                                $('#err_discente_cpf').html(msg.responseJSON.erro[i].msg);
-                                break;
-                            case "nome":
-                                $('#div_discente_nome').addClass('has-error');
-                                $('#err_discente_nome').html(msg.responseJSON.erro[i].msg);
-                                break;
-                            case "sobrenome":
-                                $('#div_discente_sobrenome').addClass('has-error');
-                                $('#err_discente_sobrenome').html(msg.responseJSON.erro[i].msg);
-                                break;
-                            case "data_nascimento":
-                                $('#div_discente_datanascimento').addClass('has-error');
-                                $('#err_discente_datanascimento').html(msg.responseJSON.erro[i].msg);
-                                break;
-                            case "id_nacionalidade":
-                                $('#div_discente_nascionalidade').addClass('has-error');
-                                $('#err_discente_nascionalidade').html(msg.responseJSON.erro[i].msg);
-                                break;
-                            case "id_sexo":
-                                $('#div_discente_sexo').addClass('has-error');
-                                $('#err_discente_sexo').html(msg.responseJSON.erro[i].msg);
-                                break;
-                            case "username":
-                                $('#div_discente_username').addClass('has-error');
-                                $('#err_discente_username').html(msg.responseJSON.erro[i].msg);
-                                break;
-                            case "id_titulo":
-                                $('#div_discente_id_titulo').addClass('has-error');
-                                $('#err_discente_id_titulo').html(msg.responseJSON.erro[i].msg);
-                                break;
-                            case "id_orientador":
-                                $('#div_discente_id_orientador').addClass('has-error');
-                                $('#err_discente_id_orientador').html(msg.responseJSON.erro[i].msg);
-                                break;
-                            case "email":
-                                $('#div_discente_email').addClass('has-error');
-                                $('#err_discente_email').html(msg.responseJSON.erro[i].msg);
-                                break;
-                            case "senha":
-                                $('#div_discente_senha').addClass('has-error');
-                                $('#err_discente_senha').html(msg.responseJSON.erro[i].msg);
-                                break;
-                            
-                        } 
-                    }
-
-
-                }
-            }
-        });
-        
+        if(idUser == 2 || idUser==5) 
+                    window.location.replace("/discentes/filtro");
+        else if(idUser==3) 
+                    window.location.replace("/discentes/visualizar?id='"+id+"'");
+    
     });
 });
+
      
 

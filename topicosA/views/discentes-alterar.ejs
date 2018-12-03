@@ -50,12 +50,12 @@
                   <div class="box-body">
                      <div id="div_discente_nome" class="form-group col-xs-12 col-sm-12 col-md-5 col-lg-5" >
                         <label >Nome*</label>
-                        <input type="text" class="form-control" id="discente_nome" placeholder="João">
+                        <input type="text" class="form-control" id="discente_nome">
                         <span id="err_discente_nome" class="help-block"></span>
                      </div>
                      <div id="div_discente_sobrenome" class="form-group col-xs-12 col-sm-12 col-md-5 col-lg-5" >
                         <label >Sobrenome*</label>
-                        <input type="text" class="form-control" id="discente_sobrenome" placeholder="Silva">
+                        <input type="text" class="form-control" id="discente_sobrenome">
                         <span id="err_discente_sobrenome" class="help-block"></span>
                      </div>
                      <div id="div_discente_datanascimento" class="form-group col-xs-12 col-sm-12 col-md-2 col-lg-2" >
@@ -129,6 +129,14 @@
                         <label >Link Perfil do Lattes</label>
                         <input type="text" class="form-control" id="discente_linkperfillattes" >
                      </div>
+                     <div class="form-group col-xs-12 col-sm-12 col-md-2 col-lg-2" >
+                                    <label>Situação</label>
+                                    <select class="form-control" id="situacao_discentes">
+                                      <option value="1">Ativo</option>
+                                      <option value="2">Inativo</option>
+                                      <option value="3">Egresso</option>
+                                    </select>
+                     </div> 
                      <div class="form-group col-xs-12 col-sm-12 col-md-2 col-lg-2">
                         <label>Telefone</label> 
                         <input id="discente_telefone" type="text" class="form-control" data-inputmask='"mask": "(99) 99999-9999"' data-mask>
@@ -266,12 +274,12 @@
                      
                      <div id="div_discente_email" class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
                         <label for="exampleInputEmail1">Email* </label>
-                        <input  type="email" class="form-control" id="discente_email" placeholder="exemplo@email.com">
+                        <input  type="email" class="form-control" id="discente_email">
                         <span id="err_discente_email" class="help-block"></span> 
                      </div>
                      <div id="div_discente_senha" class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
                         <label for="exampleInputPassword1">Senha* </label>
-                        <input type="password" class="form-control" id="discente_senha" placeholder="Password">
+                        <input type="password" class="form-control" id="discente_senha">
                         <span id="err_discente_senha" class="help-block"></span>
                      </div>
                      

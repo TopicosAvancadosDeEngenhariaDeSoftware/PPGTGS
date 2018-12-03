@@ -7,6 +7,7 @@ $(function () {
     var id_instituicao = 0;
     var urlParams = new URLSearchParams(window.location.search);
     var id = urlParams.get('id');
+    var idUser = urlParams.get('idUser');
     $.ajax({ 
         type: "GET",
         data: {},
@@ -35,6 +36,7 @@ $(function () {
            $("#list_nacionalidade").val(result.resultado.id_nacionalidade).change();
            $("#list_sexo").val(result.resultado.sexo).change();
            $("#list_titulos").val(result.resultado.id_titulo).change();
+           $("#situacao_discentes").val(result.resultado.situacao).change();
            $("#list_tipos_discente").val(result.resultado.tipo_discente[0].id_tipo_discente).change();
            for(var j=0;j<result.resultado.lista_ocupacoes.length;j++){
             var ocupacao = new Object();
@@ -327,7 +329,7 @@ $(function () {
         }
         obj.ocupacoes = JSON.stringify(lista_ocup);
         obj.removerocupacoes = JSON.stringify(lista_remover);
-
+        obj.situacao = $('#situacao_discentes').val();
         $.ajax({ 
             type: "PUT",
             data: obj,
@@ -335,7 +337,10 @@ $(function () {
             success: function(result){
                 //alert(JSON.stringify(obj));
                 //$('#resultado').html(JSON.stringify(result));
-                window.location.replace("/discentes/filtro");
+                if(idUser == 2|| idUser==5) 
+                    window.location.replace("/discentes/filtro");
+                else if(idUser==3) 
+                    window.location.replace("/discentes/visualizar?id='"+id+"'");
                
             },
             beforeSend: function(){
