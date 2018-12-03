@@ -100,5 +100,18 @@ module.exports = class DiscenteCargoInstituicaoDao{
         });
     } 
 
+    excluirDiscenteCargoInstituicao(id_discente, id_instituicao, id_cargo, callback){
+        console.log("ALOOO");
+        var sql = "delete from discentecargoinstituicao where id_discente = ? and id_instituicao = ? and id_cargo_discente = ?;"
+        var params = [];
+        params.push(id_discente);
+        params.push(id_instituicao);
+        params.push(id_cargo);
+        sql = mysql.format(sql, params);
+        this._connection.query(sql, (error, results) =>{
+            callback(error, results);
+        });
+    } 
+
    
 }
