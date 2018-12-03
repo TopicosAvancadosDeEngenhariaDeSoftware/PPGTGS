@@ -968,12 +968,16 @@ exports.editarDiscente = (req, res, next) => {
         // dps de passar por isValidoListaOcupacoes, 
         // com JSON.parse abaixo transforma em uma lista de ocupações.
         req.body.ocupacoes = JSON.parse(req.body.ocupacoes);
+        req.body.removerocupacoes = JSON.parse(req.body.removerocupacoes);
         
         let cargoDao = new cargoDiscenteDao(req.connection);
+        let discCargoInstDao = new DiscenteCargoInstituicaoDao(req.connection);
         let listaOcupacoes = req.body.ocupacoes;
+        let listaOcupacoesRemovidas = req.body.removerocupacoes;
         let id_cargo_discente = [];
+        let iDao = new instituicaoDao(req.connection);
 
-        // console.log("REQ: ", req.body);
+        console.log("OCUPAÇÕES REMOVIDAS: ", listaOcupacoesRemovidas);
         
         (new Promise(function (resolve, reject) {
             async.each(listaOcupacoes, function (result, callback) {
@@ -1020,7 +1024,7 @@ exports.editarDiscente = (req, res, next) => {
             }); 
         }).then(result => {
             // resolve(id_cargo_discente);
-            let iDao = new instituicaoDao(req.connection);
+            
             let id_instituicao = [];
             (new Promise(function (resolve, reject) {
                 // fazer o mesmo para instituição
@@ -1127,7 +1131,6 @@ exports.editarDiscente = (req, res, next) => {
                 })).then(result => {
                     // res.status(200).json({resultado: result, erro: null});
                     // console.log("lista: ", lista_inst_carg);
-                    console.log('tipo_discente a');
                     // console.log(req.body);
                     let id_tipo_discente = parseInt(req.body.id_tipo_discente);
                     let id_discente = parseInt(req.body.id_discente);
@@ -1226,35 +1229,53 @@ exports.editarDiscente = (req, res, next) => {
                                     
                         });
                     })).then(result => {
-                        //console.log(result); console.log('aq');
-                        console.log('editando discente');
-                        (new Promise(function (resolve, reject) {
-
-                            let discente = new Discente();
-                            discente.construtorParametrosRequisicao(req.body);
-                            console.log('req body ', req.body);
-
-                            console.log('id nacionalidade ', discente.id_nacionalidade);
-            
-                            let disc = new DiscenteDao(req.connection);
-                            console.log('discente ', discente);
-
-                            disc.editarDiscente(discente, (error, discente_result) => {
-                                if(error){
-                                    console.log('ERRO Editar discente: ' + error);
-                                    reject(error);
-                                }else{
-                                    console.log('Editou discente');
-                                    resolve(discente_result);
+                        console.log("removendo ocupacoes");
+                         (new Promise(function (resolve, reject) {
+                            console.log(1);
+                            async.each(listaOcupacoesRemovidas, function (result, callback) {
+                                console.log("idao ", iDao);
+                                discCargoInstDao.excluirDiscenteCargoInstituicao(id_discente, result.id_instituicao, result.id_cargo, (error, del_cargo_inst) =>{
+                                    if (error){
+                                        console.log(3);
+                                        callback(error);
+                                    } else {
+                                        console.log("excluindo ocupacoes");
+                                        callback();
+                                    }
+                                })
+                            }, function(err){
+                                if (!err){
+                                    resolve(true);
+                                } else {
+                                    reject(err);
                                 }
                             })
-                        })).then(result => {
-                            // res.status(200).json({ resultado: result, erro: null });
-                            console.log('FINAL edit:  ');
-                             res.status(200).json({ resultado: result, erro: null });
-                        }).catch(error => {
+                        }).then(result =>{
+                            console.log('editando discente');
+                            (new Promise(function (resolve, reject) {
+
+                                let discente = new Discente();
+                                discente.construtorParametrosRequisicao(req.body);
+                                let disc = new DiscenteDao(req.connection);
+
+                                disc.editarDiscente(discente, (error, discente_result) => {
+                                    if(error){
+                                        console.log('ERRO Editar discente: ' + error);
+                                        reject(error);
+                                    }else{
+                                        console.log('Editou discente');
+                                        resolve(discente_result);
+                                    }
+                                })
+                            }).then(result => {
+                                // res.status(200).json({ resultado: result, erro: null });
+                                res.status(200).json({ resultado: result, erro: null });
+                            }).catch(error => {
+                                next(error);
+                            }))
+                        }).catch(error =>{
                             next(error);
-                        });
+                        }))
                     }).catch(error => {
                         next(error);
                     });
