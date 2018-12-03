@@ -350,8 +350,8 @@ $(function () {
                 //$('#resultado').html(JSON.stringify(result));
                 if(idUser == 2|| idUser==5) 
                     window.location.replace("/discentes/filtro");
-                else if(idUser==3) 
-                    window.location.replace("/discentes/visualizar?id='"+id+"'");
+                else if(idUser==3||idUser==undefined||idUser==null) 
+                    window.location.replace("/discentes/visualizar?id="+id+"");
                
             },
             beforeSend: function(){
