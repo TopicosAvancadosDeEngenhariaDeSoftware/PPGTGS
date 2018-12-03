@@ -78,7 +78,7 @@ exports.cadastrarDiscente = async (req, res, next) => {
 exports.alterarDiscente = async (req, res, next) => {
        //var idUsuario = 1;
        //var id_tipo_usuario = req.id_tipo_usuario;
-
+        var idSituacao = 0;
        console.log("ALTERAR DISCENTE COM USUARIO ["+ req.id_tipo_usuario);
        var pDao = new paisesDao(req.connection);
         pDao.recuperarPaises((err, resultado_paises) =>{
@@ -112,7 +112,6 @@ exports.alterarDiscente = async (req, res, next) => {
                                                 res.render('discentes-alterar', {tipos_discente: results_tipos_discentes,  paises : resultado_paises, titulos : resultados_titulos, docentes: resultados_docentes, instituicoes : lista_instituicoes, tipos_instituicao : lista_tipo_instituicao, id_tipo_usuario: req.id_tipo_usuario, id_usuario: req.id_usuario});                                });
                                                 
                                         });
-
                                         
                         });
                 });      
@@ -121,6 +120,7 @@ exports.alterarDiscente = async (req, res, next) => {
 
 exports.visualizarDiscente = async (req, res, next) => {
        //var idUsuario = 1;
+        var idSituacao = 0;
        var pDao = new paisesDao(req.connection);
         pDao.recuperarPaises((err, resultado_paises) =>{
                 if(err) return next(err);
@@ -150,11 +150,11 @@ exports.visualizarDiscente = async (req, res, next) => {
                                         if(req.query.idUsuario != null) idUsuario = req.query.idUsuario;
                                         tipoDiscenteD.recuperarTiposDiscente((err, results_tipos_discentes) =>{
                                                 if(err) return next(err);
-                                                res.render('discentes-visualizar', {tipos_discente: results_tipos_discentes,  paises : resultado_paises, titulos : resultados_titulos, docentes: resultados_docentes, instituicoes : lista_instituicoes, tipos_instituicao : lista_tipo_instituicao, id_tipo_usuario: req.id_tipo_usuario, id_usuario: req.id_usuario});                                });
+                                                res.render('discentes-visualizar', {tipos_discente: results_tipos_discentes,  paises : resultado_paises, titulos : resultados_titulos, docentes: resultados_docentes, instituicoes : lista_instituicoes, tipos_instituicao : lista_tipo_instituicao, id_tipo_usuario: req.id_tipo_usuario, id_usuario: req.id_usuario});                                
+                                            });
                                                 
                                         });
 
-                                        
 
                         });
                 });      

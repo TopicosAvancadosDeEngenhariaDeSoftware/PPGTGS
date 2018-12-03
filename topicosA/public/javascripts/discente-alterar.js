@@ -1,8 +1,10 @@
 
 $(function () {
     var lista_ocupacoes = [];
+    var lista_remover = [];
     $('[data-mask]').inputmask();
     $('.select2').select2();
+    var id_instituicao = 0;
     var urlParams = new URLSearchParams(window.location.search);
     var id = urlParams.get('id');
     $.ajax({ 
@@ -10,7 +12,7 @@ $(function () {
         data: {},
         url: "../json/discentes/"+id,
         success: function(result){
-           //alert(JSON.stringify(result.resultado.tipo_discente[0].id_tipo_discente));
+           //alert(JSON.stringify(result.resultado));
            $("#discente_nome").val( result.resultado.nome);
            $("#discente_sobrenome").val(result.resultado.sobrenome);
            var data_nascimento = new Date(result.resultado.data_nascimento);
@@ -26,7 +28,6 @@ $(function () {
            $("#discente_cpf").val(result.resultado.cpf);
            $("#discente_passaporte").val(result.resultado.passaporte);
            $("#discente_telefone").val(result.resultado.telefone);
-           $("#discente_username").val(result.resultado.username);
            $("#discente_linkperfillattes").val(result.resultado.link_lattes);
            $("#discente_email").val(result.resultado.email);
            $("#list_docentes").val(result.resultado.id_docente).change();
@@ -37,7 +38,8 @@ $(function () {
            $("#list_tipos_discente").val(result.resultado.tipo_discente[0].id_tipo_discente).change();
            for(var j=0;j<result.resultado.lista_ocupacoes.length;j++){
             var ocupacao = new Object();
-            ocupacao.cargo = result.resultado.lista_ocupacoes[j].cargo.nome_cargo
+            ocupacao.cargo = result.resultado.lista_ocupacoes[j].cargo.nome_cargo;
+            ocupacao.id_cargo = result.resultado.lista_ocupacoes[j].cargo.id_cargo;
             ocupacao.id_instituicao = result.resultado.lista_ocupacoes[j].cargo.instituicao.id_instituicao;
             if(ocupacao.id_instituicao == 0){
             var instituicao = new Object();
@@ -136,15 +138,19 @@ $(function () {
         $('#div_add_ocupacao').addClass('remover');
     });
 
-    function removerListaOcupacoes(id_ocupacao_remover){
-        //alert(id_ocupacao_remover);
+    function removerListaOcupacoes(id_ocupacao_remover,id_inst,id_discente,id_cargo){
         var nova_lista_ocupacoes = [];
         for(var i = 0; i < lista_ocupacoes.length;i++){
-            
             if(lista_ocupacoes[i].id != id_ocupacao_remover){
                 nova_lista_ocupacoes.push(lista_ocupacoes[i]);
             }
         }
+
+        var discentecargoinstituicao = new Object();
+        discentecargoinstituicao.id_discente = id_discente;
+        discentecargoinstituicao.id_cargo = id_cargo;
+        discentecargoinstituicao.id_instituicao = id_inst;
+        lista_remover.push(discentecargoinstituicao);
         //alert(JSON.stringify(nova_lista_ocupacoes));
         lista_ocupacoes = null;
         lista_ocupacoes = nova_lista_ocupacoes;
@@ -161,12 +167,16 @@ $(function () {
             $("#tabela_ocupacoes").append(html);
             for(var i = 0; i < lista_ocupacoes.length; i++){
                 lista_ocupacoes[i].id = i + 1;
-                html = "<tr><td>"+lista_ocupacoes[i].id+"</td><td>"+lista_ocupacoes[i].cargo+"</td><td>["+lista_ocupacoes[i].instituicao.sigla +"] "+lista_ocupacoes[i].instituicao.nome+"</td><td> "+lista_ocupacoes[i].instituicao.tipo_instituicao.nome+" </td> <td><i id='ocupacao_trash_"+lista_ocupacoes[i].id+"' class='fa fa-fw fa-trash pull-right'></i> </td></tr>";
+                let id_inst = lista_ocupacoes[i].id_instituicao;
+                let id_discente = id;
+                let id_cargo = lista_ocupacoes[i].id_cargo;
+
+                html = "<tr><td>"+lista_ocupacoes[i].id+"</td><td>"+lista_ocupacoes[i].cargo+"</td><td>["+id_inst +"] "+lista_ocupacoes[i].instituicao.nome+"</td><td> "+lista_ocupacoes[i].instituicao.tipo_instituicao.nome+" </td> <td><i id='ocupacao_trash_"+lista_ocupacoes[i].id+"' class='fa fa-fw fa-trash pull-right'></i> </td></tr>";
                 $("#tabela_ocupacoes").append(html);
 
                 $('#ocupacao_trash_'+lista_ocupacoes[i].id).click(function(){
-                    var id = $(this).attr('id');
-                    removerListaOcupacoes(id.substring(15));
+                    var id_lixo = $(this).attr('id');
+                    removerListaOcupacoes(id_lixo.substring(15),id_inst,id_discente,id_cargo);
                 });
             }
             html= "</tbody>";
@@ -245,9 +255,6 @@ $(function () {
         $('#button_add_ocupacao').removeClass('remover');
         $('#div_add_ocupacao').addClass('remover');
     });
-
-    atualizarListaOcupacoes();
-    
     $('#button_cadastrar').click(function(){
 
         $('#div_discente_nome').removeClass('has-error');
@@ -270,8 +277,6 @@ $(function () {
         $('#div_discente_num_residencia').removeClass('has-error');
         $('#err_discente_num_residencia').html("");
 
-        $('#div_discente_username').removeClass('has-error');
-        $('#err_discente_username').html("");
 
         $('#div_discente_id_titulo').removeClass('has-error');
         $('#err_discente_id_titulo').html("");
@@ -305,7 +310,6 @@ $(function () {
         }
         obj.id_sexo = $('#list_sexo').val();
         obj.endereco_id_pais = $('#list_pais').val();
-        obj.username = $('#discente_username').val();
         obj.link_perfil_lattes = $('#discente_linkperfillattes').val();
         obj.id_titulo = $('#list_titulos').val();
         obj.id_docente = $('#list_docentes').val();
@@ -322,14 +326,14 @@ $(function () {
             }
         }
         obj.ocupacoes = JSON.stringify(lista_ocup);
-
+        obj.removerocupacoes = JSON.stringify(lista_remover);
 
         $.ajax({ 
             type: "PUT",
             data: obj,
             url: "../json/discentes/"+id,
             success: function(result){
-                alert("Alterado com sucesso");
+                //alert(JSON.stringify(obj));
                 //$('#resultado').html(JSON.stringify(result));
                 window.location.replace("/discentes/filtro");
                
@@ -341,7 +345,7 @@ $(function () {
                 //$('#loading').css({display:"none"});
             },
             error: function(msg){
-                //alert(JSON.stringify(msg));
+                alert(JSON.stringify(msg));
                 //$('#resultado').html(JSON.stringify(msg)); 
                 //$('#resultado').html(JSON.stringify(msg.responseJSON.erro));
                 if(msg.responseJSON.erro != null && msg.responseJSON.erro != undefined && msg.responseJSON.erro.length > 0 ){
@@ -372,10 +376,6 @@ $(function () {
                             case "id_sexo":
                                 $('#div_discente_sexo').addClass('has-error');
                                 $('#err_discente_sexo').html(msg.responseJSON.erro[i].msg);
-                                break;
-                            case "username":
-                                $('#div_discente_username').addClass('has-error');
-                                $('#err_discente_username').html(msg.responseJSON.erro[i].msg);
                                 break;
                             case "id_titulo":
                                 $('#div_discente_id_titulo').addClass('has-error');

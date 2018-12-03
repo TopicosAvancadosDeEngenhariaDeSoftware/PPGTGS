@@ -421,7 +421,6 @@ exports.cadastrarDiscente = (req, res, next) => {
     else if(req.body.endereco_id_pais != undefined && req.body.endereco_id_pais != null && parseInt(req.body.endereco_id_pais) != 1){
         req.assert('passaporte', 'Passaporte é obrigatório').notEmpty();
     }
-    req.assert('username', 'Username é obrigatório').notEmpty();
     req.assert('id_titulo', 'Titulo é obrigatório').notEmpty();
    // req.assert('id_orientador', 'Orientador é obrigatório').notEmpty();
     req.assert('email', 'Verifique seu email').notEmpty().isEmail();
@@ -931,7 +930,6 @@ exports.editarDiscente = (req, res, next) => {
     }
 
         console.log("Editar");
-        req.assert('username', 'username é obrigatório').notEmpty();
         req.assert('senha', 'senha é obrigatório').notEmpty();
         req.assert('email', 'email é obrigatório').notEmpty();
         req.assert('id_docente', 'docente é obrigatório').notEmpty();
