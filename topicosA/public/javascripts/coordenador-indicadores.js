@@ -303,6 +303,14 @@ function grafico_indicador_cargo_aluno(dadosGrafico){
     chart: {
       type: 'column'
     },
+    plotOptions: {
+        column: {
+            stacking: 'normal',
+            dataLabels: {
+                enabled: true
+            }
+        }
+    },
     title: {
       text: ""
     },
@@ -342,6 +350,14 @@ function grafico_indicador_instituicao_aluno(dadosGrafico){
   chart: {
     type: 'column'
   },
+  plotOptions: {
+        column: {
+            stacking: 'normal',
+            dataLabels: {
+                enabled: true
+            }
+        }
+    },
   title: {
     text: ""
   },
@@ -380,6 +396,14 @@ function grafico_indicador_nascionalidade(dadosGrafico){
     Highcharts.chart('container_nascionalidade', {
     chart: {
       type: 'column'
+    },
+    plotOptions: {
+        column: {
+            stacking: 'normal',
+            dataLabels: {
+                enabled: true
+            }
+        }
     },
     title: {
       text: ""
@@ -428,6 +452,7 @@ function grafico_indicador_titulos(dadosGrafico){
         tooltip: {
           pointFormat: '{series.name}: <b>{point.percentage:.1f} %</b>'
         },
+        
         plotOptions: {
           pie: {
             allowPointSelect: true,
