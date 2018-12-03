@@ -94,7 +94,7 @@ exports.recuperarDiscenteId = (req, res, next) => {
                         }
                     });
         })).then(result_lista_instituicao_cargo => {
-            console.log('result: ', result_lista_instituicao_cargo[0].id_discente,result_lista_instituicao_cargo[0].id_instituicao, result_lista_instituicao_cargo[0].id_cargo_discente, result_lista_instituicao_cargo[1].id_instituicao);
+            //console.log('result: ', result_lista_instituicao_cargo[0].id_discente,result_lista_instituicao_cargo[0].id_instituicao, result_lista_instituicao_cargo[0].id_cargo_discente, result_lista_instituicao_cargo[1].id_instituicao);
             //pegar a lista de instituições e retornar as instituicoes
             //pegar lista de cargos e retornar os cargos 
            
