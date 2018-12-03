@@ -12,7 +12,7 @@ $(function () {
     $("body").on("click","#excluir", function(){
         var id = $(this).parent().data("id");
         var nome = $(this).parent().data("nome");
-        if(confirm("Tem certeza que deseja EXCLUIR/Desativar : "+nome)){
+        if(confirm("Tem certeza que deseja EXCLUIR/Desativar: "+nome+" ?")){
             excluirDiscenteLogicamente(id);
         }
     });
@@ -28,7 +28,7 @@ function excluirDiscenteLogicamente(id){
         success: function(result){
             console.log(result);
             alert("Excluido!");
-            consultarPendentes();
+            buscarIndicadorSituacao();
         },
         beforeSend: function(){
         },
