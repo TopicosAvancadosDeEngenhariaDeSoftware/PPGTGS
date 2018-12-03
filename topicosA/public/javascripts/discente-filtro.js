@@ -1,11 +1,35 @@
+var pag = 0;
 $(function () { 
+
+    $('#btn_anterior').click(function(){
+        //alert("oi");
+        if(pag > 0){
+            pag--;
+            if(pag == 0) $('#btn_anterior').addClass('remover');
+            buscarIndicadorSituacao();
+        } 
+    });
+
+    $('#btn_proximo').click(function(){
+        //alert("oi2");
+            pag++;
+            if(pag > 0) $('#btn_anterior').removeClass('remover');
+            buscarIndicadorSituacao();
+    });
+
     $('#filtro_situacao').change(function() {
         $('#carregando_filtro').removeClass('remover');
+        pag = 0;
+        if(pag == 0) $('#btn_anterior').addClass('remover');
         buscarIndicadorSituacao();
     });
+
+    if(pag == 0) $('#btn_anterior').addClass('remover');
     buscarIndicadorSituacao();
 
     $('#discente_nome').keyup(function() {
+        pag = 0;
+        if(pag == 0) $('#btn_anterior').addClass('remover');
         buscarIndicadorSituacao();
     });
 
@@ -49,7 +73,7 @@ function buscarIndicadorSituacao(){
     $.ajax({ 
         type: "GET",
         data: {},
-        url: "../../json/discentes/situacoes_discente/"+filtro_idSituacao+"/nomes?nome="+$('#discente_nome').val(),
+        url: "../../json/discentes/situacoes_discente/"+filtro_idSituacao+"/nomes?nome="+$('#discente_nome').val()+"&pagina="+pag,
         success: function(result){
             var data1 = document.getElementsByName('yourdata')[0].content;
 
