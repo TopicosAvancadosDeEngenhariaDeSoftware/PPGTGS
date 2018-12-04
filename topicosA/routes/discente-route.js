@@ -34,7 +34,7 @@ router.post('/teste', async (req, res, next) =>{
     req.assert('email', 'Verifique seu email').notEmpty().isEmail();
     req.assert('senha', 'Verifique a sua senha').notEmpty().isLength({ min: 5, max: 60});
     req.assert('senha_conf', 'Verifique a sua confirmação de senha').notEmpty().isLength({ min: 5, max: 60});
-    req.assert('ocupacoes', 'Verifique as ocupações').isValidListaOcupacoes();
+    req.assert('ocupacoes', 'Verifique as ocupações').notEmpty();
 
     
     /*

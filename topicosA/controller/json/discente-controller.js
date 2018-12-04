@@ -549,7 +549,8 @@ exports.cadastrarDiscente = (req, res, next) => {
 
     let verifica_discente = new DiscenteDao(req.connection);
 
-
+    //acessible for others
+    var id_discente_cadastrado;
 
     verifica_discente.recuperarDiscentePorEmail(email, (error, result_existe_discente) => {
         if (error) {
@@ -686,7 +687,7 @@ exports.cadastrarDiscente = (req, res, next) => {
                     (new Promise(function(resolve, reject) {
                     
                         let disc = new DiscenteDao(req.connection);
-                        console.log('Discente (estrangeiro) pronto: ', discente);
+                        console.log("\n\n\n\n\n\n\n\'Discente (estrangeiro) pronto: ", discente);
                         disc.inserirDiscente(discente, (error, discente_result) => {
                             if (error) {
                                 reject(error);
@@ -697,10 +698,10 @@ exports.cadastrarDiscente = (req, res, next) => {
                         });
 
                     })).then(result => {
-                        console.log("FOIIIIIIIIIIII \n\n\n\\n\n\'"+result);
+                        console.log("FOIIIIIIIIIIIIESTRANGEIRO\n\n\n\n\'"+result);
                         //res.status(201).json({resultado: result, erro: null});
 
-                        var id_discente_cadastrado = result.id_discente;
+                        id_discente_cadastrado = result.id_discente;
 
                         console.log('id discente cad: ', id_discente_cadastrado);
                     });

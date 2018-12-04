@@ -172,18 +172,22 @@ module.exports = class DiscenteDao{
     inserirDiscente(discente, callback){
 
         let c = new crypto();
-        var sql = "insert into discente (nome,sobrenome, data_nascimento, rg, cpf, username, senha, link_lattes, "+
-        "email, id_endereco, numero_residencia, complemento, id_docente, isaceito, situacao, id_titulo, sexo, telefone, id_nacionalidade, passaporte) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+        var sql = "insert into discente (nome,sobrenome, data_nascimento, rg, cpf, senha, link_lattes, "+
+        "email, id_endereco, numero_residencia, complemento, id_docente, isaceito, situacao, id_titulo, sexo, telefone, id_nacionalidade, passaporte) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
         var params = [];
         params.push(discente.nome);
         params.push(discente.sobrenome);
         params.push(discente.data_nascimento);
         params.push(discente.rg);
         params.push(discente.cpf);
-        params.push('null');
         params.push(c.encrypt(discente.senha));
         params.push(discente.link_lattes);
         params.push(discente.email);
+        
+        if(isNaN(discente.id_endereco)){
+            discente.id_endereco = null ;
+            discente.numero_residencia = null;
+        }
         params.push(discente.id_endereco);
         params.push(discente.numero_residencia);
         params.push(discente.complemento);
