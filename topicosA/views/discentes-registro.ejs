@@ -52,17 +52,17 @@
                      </div>
 
 
-                     <div id="div_discente_nascionalidade" class="form-group col-xs-12 col-sm-12 col-md-2 col-lg-2" >
-                        <label >Nacionalidade</label>
+                     <div id="div_discente_nacionalidade" class="form-group col-xs-12 col-sm-12 col-md-2 col-lg-2" >
+                        <label >Nacionalidade*</label>
                         <select id="list_nacionalidade" class="form-control select2" style="width: 100%;" name="id_nacionalidade">
                            <% for(var i = 0; i < paises.length ; i++){ %> 
                            <option value="<%= paises[i].id_pais %>"><%= paises[i].nacionalidade %> </option>
                            <% } %>
                         </select>
-                        <span id="err_discente_nascionalidade" class="help-block"></span>      
+                        <span id="err_discente_nacionalidade" class="help-block"></span>      
                      </div>
                      <div id="div_discente_sexo" class="form-group col-xs-12 col-sm-12 col-md-2 col-lg-2" >
-                        <label >Sexo</label>
+                        <label >Sexo*</label>
                         <select id="list_sexo" class="form-control" style="width: 100%;" name="id_sexo">
                            <option value="1">Masculino</option>
                            <option value="2">Feminino</option>
@@ -71,18 +71,19 @@
                         <span id="err_discente_sexo" class="help-block"></span>   
                      </div>
                      
+                     <div id="div_discente_cpf" class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3" >
+                        <label >CPF*</label>
+                        <input type="text" class="form-control" id="discente_cpf">
+                        <span id="err_discente_cpf" class="help-block"></span>  
+                     </div>
                      <div id="card_discente_rg"  class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3" >
                         <label >RG</label>
                         <input type="text" class="form-control" id="discente_rg">
                      </div>
-                     <div id="div_discente_cpf" class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3" >
-                        <label >CPF</label>
-                        <input type="text" class="form-control" id="discente_cpf">
-                        <span id="err_discente_cpf" class="help-block"></span>  
-                     </div>
                      <div id="card_discente_passaporte" class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6" >
-                        <label >Nº do Passaporte</label>
+                        <label >Nº do Passaporte*</label>
                         <input type="text" class="form-control" id="discente_passaporte">
+                        <span id="err_discente_passaporte" class="help-block"></span>
                      </div>
 
 
@@ -194,9 +195,8 @@
                      <!--cool <br> -->
                      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><p>&nbsp</p></div>
 
-
                      <div id="div_discente_id_pais" class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4" >
-                        <label >País*</label>
+                        <label >Endereço | País*</label>
                         <select id="list_pais" class="form-control select2" style="width: 100%;" name="endereco_id_pais">
                            <% for(var i = 0; i < paises.length ; i++){ %> 
                            <option value="<%= paises[i].id_pais %>"><%= paises[i].nome %> </option>

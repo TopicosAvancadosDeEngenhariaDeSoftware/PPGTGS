@@ -7,21 +7,23 @@ $(function () {
 
     function verificarNacionalidade(){
         if ($('#list_nacionalidade').val() == 1) {
-            $('#card_discente_cpf').removeClass('remover');
+            $('#div_discente_cpf').removeClass('remover');
             $('#card_discente_rg').removeClass('remover');
             $('#card_discente_passaporte').addClass('remover');
             $('#card_discente_passaporte').val("");
         }else{
             $('#card_discente_rg').addClass('remover');
             $('#card_discente_rg').val("");
-            $('#card_discente_cpf').addClass('remover');
-            $('#card_discente_cpf').val("");
+            $('#div_discente_cpf').addClass('remover');
+            $('#div_discente_cpf').val("");
             $('#card_discente_passaporte').removeClass('remover');
+            $('#card_discente_passaporte').val("");
         }
     }
 
     function verificarPais(){
         atualizarListaEstado();
+        
         if ($('#list_pais').val() == 1) {
             $('#endereco_brasil').removeClass('remover');
             
@@ -158,6 +160,7 @@ $(function () {
             var html = "<tbody><tr><th>Nº</th><th>Cargo</th><th>Instituição</th><th>Tipo</th></tr>";
             $("#tabela_ocupacoes").append(html);
             for(var i = 0; i < lista_ocupacoes.length; i++){
+                console.log(lista_ocupacoes[i]);
                 lista_ocupacoes[i].id = i + 1;
                 html = "<tr><td>"+lista_ocupacoes[i].id+"</td><td>"+lista_ocupacoes[i].cargo+"</td><td>["+lista_ocupacoes[i].instituicao.sigla +"] "+lista_ocupacoes[i].instituicao.nome+"</td><td> "+lista_ocupacoes[i].instituicao.tipo_instituicao.nome+" </td> <td><i id='ocupacao_trash_"+lista_ocupacoes[i].id+"' class='fa fa-fw fa-trash pull-right'></i> </td></tr>";
                 $("#tabela_ocupacoes").append(html);
@@ -257,8 +260,8 @@ $(function () {
         $('#div_discente_datanascimento').removeClass('has-error');
         $('#err_discente_datanascimento').html("");
 
-        $('#div_discente_nascionalidade').removeClass('has-error');
-        $('#err_discente_nascionalidade').html("");
+        $('#div_discente_nacionalidade').removeClass('has-error');
+        $('#err_discente_nacionalidade').html("");
 
         $('#div_discente_sexo').removeClass('has-error');
         $('#err_discente_sexo').html("");
@@ -283,9 +286,6 @@ $(function () {
 
         $('#div_discente_num_residencia').removeClass('has-error');
         $('#err_discente_num_residencia').html("");
-
-        $('#div_discente_username').removeClass('has-error');
-        $('#err_discente_username').html("");
 
         $('#div_discente_id_titulo').removeClass('has-error');
         $('#err_discente_id_titulo').html("");
@@ -393,8 +393,8 @@ $(function () {
                                 $('#err_discente_datanascimento').html(msg.responseJSON.erro[i].msg);
                                 break;
                             case "id_nacionalidade":
-                                $('#div_discente_nascionalidade').addClass('has-error');
-                                $('#err_discente_nascionalidade').html(msg.responseJSON.erro[i].msg);
+                                $('#div_discente_nacionalidade').addClass('has-error');
+                                $('#err_discente_nacionalidade').html(msg.responseJSON.erro[i].msg);
                                 break;
                             case "id_sexo":
                                 $('#div_discente_sexo').addClass('has-error');
