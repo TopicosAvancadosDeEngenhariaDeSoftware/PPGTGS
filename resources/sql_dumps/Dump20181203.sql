@@ -304,7 +304,7 @@ CREATE TABLE `estado` (
 
 LOCK TABLES `estado` WRITE;
 /*!40000 ALTER TABLE `estado` DISABLE KEYS */;
-INSERT INTO `estado` VALUES (11,'Rondônia','RO',7),(12,'Acre','AC',7),(13,'Amazonas','AM',7),(14,'Roraima','RR',7),(15,'Pará','PA',7),(16,'Amapá','AP',7),(17,'Tocantins','TO',7),(21,'Maranhão','MA',7),(22,'Piauí','PI',7),(23,'Ceará','CE',7),(24,'Rio Grande do Norte','RN',7),(25,'Paraíba','PB',7),(26,'Pernambuco','PE',7),(27,'Alagoas','AL',7),(28,'Sergipe','SE',7),(29,'Bahia','BA',7),(31,'Minas Gerais','MG',7),(32,'Espírito Santo','ES',7),(33,'Rio de Janeiro','RJ',7),(35,'São Paulo','SP',7),(41,'Paraná','PR',7),(42,'Santa Catarina','SC',7),(43,'Rio Grande do Sul','RS',7),(50,'Mato Grosso do Sul','MS',7),(51,'Mato Grosso','MT',7),(52,'Goiás','GO',7),(53,'Distrito Federal','DF',7);
+INSERT INTO `estado` VALUES (11,'Rondônia','RO',1),(12,'Acre','AC',1),(13,'Amazonas','AM',1),(14,'Roraima','RR',1),(15,'Pará','PA',1),(16,'Amapá','AP',1),(17,'Tocantins','TO',1),(21,'Maranhão','MA',1),(22,'Piauí','PI',1),(23,'Ceará','CE',1),(24,'Rio Grande do Norte','RN',1),(25,'Paraíba','PB',1),(26,'Pernambuco','PE',1),(27,'Alagoas','AL',1),(28,'Sergipe','SE',1),(29,'Bahia','BA',1),(31,'Minas Gerais','MG',1),(32,'Espírito Santo','ES',1),(33,'Rio de Janeiro','RJ',1),(35,'São Paulo','SP',1),(41,'Paraná','PR',1),(42,'Santa Catarina','SC',1),(43,'Rio Grande do Sul','RS',1),(50,'Mato Grosso do Sul','MS',1),(51,'Mato Grosso','MT',1),(52,'Goiás','GO',1),(53,'Distrito Federal','DF',1);
 /*!40000 ALTER TABLE `estado` ENABLE KEYS */;
 UNLOCK TABLES;
 
